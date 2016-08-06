@@ -180,7 +180,10 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
         db.insert("Shotlist", null, ruleValues);
     }
 
-    public ShotListDAO GetShotListByName(String name) {
+    /*
+    Return a NULL dao object if no matching records are found.
+     */
+    public ShotListDAO GetShotListByName(String name) throws Exception {
         SQLiteDatabase db = null;
         Cursor cursor = null;
         ShotListDAO dao = null;
@@ -189,14 +192,31 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             db = this.getWritableDatabase();
             dao = new ShotListDAO();
 
-            cursor = db.query("Shotlist", new String[]{"Name"}, null, null, null, null, "RANDOM() LIMIT 1");
+            cursor = db.query("Shotlist",
+                    new String[]{"_id", "Name", "LongDescription", "CreatedDate", "IsActive"},
+                    "Name = ?",
+                    new String[]{name},
+                    null, null, null);
 
             if (cursor.moveToFirst()) {
                 // output the first row
-                String dbCategoryName = cursor.getString(0);
+                int _id = Integer.parseInt(cursor.getString(0));
+                String _name = cursor.getString(1);
+                String _longDescription = cursor.getString(2);
+                String _createdDate = cursor.getString(3);
+                boolean _isActive = Boolean.parseBoolean(cursor.getString(4));
+
+                dao.setId(_id);
+                dao.setName(_name);
+                dao.setLongDescription(_longDescription);
+                dao.setActive(_isActive);
             }
+
+            return dao;
+
         } catch (Exception e) {
             //display.setText(String.format("Error: %s", e.getMessage()));
+            throw new Exception(e);
         } finally {
             if (cursor != null)
                 cursor.close();
@@ -204,7 +224,5 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             if (db != null)
                 db.close();
         }
-
-        return dao;
     }
 }
