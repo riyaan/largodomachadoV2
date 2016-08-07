@@ -32,8 +32,14 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
 
     public static PSLDatabaseHelper getInstance(Context context)
     {
-        if(instance == null) {
-            instance = new PSLDatabaseHelper(context);
+        if(context == null){
+            // Use the test db.
+        }
+        else {
+
+            if (instance == null) {
+                instance = new PSLDatabaseHelper(context);
+            }
         }
         return instance;
     }
@@ -206,6 +212,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
                 String _createdDate = cursor.getString(3);
                 boolean _isActive = Boolean.parseBoolean(cursor.getString(4));
 
+                // TODO: Mapper?
                 dao.setId(_id);
                 dao.setName(_name);
                 dao.setLongDescription(_longDescription);
