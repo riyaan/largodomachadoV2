@@ -38,4 +38,16 @@
         android:hint="Add the Category Name."
         android:editable="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_new_shotlist"
+        android:id="@+id/buttonNewShotlist"
+        android:onClick="onClickNewShotlist"
+        android:layout_below="@+id/textViewDisplayCategory"
+        android:layout_alignLeft="@+id/buttonAddCategory"
+        android:layout_alignStart="@+id/buttonAddCategory"
+        android:layout_marginTop="38dp" />
+
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.photoshotlist;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,17 +14,19 @@ import com.photoshotlist.dal.ShotListDAO;
 
 public class MainActivity extends AppCompatActivity {
 
+    public final static String EXTRA_MESSAGE = "YANIE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
-        try {
-            ShotListDAO dao = dbHelper.GetShotListByName("test");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
+//        try {
+//            ShotListDAO dao = dbHelper.GetShotListByName("test");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void onClickAddCategory(View view)
@@ -61,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
             if(db != null)
                 db.close();
         }
+    }
 
+    public void onClickNewShotlist(View view)
+    {
+        // Test
+        Intent intent = new Intent(this, MainShotListActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
+        startActivity(intent);
     }
 }

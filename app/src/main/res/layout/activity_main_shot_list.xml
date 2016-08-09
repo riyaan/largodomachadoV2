@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main_shot_list"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    tools:context="com.photoshotlist.MainShotListActivity">
+
+    <GridView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/gridView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:columnWidth="100dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="5dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        style="@android:style/Widget.Holo.Light.GridView"
+        android:longClickable="false"
+        android:drawSelectorOnTop="true"
+        android:focusable="true"
+        android:clickable="true" />
+</RelativeLayout>
