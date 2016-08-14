@@ -69,8 +69,15 @@ public class MainActivity extends AppCompatActivity {
     public void onClickNewShotlist(View view)
     {
         // Test
-        Intent intent = new Intent(this, MainShotListActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
+//        Intent intent = new Intent(this, MainShotListActivity.class);
+//        intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
+//        startActivity(intent);
+
+        // Invoke the 'Create Shot List' UI
+        Intent intent = new Intent(this, NewShotListActivity.class);
+        // intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
         startActivity(intent);
     }
+
+
 }

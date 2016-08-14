@@ -2,4 +2,7 @@
     <string name="app_name">PhotoShotList</string>
     <string name="button_add_category">Random Category</string>
     <string name="button_new_shotlist">Shot Lists</string>
+    <string name="hint_edittext_shotlist_name">Shot List Name</string>
+    <string name="hint_edittext_shotlist_description">Shot List Description</string>
+    <string name="button_create_shotlist">Create Shot List</string>
 </resources>

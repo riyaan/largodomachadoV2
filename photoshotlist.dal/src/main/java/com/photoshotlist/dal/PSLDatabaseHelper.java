@@ -55,7 +55,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
-        if(oldVersion < 2){
+        //if(oldVersion < 2){
 
             db.execSQL(CREATE_TABLE_CATEGORY);
 
@@ -148,7 +148,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             InsertRule(db, "Orientation", "", 1);
 
             db.execSQL(CREATE_TABLE_SHOTLIST);
-        }
+        //}
 
         if(oldVersion < 3){
             // code to add the new DB structure
