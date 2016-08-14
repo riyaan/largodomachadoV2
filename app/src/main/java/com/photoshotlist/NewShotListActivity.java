@@ -34,7 +34,7 @@ public class NewShotListActivity extends AppCompatActivity {
             errorMessage = (TextView)findViewById(R.id.textViewErrorMessage);
 
             PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
-            dao = dbHelper.InsertShotlist(shotListName.getText().toString(), shotListDescription.getText().toString());
+            dao = dbHelper.InsertShotList(shotListName.getText().toString(), shotListDescription.getText().toString());
 
             if(dao == null)
                 errorMessage.setText(String.format("An error occurred: %s", "TODO: add a user friendly error message."));

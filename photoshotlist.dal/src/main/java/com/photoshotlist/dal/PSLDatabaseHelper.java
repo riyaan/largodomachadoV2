@@ -148,6 +148,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             InsertRule(db, "Orientation", "", 1);
 
             db.execSQL(CREATE_TABLE_SHOTLIST);
+            InsertShotList(db, "Sample Shot List", "Some Long Description. Blah blah blah...", 1);
         //}
 
         if(oldVersion < 3){
@@ -173,11 +174,30 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
         db.insert("Rule", null, ruleValues);
     }
 
+    private static void InsertShotList(SQLiteDatabase db, String name, String longDescription, int isActive){
+        ContentValues ruleValues = new ContentValues();
+        ruleValues.put("Name", name);
+        ruleValues.put("LongDescription", longDescription);
+
+        // The date
+        // TODO: There must be a better way
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS.SSS");
+        String text = date.format(formatter);
+        LocalDateTime parsedDate = LocalDateTime.parse(text, formatter);
+        String textDate = parsedDate.toString();
+        ruleValues.put("CreatedDate", textDate);
+
+        ruleValues.put("IsActive", isActive);
+
+        db.insert("Rule", null, ruleValues);
+    }
+
     /*
     Returns 1 on validation error
     Returns -1 if an error occurred
      */
-    public ShotListDAO InsertShotlist(String name, String longDescription) throws Exception {
+    public ShotListDAO InsertShotList(String name, String longDescription) throws Exception {
 
         SQLiteDatabase db = null;
         Cursor cursor = null;
