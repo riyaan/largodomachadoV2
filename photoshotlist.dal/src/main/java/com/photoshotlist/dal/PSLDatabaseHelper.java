@@ -59,7 +59,10 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
 
             db.execSQL(CREATE_TABLE_CATEGORY);
 
-            // TODO: Read these values from configuration file
+            /*
+            TODO: Read these values from configuration file.
+            TODO: Allow these categories to be added by the application
+            */
             InsertCategory(db, "ABC (Always Be Curious)", "", 1);
             InsertCategory(db, "Abstract", "", 1);
             InsertCategory(db, "Aerial", "", 1);
@@ -120,6 +123,11 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
 
             db.execSQL(CREATE_TABLE_RULE);
 
+            /*
+            TODO: Read these values from configuration file.
+            TODO: Allow these Rules to be added by the application
+            */
+
             InsertRule(db, "Rule of Thirds", "", 1);
             InsertRule(db, "The Golden Ratio", "", 1);
             InsertRule(db, "Golden Triangle & Spirals", "", 1);
@@ -165,25 +173,59 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
         db.insert("Rule", null, ruleValues);
     }
 
-    public void InsertShotlist(String name, String longDescription){
+    /*
+    Returns 1 on validation error
+    Returns -1 if an error occurred
+     */
+    public ShotListDAO InsertShotlist(String name, String longDescription) throws Exception {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        ShotListDAO dao = null;
 
-        ContentValues ruleValues = new ContentValues();
-        ruleValues.put("Name", name);
-        ruleValues.put("LongDescription", longDescription);
+        try {
 
-        LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS.SSS");
-        String text = date.format(formatter);
-        LocalDateTime parsedDate = LocalDateTime.parse(text, formatter);
+            if (name == null || name.toString().isEmpty())
+                return dao; // 1 - validation error
 
-        String textDate = parsedDate.toString();
+            if (longDescription == null)
+                return dao; // 1 - validation error
 
-        ruleValues.put("CreatedDate", textDate);
-        ruleValues.put("IsActive", 1);
+            // Check if the shot list already exists
+            dao = GetShotListByName(name);
 
-        db.insert("Shotlist", null, ruleValues);
+            db = this.getWritableDatabase();
+
+            ContentValues ruleValues = new ContentValues();
+            ruleValues.put("Name", name);
+            ruleValues.put("LongDescription", longDescription);
+
+            LocalDateTime date = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS.SSS");
+            String text = date.format(formatter);
+            LocalDateTime parsedDate = LocalDateTime.parse(text, formatter);
+
+            String textDate = parsedDate.toString();
+
+            ruleValues.put("CreatedDate", textDate);
+            ruleValues.put("IsActive", 1);
+
+            int shotListId = Math.toIntExact(db.insert("Shotlist", null, ruleValues));
+            if(shotListId == -1)
+                return dao;
+
+            dao = GetShotListByName(name);
+            return dao;
+
+        }catch (Exception ex){
+            throw new Exception(ex);
+        }finally {
+            if (cursor != null)
+                cursor.close();
+
+            if (db != null)
+                db.close();
+        }
     }
 
     /*
@@ -212,7 +254,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
                 String _createdDate = cursor.getString(3);
                 boolean _isActive = Boolean.parseBoolean(cursor.getString(4));
 
-                // TODO: Mapper?
+                // TODO: Use a Mapper?
                 dao.setId(_id);
                 dao.setName(_name);
                 dao.setLongDescription(_longDescription);
@@ -221,9 +263,9 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
 
             return dao;
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
             //display.setText(String.format("Error: %s", e.getMessage()));
-            throw new Exception(e);
+            throw new Exception(ex);
         } finally {
             if (cursor != null)
                 cursor.close();
