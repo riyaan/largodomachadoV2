@@ -1,1 +1,1 @@
-include ':app', ':photoshotlist.dal'
+include ':app', ':photoshotlist.dal', ':photoshotlist.common'

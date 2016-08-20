@@ -5,15 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.format.DateFormat;
 import android.util.Log;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
+import com.photoshotlist.common.Helper;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class PSLDatabaseHelper extends SQLiteOpenHelper {
@@ -179,13 +176,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
         ruleValues.put("Name", name);
         ruleValues.put("LongDescription", longDescription);
 
-        // The date
-        // TODO: There must be a better way
-        LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS.SSS");
-        String text = date.format(formatter);
-        LocalDateTime parsedDate = LocalDateTime.parse(text, formatter);
-        String textDate = parsedDate.toString();
+        String textDate = Helper.GetFormattedDate();
         ruleValues.put("CreatedDate", textDate);
 
         ruleValues.put("IsActive", isActive);
@@ -215,6 +206,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
                 return dao; // 1 - validation error
 
             // Check if the shot list already exists
+            // TODO: Create a custom logger class
             Log.d(this.getClass().getName(), "Before ShotList name validation");
             dao = GetShotListByName(name);
             Log.d(this.getClass().getName(), "After ShotList name validation");
@@ -229,10 +221,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             ruleValues.put("Name", name);
             ruleValues.put("LongDescription", longDescription);
 
-            //TODO: Refactor into a Helper
-            Date date = Calendar.getInstance().getTime();
-            Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String textDate = formatter.format(date);
+            String textDate = Helper.GetFormattedDate();
 
             ruleValues.put("CreatedDate", textDate);
             ruleValues.put("IsActive", 1);
