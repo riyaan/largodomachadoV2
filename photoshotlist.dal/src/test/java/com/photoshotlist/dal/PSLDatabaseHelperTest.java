@@ -11,7 +11,15 @@ import org.junit.runner.RunWith;
 //import org.robolectric.RobolectricTestRunner;
 //import org.robolectric.annotation.Config;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 //import org.mockito.Mockito;
 //import android.test.AndroidTestCase;
@@ -54,5 +62,24 @@ public class PSLDatabaseHelperTest{
         ShotListDAO dao = obj.GetShotListByName("test");
 
         assertEquals(null, dao);
+    }
+
+    @Test
+    public void convertDateToText()
+    {
+        String textDate;
+//        LocalDateTime date = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS.SSS");
+//        String text = date.format(formatter);
+//        LocalDateTime parsedDate = LocalDateTime.parse(text, formatter);
+//
+//        String textDate = parsedDate.toString();
+
+        Date date = Calendar.getInstance().getTime();
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        textDate = formatter.format(date);
+
+
+        assertNotEquals("", textDate);
     }
 }

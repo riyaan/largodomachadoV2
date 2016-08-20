@@ -6,10 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.format.DateFormat;
+import android.util.Log;
 
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -18,9 +21,8 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
     private static PSLDatabaseHelper instance;
 
     private static final String DB_NAME = "PhotoShotList";
-    private static final int DB_VERSION = 1; // TODO: Read from configuration file
-    private static final int OLD_VERSION = 1; // old version of the database
-    private static final int NEW_VERSION = 1; // new version of the database
+    private static final int DB_VERSION = 2; // TODO: Read from configuration file
+    private static final int DB_OLD_VERSION = 1;
 
     private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE Category (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, IsActive INTEGER);";
     private static final String CREATE_TABLE_RULE = "CREATE TABLE Rule (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, IsActive INTEGER);";
@@ -46,16 +48,16 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        updateMyDatabase(db, OLD_VERSION, NEW_VERSION);
+        updateMyDatabase(db, DB_OLD_VERSION, DB_VERSION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        updateMyDatabase(db, DB_OLD_VERSION, DB_VERSION);
     }
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
-        //if(oldVersion < 2){
+        if(oldVersion < 1){
 
             db.execSQL(CREATE_TABLE_CATEGORY);
 
@@ -146,13 +148,11 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             InsertRule(db, "Depth", "", 1);
             InsertRule(db, "Framing", "", 1);
             InsertRule(db, "Orientation", "", 1);
+        }
 
-            db.execSQL(CREATE_TABLE_SHOTLIST);
-            InsertShotList(db, "Sample Shot List", "Some Long Description. Blah blah blah...", 1);
-        //}
-
-        if(oldVersion < 3){
+        if(oldVersion < 2){
             // code to add the new DB structure
+            db.execSQL(CREATE_TABLE_SHOTLIST);
         }
     }
 
@@ -199,6 +199,9 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
      */
     public ShotListDAO InsertShotList(String name, String longDescription) throws Exception {
 
+        // TOOD: Create a custom LogHelper Class
+        Log.d(this.getClass().getName(), "Entering InsertShotList");
+
         SQLiteDatabase db = null;
         Cursor cursor = null;
         ShotListDAO dao = null;
@@ -212,7 +215,13 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
                 return dao; // 1 - validation error
 
             // Check if the shot list already exists
+            Log.d(this.getClass().getName(), "Before ShotList name validation");
             dao = GetShotListByName(name);
+            Log.d(this.getClass().getName(), "After ShotList name validation");
+            if(dao != null) {
+                Log.d(this.getClass().getName(), "Shotlist already exists");
+                return dao;
+            }
 
             db = this.getWritableDatabase();
 
@@ -220,17 +229,15 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             ruleValues.put("Name", name);
             ruleValues.put("LongDescription", longDescription);
 
-            LocalDateTime date = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS.SSS");
-            String text = date.format(formatter);
-            LocalDateTime parsedDate = LocalDateTime.parse(text, formatter);
-
-            String textDate = parsedDate.toString();
+            //TODO: Refactor into a Helper
+            Date date = Calendar.getInstance().getTime();
+            Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String textDate = formatter.format(date);
 
             ruleValues.put("CreatedDate", textDate);
             ruleValues.put("IsActive", 1);
 
-            int shotListId = Math.toIntExact(db.insert("Shotlist", null, ruleValues));
+            int shotListId = (int)db.insert("Shotlist", null, ruleValues);
             if(shotListId == -1)
                 return dao;
 
@@ -258,7 +265,6 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
 
         try {
             db = this.getWritableDatabase();
-            dao = new ShotListDAO();
 
             cursor = db.query("Shotlist",
                     new String[]{"_id", "Name", "LongDescription", "CreatedDate", "IsActive"},
@@ -275,6 +281,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
                 boolean _isActive = Boolean.parseBoolean(cursor.getString(4));
 
                 // TODO: Use a Mapper?
+                dao = new ShotListDAO();
                 dao.setId(_id);
                 dao.setName(_name);
                 dao.setLongDescription(_longDescription);
