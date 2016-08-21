@@ -1,6 +1,7 @@
 package com.photoshotlist.bll;
 
 import android.content.Context;
+import android.database.SQLException;
 
 import com.photoshotlist.common.Logger;
 import com.photoshotlist.dal.PSLDatabaseHelper;
@@ -38,7 +39,22 @@ public class PSLBusinessHelper {
                 throw new PSLException("Name is mandatory when creating a new ShotList.");
 
             // Setup link to data functionality
+
+
+            // Use the runtime version of the database
+            // PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+
+            // Use the standalone version of the database
+            // http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
             PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+            try {
+                dbHelper.createDataBase();
+                dbHelper.openDataBase();
+
+            }catch(SQLException sqle){
+
+                throw sqle;
+            }
 
             // Check if the name is already in use
             ShotListDAO dao = null;
