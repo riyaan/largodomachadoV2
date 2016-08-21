@@ -5,12 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.photoshotlist.common.Helper;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import com.photoshotlist.common.Logger;
 
 
 public class PSLDatabaseHelper extends SQLiteOpenHelper {
@@ -185,13 +182,10 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    Returns 1 on validation error
     Returns -1 if an error occurred
      */
-    public ShotListDAO InsertShotList(String name, String longDescription) throws Exception {
-
-        // TOOD: Create a custom LogHelper Class
-        Log.d(this.getClass().getName(), "Entering InsertShotList");
+    public int InsertShotList(String name, String longDescription) throws Exception {
+        Logger.Debug(this.getClass().getName(), "Entering InsertShotList");
 
         SQLiteDatabase db = null;
         Cursor cursor = null;
@@ -200,20 +194,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
         try {
 
             if (name == null || name.toString().isEmpty())
-                return dao; // 1 - validation error
-
-            if (longDescription == null)
-                return dao; // 1 - validation error
-
-            // Check if the shot list already exists
-            // TODO: Create a custom logger class
-            Log.d(this.getClass().getName(), "Before ShotList name validation");
-            dao = GetShotListByName(name);
-            Log.d(this.getClass().getName(), "After ShotList name validation");
-            if(dao != null) {
-                Log.d(this.getClass().getName(), "Shotlist already exists");
-                return dao;
-            }
+                throw new Exception("Null or Empty values for ShotList Name field.");
 
             db = this.getWritableDatabase();
 
@@ -227,11 +208,7 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             ruleValues.put("IsActive", 1);
 
             int shotListId = (int)db.insert("Shotlist", null, ruleValues);
-            if(shotListId == -1)
-                return dao;
-
-            dao = GetShotListByName(name);
-            return dao;
+            return shotListId;
 
         }catch (Exception ex){
             throw new Exception(ex);
@@ -259,6 +236,50 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
                     new String[]{"_id", "Name", "LongDescription", "CreatedDate", "IsActive"},
                     "Name = ?",
                     new String[]{name},
+                    null, null, null);
+
+            if (cursor.moveToFirst()) {
+                // output the first row
+                int _id = Integer.parseInt(cursor.getString(0));
+                String _name = cursor.getString(1);
+                String _longDescription = cursor.getString(2);
+                String _createdDate = cursor.getString(3);
+                boolean _isActive = Boolean.parseBoolean(cursor.getString(4));
+
+                // TODO: Use a Mapper?
+                dao = new ShotListDAO();
+                dao.setId(_id);
+                dao.setName(_name);
+                dao.setLongDescription(_longDescription);
+                dao.setActive(_isActive);
+            }
+
+            return dao;
+
+        } catch (Exception ex) {
+            //display.setText(String.format("Error: %s", e.getMessage()));
+            throw new Exception(ex);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public ShotListDAO GetShotListById(int shotListId) throws Exception {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        ShotListDAO dao = null;
+
+        try {
+            db = this.getWritableDatabase();
+
+            cursor = db.query("Shotlist",
+                    new String[]{"_id", "Name", "LongDescription", "CreatedDate", "IsActive"},
+                    "_id = ?",
+                    new String[]{Integer.toString(shotListId)},
                     null, null, null);
 
             if (cursor.moveToFirst()) {

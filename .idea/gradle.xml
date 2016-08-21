@@ -10,16 +10,20 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
+            <option value="$PROJECT_DIR$/photoshotlist.exception" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
+            <option value="$PROJECT_DIR$/photoshotlist.exception" />
           </set>
         </option>
       </GradleProjectSettings>
