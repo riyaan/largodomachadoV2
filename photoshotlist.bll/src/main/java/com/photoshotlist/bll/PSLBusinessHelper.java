@@ -43,7 +43,7 @@ public class PSLBusinessHelper {
             // Check if the name is already in use
             ShotListDAO dao = null;
             dao = dbHelper.GetShotListByName(domainObject.getName());
-            if(dao == null)
+            if(dao != null)
                 throw new PSLException(String.format("The name '%s' is already in use.", domainObject.getName()));
 
             // The name is available for use. Insert the record

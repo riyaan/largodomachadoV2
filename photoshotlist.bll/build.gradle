@@ -4,4 +4,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(path: ':photoshotlist.dal')
     compile project(path: ':photoshotlist.exception')
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 }
