@@ -5,4 +5,25 @@
     <string name="hint_edittext_shotlist_name">Shot List Name</string>
     <string name="hint_edittext_shotlist_description">Shot List Description</string>
     <string name="button_create_shotlist">Create Shot List</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_shotlists">Shot Lists</string>
+    <string name="nav_item_categories">Categories</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_shotlists</item>
+        <item>@string/nav_item_categories</item>
+    </string-array>
+
+    <string name="title_shotlists">Shot Lists</string>
+    <string name="title_categories">Categories</string>
+    <string name="title_home">Home</string>
+
 </resources>

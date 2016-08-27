@@ -42,19 +42,19 @@ public class PSLBusinessHelper {
 
 
             // Use the runtime version of the database
-            // PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
 
             // Use the standalone version of the database
             // http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
-            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
-            try {
-                dbHelper.createDataBase();
-                dbHelper.openDataBase();
-
-            }catch(SQLException sqle){
-
-                throw sqle;
-            }
+//            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+//            try {
+//                dbHelper.createDataBase();
+//                dbHelper.openDataBase();
+//
+//            }catch(SQLException sqle){
+//
+//                throw sqle;
+//            }
 
             // Check if the name is already in use
             ShotListDAO dao = null;
