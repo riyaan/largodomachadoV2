@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 import com.photoshotlist.dal.PSLDatabaseHelper;
 import com.photoshotlist.dal.ShotListDAO;
 
-public class MainActivity extends AppCompatActivity {
+import activity.Drawer;
+
+public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener {
 
     private Toolbar mToolbar;
+    private Drawer drawerFragment;
     public final static String EXTRA_MESSAGE = "YANIE";
 
     @Override
@@ -29,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        drawerFragment = (Drawer)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment.setDrawerListener(this);
     }
 
     @Override
@@ -105,4 +114,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onDrawerItemSelected(View view, int position) {
+
+    }
 }
