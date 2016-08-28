@@ -7,24 +7,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-    </LinearLayout>
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
 
-        <FrameLayout
-            android:id="@+id/container_body"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <fragment
@@ -36,50 +33,6 @@
         tools:layout="@layout/fragment_navigation_drawer"
         android:name="activity.Drawer" />
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAddCategory"
-        android:text="@string/button_add_category"
-        android:onClick="onClickAddCategory"
-        android:layout_marginTop="63dp"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textViewDisplayCategory"
-        android:textAlignment="center"
-        android:layout_below="@+id/editTextCategoryName" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextCategoryName"
-        android:enabled="true"
-        android:inputType="text"
-        android:hint="Add the Category Name."
-        android:editable="true"
-        android:layout_below="@+id/buttonAddCategory"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_new_shotlist"
-        android:id="@+id/buttonNewShotlist"
-        android:onClick="onClickNewShotlist"
-        android:layout_marginTop="81dp"
-        android:layout_below="@+id/editTextCategoryName"
-        android:layout_alignRight="@+id/buttonAddCategory"
-        android:layout_alignEnd="@+id/buttonAddCategory" />
-</RelativeLayout>
-
+    <!-- End The Navigation Drawer -->
 
 </android.support.v4.widget.DrawerLayout>

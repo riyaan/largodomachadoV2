@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +19,14 @@ import android.widget.TextView;
 import com.photoshotlist.dal.PSLDatabaseHelper;
 import com.photoshotlist.dal.ShotListDAO;
 
+import activity.CategoryFragment;
 import activity.Drawer;
+import activity.HomeFragment;
+import activity.ShotListFragment;
 
 public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener {
 
+    private static String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolbar;
     private Drawer drawerFragment;
     public final static String EXTRA_MESSAGE = "YANIE";
@@ -38,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
+
+        // display the first navigation drawer view on app launch
+        displayView(0);
     }
 
     @Override
@@ -60,6 +70,37 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayView(int position) {
+        Fragment fragment = null;
+        String title = getString(R.string.app_name);
+        switch (position) {
+            case 0:
+                fragment = new HomeFragment();
+                title = getString(R.string.title_home);
+                break;
+            case 1:
+                fragment = new ShotListFragment();
+                title = getString(R.string.title_shotlists);
+                break;
+            case 2:
+                fragment = new CategoryFragment();
+                title = getString(R.string.title_categories);
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+            getSupportActionBar().setTitle(title);
+        }
     }
 
 
@@ -100,6 +141,13 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
         }
     }
 
+
+    @Override
+    public void onDrawerItemSelected(View view, int position) {
+        displayView(position);
+    }
+
+
     public void onClickNewShotlist(View view)
     {
         // Test
@@ -111,11 +159,5 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
         Intent intent = new Intent(this, NewShotListActivity.class);
         // intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
         startActivity(intent);
-    }
-
-
-    @Override
-    public void onDrawerItemSelected(View view, int position) {
-
     }
 }
