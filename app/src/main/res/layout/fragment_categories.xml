@@ -25,7 +25,6 @@
         android:gravity="center_horizontal"
         android:text="Edit fragment_categories.xml to change the appearance" />
 
-
     <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -57,5 +56,18 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonViewAllCategory"
+        android:text="@string/button_all_categories"
+        android:onClick="onClickViewAllCategory"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="57dp"
+        android:layout_above="@+id/textViewDisplayCategory"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="42dp"
+        android:layout_marginStart="42dp" />
 
 </RelativeLayout>

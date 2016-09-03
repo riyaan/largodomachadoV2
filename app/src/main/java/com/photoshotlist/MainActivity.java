@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.photoshotlist.dal.PSLDatabaseHelper;
 import com.photoshotlist.dal.ShotListDAO;
 
+import activity.CategoryAllFragment;
 import activity.CategoryFragment;
 import activity.Drawer;
 import activity.HomeFragment;
@@ -141,6 +142,19 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
         }
     }
 
+    public void onClickViewAllCategory(View view)
+    {
+        Fragment fragment = new CategoryAllFragment();
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+            getSupportActionBar().setTitle("All Categories");
+        }
+    }
 
     @Override
     public void onDrawerItemSelected(View view, int position) {
