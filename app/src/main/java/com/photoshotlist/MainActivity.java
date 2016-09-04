@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,13 +20,17 @@ import android.widget.TextView;
 import com.photoshotlist.dal.PSLDatabaseHelper;
 import com.photoshotlist.dal.ShotListDAO;
 
+import java.util.List;
+
 import activity.CategoryAllFragment;
 import activity.CategoryFragment;
 import activity.Drawer;
 import activity.HomeFragment;
 import activity.ShotListFragment;
+import adapter.AlbumsAdapter;
+import model.Album;
 
-public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener {
+public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener, CategoryAllFragment.ListFragmentItemClickListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolbar;
@@ -173,5 +178,10 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
         Intent intent = new Intent(this, NewShotListActivity.class);
         // intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
         startActivity(intent);
+    }
+
+    @Override
+    public void onListFragmentItemClick(int position) {
+        getSupportActionBar().setTitle(Integer.toString(position));
     }
 }

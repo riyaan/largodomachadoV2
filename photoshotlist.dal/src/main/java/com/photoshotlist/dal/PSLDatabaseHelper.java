@@ -15,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PSLDatabaseHelper extends SQLiteOpenHelper {
@@ -419,6 +421,55 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             }
 
             return dao;
+
+        } catch (Exception ex) {
+            //display.setText(String.format("Error: %s", e.getMessage()));
+            throw new Exception(ex);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public List<ShotListDAO> GetAllCategories() throws Exception {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        ShotListDAO dao = null;
+        List<ShotListDAO> daoList = new ArrayList<ShotListDAO>();
+
+        try {
+            db = this.getWritableDatabase();
+
+            cursor = db.query("Category",
+                    new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                    null, null, null, null, null);
+
+            if (cursor.moveToFirst()) {
+
+                do{
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                    // TODO: Use a Mapper?
+                    dao = new ShotListDAO();
+                    dao.setId(_id);
+                    dao.setName(_name);
+                    dao.setLongDescription(_longDescription);
+                    dao.setActive(_isActive);
+
+                    daoList.add(dao);
+
+                    //cursor.moveToNext();
+                }while(cursor.moveToNext());
+            }
+
+            return daoList;
 
         } catch (Exception ex) {
             //display.setText(String.format("Error: %s", e.getMessage()));

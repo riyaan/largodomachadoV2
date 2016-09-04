@@ -8,6 +8,9 @@ import com.photoshotlist.dal.PSLDatabaseHelper;
 import com.photoshotlist.dal.ShotListDAO;
 import com.photoshotlist.exception.PSLException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by PhpDev on 2016/08/21.
  */
@@ -84,6 +87,49 @@ public class PSLBusinessHelper {
             sdo.setCreatedDate(dao.getCreatedDate());
 
             return sdo;
+        }
+        catch(Exception ex)
+        {
+            throw new PSLException(ex.getMessage());
+        }
+    }
+
+    public List<ShotListDO> GetAllCategories() throws PSLException
+    {
+        try {
+            // Use the runtime version of the database
+            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+
+            // Use the standalone version of the database
+            // http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
+//            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+//            try {
+//                dbHelper.createDataBase();
+//                dbHelper.openDataBase();
+//
+//            }catch(SQLException sqle){
+//
+//                throw sqle;
+//            }
+
+            // The name is available for use. Insert the record
+            Logger.Debug(this.getClass().getName(), "Before GetAllCategories");
+            List<ShotListDAO> categoryList = dbHelper.GetAllCategories();
+            Logger.Debug(this.getClass().getName(), "After InsertShotList");
+
+            // TODO: Use Data to Business Mapper
+            List<ShotListDO> categoryListDO = new ArrayList<ShotListDO>();
+            for (ShotListDAO obj:categoryList) {
+                ShotListDO sdo = new ShotListDO();
+                sdo.setName(obj.getName());
+                sdo.setLongDescription(obj.getLongDescription());
+                sdo.setActive(obj.isActive());
+                sdo.setId(obj.getId());
+
+                categoryListDO.add(sdo);
+            }
+
+            return categoryListDO;
         }
         catch(Exception ex)
         {

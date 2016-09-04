@@ -11,4 +11,9 @@
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#FF80AB</color>
 
+    <!-- Card View Start -->
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+    <!-- Card View End -->
+
 </resources>
