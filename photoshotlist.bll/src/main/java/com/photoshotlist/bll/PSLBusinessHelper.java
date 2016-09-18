@@ -136,4 +136,42 @@ public class PSLBusinessHelper {
             throw new PSLException(ex.getMessage());
         }
     }
+
+    public ShotListDO GetCategoryById(int categoryId) throws PSLException
+    {
+        try {
+            // Use the runtime version of the database
+            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+
+            // Use the standalone version of the database
+            // http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
+//            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+//            try {
+//                dbHelper.createDataBase();
+//                dbHelper.openDataBase();
+//
+//            }catch(SQLException sqle){
+//
+//                throw sqle;
+//            }
+
+            // The name is available for use. Insert the record
+            Logger.Debug(this.getClass().getName(), "Before GetCategoryById");
+            ShotListDAO category = dbHelper.GetCategoryById(categoryId);
+            Logger.Debug(this.getClass().getName(), "After InsertShotList");
+
+            // TODO: Use Data to Business Mapper
+            ShotListDO sdo = new ShotListDO();
+            sdo.setName(category.getName());
+            sdo.setLongDescription(category.getLongDescription());
+            sdo.setActive(category.isActive());
+            sdo.setId(category.getId());
+
+            return sdo;
+        }
+        catch(Exception ex)
+        {
+            throw new PSLException(ex.getMessage());
+        }
+    }
 }

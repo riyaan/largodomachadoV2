@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +24,7 @@ import com.photoshotlist.dal.ShotListDAO;
 import java.util.List;
 
 import activity.CategoryAllFragment;
+import activity.CategoryDetailFragment;
 import activity.CategoryFragment;
 import activity.Drawer;
 import activity.HomeFragment;
@@ -30,7 +32,8 @@ import activity.ShotListFragment;
 import adapter.AlbumsAdapter;
 import model.Album;
 
-public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener, CategoryAllFragment.ListFragmentItemClickListener {
+public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener, CategoryAllFragment.ListFragmentItemClickListener,
+CategoryDetailFragment.OnFragmentInteractionListener{
 
     private static String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolbar;
@@ -183,5 +186,34 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
     @Override
     public void onListFragmentItemClick(int position) {
         getSupportActionBar().setTitle(Integer.toString(position));
+
+        // TODO: The list fragment stores the list items starting from 0
+        // TODO: Is there a way to use the ID retrieved from the DB record
+        int categoryId = position+1;
+
+        // load the category detail fragment.
+        // pass in the id of the category
+        CategoryDetailFragment fragment = new CategoryDetailFragment();
+        if (fragment != null) {
+            fragment.setCategoryId(categoryId);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+
+            // TODO: Start - This gets the back button to work
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            // TODO: End - This gets the back button to work
+
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+            getSupportActionBar().setTitle("Detail Fragment");
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -41,9 +41,6 @@ public class CategoryAllFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_categories_all, container, false);
 
-        //TODO: Implement onClick event handler for each item in the List.
-        //TODO: Use the selected id or name to get the details for this category. Pass this information onto the detail fragment.
-        //TODO: Create a Category Detail Fragment.
         //TODO: Use card view. Instead of list view.
         //TODO: Back button issue on Fragment.
 
