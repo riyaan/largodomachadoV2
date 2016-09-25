@@ -42,7 +42,6 @@ public class CategoryAllFragment extends ListFragment {
         View rootView = inflater.inflate(R.layout.fragment_categories_all, container, false);
 
         //TODO: Use card view. Instead of list view.
-        //TODO: Back button issue on Fragment.
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, GetAllCategories());

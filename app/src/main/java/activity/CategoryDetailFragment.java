@@ -5,17 +5,26 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v7.widget.RecyclerView;
 
 import com.photoshotlist.R;
 import com.photoshotlist.bll.PSLBusinessHelper;
 import com.photoshotlist.bll.ShotListDO;
 import com.photoshotlist.common.Logger;
 import com.photoshotlist.exception.PSLException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import adapter.CaptionedCategoryImageAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,14 +87,62 @@ public class CategoryDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category_detail, container, false);
+        //return inflater.inflate(R.layout.fragment_category_detail, container, false);
+        RecyclerView pizzaRecycler = (RecyclerView)inflater.inflate(
+                R.layout.fragment_category_detail, container, false);
+
+//        String[] pizzaNames = new String[Pizza.pizzas.length];
+//        for (int i = 0; i < pizzaNames.length; i++) {
+//            pizzaNames[i] = Pizza.pizzas[i].getName();
+//        }
+
+        List<ShotListDO> list = new ArrayList<ShotListDO>();
+
+        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
+        Logger.Debug(this.getClass().getName(), "Before InsertShotList");
+        try {
+            list = businessHelper.GetAllCategories();
+        } catch (PSLException e) {
+            e.printStackTrace();
+        }
+
+        List<String> values = new ArrayList<String>();
+        for (ShotListDO obj:list) {
+            values.add(obj.getName());
+        }
+
+        // TODO: Store the image resource id along with the image in the Category DB.
+        //String[] pizzaNames = values.toArray(new String[0]);
+        String[] pizzaNames = new String[] {"Diavolo", "Funghi", "String3", "String4", "String5","String6","String7", "String8","String9","String10"};
+
+//        int[] pizzaImages = new int[Pizza.pizzas.length];
+//        for (int i = 0; i < pizzaImages.length; i++) {
+//            pizzaImages[i] = Pizza.pizzas[i].getImageResourceId();
+//        }
+        int[] pizzaImages = new int[] {R.drawable.hydrangeas, R.drawable.tulips, R.drawable.desert, R.drawable.chrysanthemum,
+                R.drawable.penguins, R.drawable.lighthouse, R.drawable.album1, R.drawable.album2, R.drawable.album3, R.drawable.album4};
+
+//        int[] pizzaImages = new int[pizzaNames.length];
+//        for(int i=0; i<pizzaNames.length; i++)
+//        {
+//            pizzaImages[i] = R.drawable.category_animals;
+//        }
+
+        CaptionedCategoryImageAdapter adapter = new CaptionedCategoryImageAdapter(pizzaNames, pizzaImages);
+        pizzaRecycler.setAdapter(adapter);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        pizzaRecycler.setLayoutManager(layoutManager);
+
+        return pizzaRecycler;
+
     }
 
     @Override
     public void onStart(){
         super.onStart();
 
-        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
+        /*PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
         Logger.Debug(this.getClass().getName(), "onStart");
 
         ShotListDO category = null;
@@ -118,7 +175,7 @@ public class CategoryDetailFragment extends Fragment {
                 uri = Uri.parse("android.resource://com.photoshotlist/drawable/category_ina");
                 iv.setImageURI(uri);
             }
-        }
+        }*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event
