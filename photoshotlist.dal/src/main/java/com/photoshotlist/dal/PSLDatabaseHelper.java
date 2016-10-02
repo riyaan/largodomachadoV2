@@ -32,12 +32,14 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    private static final int DB_VERSION = 2; // TODO: Read from configuration file
-    private static final int DB_OLD_VERSION = 1;
+    private static final int DB_VERSION = 3; // TODO: Read from configuration file
+    private static final int DB_OLD_VERSION = 2;
 
     private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE Category (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, IsActive INTEGER);";
     private static final String CREATE_TABLE_RULE = "CREATE TABLE Rule (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, IsActive INTEGER);";
     private static final String CREATE_TABLE_SHOTLIST = "CREATE TABLE Shotlist (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, CreatedDate TEXT, IsActive INTEGER);";
+    private static final String CREATE_TABLE_IMAGE = "CREATE TABLE Image (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, LongDescription TEXT, Location TEXT, ImageResourceId INTEGER, IsActive INTEGER);";
+    private static final String CREATE_TABLE_CATEGORY_IMAGE = "CREATE TABLE CategoryImage (CategoryId INTEGER NOT NULL, ImageId INTEGER NOT NULL);";
 
     private PSLDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -270,6 +272,15 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
             // code to add the new DB structure
             db.execSQL(CREATE_TABLE_SHOTLIST);
         }
+
+        if(oldVersion < 3) {
+            // code to add the new DB Structure
+            db.execSQL(CREATE_TABLE_IMAGE);
+            db.execSQL(CREATE_TABLE_CATEGORY_IMAGE);
+
+            InsertImage(db, "Chains", "XYZ", "R.drawable.category_abstract", 0, 1);
+            InsertCategoryImage(db, 2, 1);
+        }
     }
 
     private static void InsertCategory(SQLiteDatabase db, String name, String longDescription, int isActive){
@@ -301,6 +312,25 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
         ruleValues.put("IsActive", isActive);
 
         db.insert("Rule", null, ruleValues);
+    }
+
+    private static void InsertImage(SQLiteDatabase db, String name, String longDescription, String location, int imageResourceId, int isActive){
+        ContentValues ruleValues = new ContentValues();
+        ruleValues.put("Name", name);
+        ruleValues.put("LongDescription", longDescription);
+        ruleValues.put("Location", location);
+        ruleValues.put("ImageResourceId", imageResourceId);
+        ruleValues.put("IsActive", isActive);
+
+        db.insert("Image", null, ruleValues);
+    }
+
+    private static void InsertCategoryImage(SQLiteDatabase db, int categoryId, int imageId){
+        ContentValues ruleValues = new ContentValues();
+        ruleValues.put("CategoryId", categoryId);
+        ruleValues.put("ImageId", imageId);
+
+        db.insert("CategoryImage", null, ruleValues);
     }
 
     /*
@@ -515,6 +545,55 @@ public class PSLDatabaseHelper extends SQLiteOpenHelper {
 
                     //cursor.moveToNext();
                 }while(cursor.moveToNext());
+            }
+
+            return dao;
+
+        } catch (Exception ex) {
+            //display.setText(String.format("Error: %s", e.getMessage()));
+            throw new Exception(ex);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public ImageDAO GetImageByCategoryId(int categoryId) throws Exception {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        ImageDAO dao = null;
+
+        try {
+            db = this.getWritableDatabase();
+
+            String query = "select i._id, i.Name, i.LongDescription, i.Location, i.ImageResourceId, i.IsActive " +
+                    "from Category c\n " +
+                    "inner join CategoryImage ci on ci.CategoryId = c._id\n" +
+                    "inner join Image i on i._id = ci.ImageId\n" +
+                    "where c._id = "+ Integer.toString(categoryId);
+
+            cursor = db.rawQuery(query, null);
+
+            if (cursor.moveToFirst()) {
+                // output the first row
+                int _id = Integer.parseInt(cursor.getString(0));
+                String _name = cursor.getString(1);
+                String _longDescription = cursor.getString(2);
+                String _location = cursor.getString(3);
+                int _imageResourceId = Integer.parseInt(cursor.getString(4));
+                boolean _isActive = Boolean.parseBoolean(cursor.getString(5));
+
+                // TODO: Use a Mapper?
+                dao = new ImageDAO();
+                dao.setId(_id);
+                dao.setName(_name);
+                dao.setLongDescription(_longDescription);
+                dao.setLocation(_location);
+                dao.setImageResourceId(_imageResourceId);
+                dao.setActive(_isActive);
             }
 
             return dao;

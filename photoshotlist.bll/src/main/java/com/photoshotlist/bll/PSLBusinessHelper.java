@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 
 import com.photoshotlist.common.Logger;
+import com.photoshotlist.dal.ImageDAO;
 import com.photoshotlist.dal.PSLDatabaseHelper;
 import com.photoshotlist.dal.ShotListDAO;
 import com.photoshotlist.exception.PSLException;
@@ -166,6 +167,52 @@ public class PSLBusinessHelper {
             sdo.setLongDescription(category.getLongDescription());
             sdo.setActive(category.isActive());
             sdo.setId(category.getId());
+
+            return sdo;
+        }
+        catch(Exception ex)
+        {
+            throw new PSLException(ex.getMessage());
+        }
+    }
+
+    public ImageDO GetImageByCategoryId(int categoryId) throws PSLException
+    {
+        try {
+            // Use the runtime version of the database
+            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+
+            // Use the standalone version of the database
+            // http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
+//            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+//            try {
+//                dbHelper.createDataBase();
+//                dbHelper.openDataBase();
+//
+//            }catch(SQLException sqle){
+//
+//                throw sqle;
+//            }
+
+            // The name is available for use. Insert the record
+            Logger.Debug(this.getClass().getName(), "Before GetCategoryById");
+            ImageDAO image = dbHelper.GetImageByCategoryId(categoryId);
+            Logger.Debug(this.getClass().getName(), "After InsertShotList");
+
+            // TODO: Use Data to Business Mapper
+            ImageDO sdo = new ImageDO();
+            sdo.setName(image.getName());
+            sdo.setLongDescription(image.getLongDescription());
+
+            if(image.getLocation() != null && image.getLocation().isEmpty())
+                sdo.setLocation("R.drawable.category_ina");
+            else
+                sdo.setLocation(image.getLocation());
+
+            sdo.setImageResourceId(image.getImageResourceId());
+
+            sdo.setActive(image.isActive());
+            sdo.setId(image.getId());
 
             return sdo;
         }

@@ -82,4 +82,10 @@ public class PSLDatabaseHelperTest{
 
         assertNotEquals("", textDate);
     }
+
+    @Test
+    public void getImageByCategoryId()
+    {
+
+    }
 }

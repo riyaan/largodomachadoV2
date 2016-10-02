@@ -1,54 +1,80 @@
 package activity;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.support.v7.widget.RecyclerView;
 
 import com.photoshotlist.R;
+import com.photoshotlist.bll.ImageDO;
 import com.photoshotlist.bll.PSLBusinessHelper;
 import com.photoshotlist.bll.ShotListDO;
 import com.photoshotlist.common.Logger;
+import com.photoshotlist.dal.ImageDAO;
 import com.photoshotlist.exception.PSLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import adapter.CaptionedAllCategoryImageAdapter;
 
 
-public class CategoryAllFragment extends ListFragment {
-
-    public interface ListFragmentItemClickListener{
-        void onListFragmentItemClick(int position);
-    }
-
-    ListFragmentItemClickListener iItemClickListener;
-
-    public CategoryAllFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+public class CategoryAllFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_categories_all, container, false);
 
-        //TODO: Use card view. Instead of list view.
+        RecyclerView categoryAllRecycler = (RecyclerView)inflater.inflate(
+                R.layout.fragment_categories_all, container, false);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, GetAllCategories());
-        setListAdapter(adapter);
 
-        // Inflate the layout for this fragment
-        return rootView;
+        int[] pizzaImages = new int[] {R.drawable.hydrangeas, R.drawable.tulips, R.drawable.desert, R.drawable.chrysanthemum,
+                R.drawable.penguins, R.drawable.lighthouse, R.drawable.album1, R.drawable.album2, R.drawable.album3, R.drawable.album4};
+        String[] pizzaNames = new String[] {"Diavolo", "Funghi", "String3", "String4", "String5","String6","String7", "String8","String9","String10"};
+
+        //String[] pizzaNames = GetAllCategories().toArray(new String[0]);
+        ImageDO imageDO = null;
+        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
+        try {
+            imageDO = businessHelper.GetImageByCategoryId(2);
+        } catch (PSLException e) {
+            e.printStackTrace();
+        }
+
+        // TODO: if there is no matching image in the resoure folder, use category_ina.jpg
+        // TODO: enable back button on Category all fragment
+        // TODO: Display the correct category name instead of the image name
+        // TODO: Implement on click of item in card view
+        // TODO: Improve performance of image load in all categories card view
+
+        // R.drawable.category_ina //
+        String[] temp = imageDO.getLocation().split(Pattern.quote("."));
+
+        Resources resources = getActivity().getResources();
+        final int resourceId = resources.getIdentifier(temp[2], "drawable",
+                getActivity().getPackageName());
+
+        pizzaNames = new String[] { imageDO.getName() };
+        pizzaImages = new int[] { resourceId };
+
+        //return resources.getDrawable(resourceId);
+
+        CaptionedAllCategoryImageAdapter adapter = new CaptionedAllCategoryImageAdapter(
+                pizzaNames,pizzaImages);
+
+        categoryAllRecycler.setAdapter(adapter);
+        GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
+        categoryAllRecycler.setLayoutManager(glm);
+        return categoryAllRecycler;
     }
 
     private List<String> GetAllCategories()
@@ -70,21 +96,4 @@ public class CategoryAllFragment extends ListFragment {
 
         return values;
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.iItemClickListener = (ListFragmentItemClickListener) activity;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id){
-        iItemClickListener.onListFragmentItemClick(position);
-    }
-
 }
