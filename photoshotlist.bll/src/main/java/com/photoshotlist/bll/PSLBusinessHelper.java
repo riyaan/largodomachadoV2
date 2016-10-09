@@ -180,7 +180,11 @@ public class PSLBusinessHelper {
     {
         try {
             // Use the runtime version of the database
-            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+            //PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+
+            PSLDatabaseHelper dbHelper = new PSLDatabaseHelper(this._context);
+            //dbHelper.createDataBase();
+            //dbHelper.openDataBase();
 
             // Use the standalone version of the database
             // http://blog.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
@@ -221,4 +225,5 @@ public class PSLBusinessHelper {
             throw new PSLException(ex.getMessage());
         }
     }
+
 }

@@ -46,7 +46,7 @@ CategoryDetailFragment.OnFragmentInteractionListener{
         setContentView(R.layout.activity_main);
 
         // Initialize the database
-        PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
+        // PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 

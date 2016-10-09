@@ -6,6 +6,7 @@ dependencies {
     compile 'com.google.android:android:4.1.1.4'
     compile 'org.mockito:mockito-core:2.0.98-beta'
     compile 'com.google.android:android-test:4.1.1.4'
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     //compile 'org.robolectric:robolectric:3.1.2'
 
     sourceCompatibility = 1.7
