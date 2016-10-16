@@ -36,19 +36,18 @@ public class CategoryAllFragment extends Fragment {
         RecyclerView categoryAllRecycler = (RecyclerView)inflater.inflate(
                 R.layout.fragment_categories_all, container, false);
 
-
-        int[] pizzaImages = new int[] {R.drawable.hydrangeas, R.drawable.tulips, R.drawable.desert, R.drawable.chrysanthemum,
-                R.drawable.penguins, R.drawable.lighthouse, R.drawable.album1, R.drawable.album2, R.drawable.album3, R.drawable.album4};
-        String[] pizzaNames = new String[] {"Diavolo", "Funghi", "String3", "String4", "String5","String6","String7", "String8","String9","String10"};
-
-        //String[] pizzaNames = GetAllCategories().toArray(new String[0]);
-        ImageDO imageDO = null;
+        List<ImageDO> imageDOList = null;
         PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
         try {
-            imageDO = businessHelper.GetImageByCategoryId(2);
+            imageDOList = businessHelper.GetPreviewImagesForCategories();
         } catch (PSLException e) {
             e.printStackTrace();
         }
+
+        int[] images = new int[imageDOList.size()];
+
+        List<Integer> tempImages = new ArrayList<Integer>();
+        List<String> tempNames = new ArrayList<String>();
 
         // TODO: if there is no matching image in the resoure folder, use category_ina.jpg
         // TODO: enable back button on Category all fragment
@@ -57,19 +56,24 @@ public class CategoryAllFragment extends Fragment {
         // TODO: Improve performance of image load in all categories card view
 
         // R.drawable.category_ina //
-        String[] temp = imageDO.getLocation().split(Pattern.quote("."));
+        for (ImageDO obj:imageDOList) {
+            String[] temp = obj.getLocation().split(Pattern.quote("."));
 
-        Resources resources = getActivity().getResources();
-        final int resourceId = resources.getIdentifier(temp[2], "drawable",
-                getActivity().getPackageName());
+            Resources resources = getActivity().getResources();
+            final int resourceId = resources.getIdentifier(temp[2], "drawable",
+                    getActivity().getPackageName());
 
-        pizzaNames = new String[] { imageDO.getName() };
-        pizzaImages = new int[] { resourceId };
+            tempNames.add(obj.getName());
+            tempImages.add(resourceId);
+        }
 
-        //return resources.getDrawable(resourceId);
+        // CAnnot use the List<int> in the ImageAdapter
+        for(int i=0; i<tempImages.size(); i++){
+            images[i] = tempImages.get(i);
+        }
 
         CaptionedAllCategoryImageAdapter adapter = new CaptionedAllCategoryImageAdapter(
-                pizzaNames,pizzaImages);
+                tempNames.toArray(new String[0]),images);
 
         categoryAllRecycler.setAdapter(adapter);
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);

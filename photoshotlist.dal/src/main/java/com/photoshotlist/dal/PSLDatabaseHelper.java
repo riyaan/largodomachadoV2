@@ -3,22 +3,16 @@ package com.photoshotlist.dal;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.photoshotlist.common.Helper;
 import com.photoshotlist.common.Logger;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Cleanup this class. But a prerequisite is to create Unit Tests first.
 
 //public class PSLDatabaseHelper extends SQLiteOpenHelper {
     public class PSLDatabaseHelper extends SQLiteAssetHelper {
@@ -34,7 +28,7 @@ import java.util.List;
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    private static final int DB_VERSION = 4; // TODO: Read from configuration file
+    private static final int DB_VERSION = 7; // TODO: Read from configuration file
 //    private static final int DB_OLD_VERSION = 2;
 
 //    private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE Category (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, IsActive INTEGER);";
@@ -613,6 +607,51 @@ import java.util.List;
             }
 
             return dao;
+
+        } catch (Exception ex) {
+            //display.setText(String.format("Error: %s", e.getMessage()));
+            throw new Exception(ex);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public List<ImageDAO> GetPreviewImagesForCategories() throws Exception {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        ShotListDAO dao = null;
+        List<ShotListDAO> daoCategoryList = new ArrayList<ShotListDAO>();
+        List<ImageDAO> daoList = new ArrayList<ImageDAO>();
+
+        try {
+            db = this.getWritableDatabase();
+
+            daoCategoryList = GetAllCategories();
+
+            for (ShotListDAO obj:daoCategoryList) {
+                ImageDAO img = GetImageByCategoryId(obj.getId());
+
+                // When no preview Image for this Category is found. Use the default image.
+                if(img == null) {
+                    img = new ImageDAO();
+                    img.setName(obj.getName()); // Using the Category Name instead of the Image Name
+                    img.setId(obj.getId());
+                    img.setLongDescription(obj.getLongDescription());
+                    img.setLocation("R.drawable.category_ina"); // TODO: Store this in a config
+                    img.setImageResourceId(0);
+                    img.setActive(true);
+                }
+                else
+                    img.setName(obj.getName()); // Using the Category Name instead of the Image Name
+
+                daoList.add(img);
+            }
+
+            return daoList;
 
         } catch (Exception ex) {
             //display.setText(String.format("Error: %s", e.getMessage()));

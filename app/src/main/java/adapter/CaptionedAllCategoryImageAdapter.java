@@ -15,6 +15,7 @@ import com.photoshotlist.R;
  */
 public class CaptionedAllCategoryImageAdapter extends RecyclerView.Adapter<CaptionedAllCategoryImageAdapter.ViewHolder>{
 
+    // TODO: Use List instead of Array
     private String[] captions;
     private int[] imageIds;
 

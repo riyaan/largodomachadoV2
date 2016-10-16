@@ -226,4 +226,34 @@ public class PSLBusinessHelper {
         }
     }
 
+    public List<ImageDO> GetPreviewImagesForCategories() throws PSLException
+    {
+        try {
+            PSLDatabaseHelper dbHelper = new PSLDatabaseHelper(this._context);
+
+            Logger.Debug(this.getClass().getName(), "GetPreviewImagesForCategories");
+            List<ImageDAO> previewImageDAOList = dbHelper.GetPreviewImagesForCategories();
+
+            List<ImageDO> previewImageDOList = new ArrayList<ImageDO>();
+            for (ImageDAO obj:previewImageDAOList) {
+
+                // TODO: Use Data to Business Mapper
+                ImageDO sdo = new ImageDO();
+                sdo.setName(obj.getName());
+                sdo.setLongDescription(obj.getLongDescription());
+                sdo.setLocation(obj.getLocation());
+                sdo.setImageResourceId(obj.getImageResourceId());
+                sdo.setActive(obj.isActive());
+                sdo.setId(obj.getId());
+
+                previewImageDOList.add(sdo);
+            }
+
+            return previewImageDOList;
+        }
+        catch(Exception ex)
+        {
+            throw new PSLException(ex.getMessage());
+        }
+    }
 }
