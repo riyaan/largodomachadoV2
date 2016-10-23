@@ -1,6 +1,7 @@
 package activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.RecyclerView;
 
+import com.photoshotlist.DetailsActivity;
 import com.photoshotlist.R;
 import com.photoshotlist.bll.ImageDO;
 import com.photoshotlist.bll.PSLBusinessHelper;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import adapter.CaptionedAllCategoryImageAdapter;
+import adapter.CaptionedImagesAdapter;
 
 
 public class CategoryAllFragment extends Fragment {
@@ -72,12 +75,21 @@ public class CategoryAllFragment extends Fragment {
             images[i] = tempImages.get(i);
         }
 
-        CaptionedAllCategoryImageAdapter adapter = new CaptionedAllCategoryImageAdapter(
+        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(
                 tempNames.toArray(new String[0]),images);
 
         categoryAllRecycler.setAdapter(adapter);
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);
         categoryAllRecycler.setLayoutManager(glm);
+
+        adapter.setListener(new CaptionedImagesAdapter.Listener(){
+            public void onClick(int position){
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra(DetailsActivity.EXTRA_MESSAGE, position);
+                getActivity().startActivity(intent);
+            }
+        });
+
         return categoryAllRecycler;
     }
 
