@@ -28,7 +28,7 @@ import java.util.List;
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    private static final int DB_VERSION = 7; // TODO: Read from configuration file
+    private static final int DB_VERSION = 8; // TODO: Read from configuration file
 //    private static final int DB_OLD_VERSION = 2;
 
 //    private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE Category (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, IsActive INTEGER);";
@@ -570,13 +570,60 @@ import java.util.List;
         }
     }
 
-    public ImageDAO GetImageByCategoryId(int categoryId) throws Exception {
+    public ShotListDAO GetCategoryByName(String categoryName) throws Exception {
         SQLiteDatabase db = null;
         Cursor cursor = null;
-        ImageDAO dao = null;
+        ShotListDAO dao = null;
 
         try {
-            //db = this.getWritableDatabase();
+            db = this.getWritableDatabase();
+
+            cursor = db.query("Category",
+                    new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                    "Name = ?",
+                    new String[]{categoryName},
+                    null, null, null);
+
+            if (cursor.moveToFirst()) {
+
+                do{
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                    // TODO: Use a Mapper?
+                    dao = new ShotListDAO();
+                    dao.setId(_id);
+                    dao.setName(_name);
+                    dao.setLongDescription(_longDescription);
+                    dao.setActive(_isActive);
+
+                    //cursor.moveToNext();
+                }while(cursor.moveToNext());
+            }
+
+            return dao;
+
+        } catch (Exception ex) {
+            //display.setText(String.format("Error: %s", e.getMessage()));
+            throw new Exception(ex);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public List<ImageDAO> GetAllImagesForCategory(int categoryId) throws Exception {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        List<ImageDAO> daoList = new ArrayList<ImageDAO>();
+
+        try {
             db = getReadableDatabase();
 
             String query = "select i._id, i.Name, i.LongDescription, i.Location, i.ImageResourceId, i.IsActive " +
@@ -588,22 +635,77 @@ import java.util.List;
             cursor = db.rawQuery(query, null);
 
             if (cursor.moveToFirst()) {
-                // output the first row
-                int _id = Integer.parseInt(cursor.getString(0));
-                String _name = cursor.getString(1);
-                String _longDescription = cursor.getString(2);
-                String _location = cursor.getString(3);
-                int _imageResourceId = Integer.parseInt(cursor.getString(4));
-                boolean _isActive = Boolean.parseBoolean(cursor.getString(5));
 
-                // TODO: Use a Mapper?
-                dao = new ImageDAO();
-                dao.setId(_id);
-                dao.setName(_name);
-                dao.setLongDescription(_longDescription);
-                dao.setLocation(_location);
-                dao.setImageResourceId(_imageResourceId);
-                dao.setActive(_isActive);
+                do {
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    String _location = cursor.getString(3);
+                    int _imageResourceId = Integer.parseInt(cursor.getString(4));
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(5));
+
+                    // TODO: Use a Mapper?
+                    ImageDAO dao = new ImageDAO();
+                    dao.setId(_id);
+                    dao.setName(_name);
+                    dao.setLongDescription(_longDescription);
+                    dao.setLocation(_location);
+                    dao.setImageResourceId(_imageResourceId);
+                    dao.setActive(_isActive);
+
+                    daoList.add(dao);
+
+                }while(cursor.moveToNext());
+            }
+
+            return daoList;
+
+        } catch (Exception ex) {
+            //display.setText(String.format("Error: %s", e.getMessage()));
+            throw new Exception(ex);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public ImageDAO GetPreviewImageForCategory(int categoryId) throws Exception {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        ImageDAO dao = null;
+
+        try {
+            db = getReadableDatabase();
+
+            String query = "select i._id, i.Name, i.LongDescription, i.Location, i.ImageResourceId, i.IsActive " +
+                    "from Category c\n " +
+                    "inner join CategoryImage ci on ci.CategoryId = c._id\n" +
+                    "inner join Image i on i._id = ci.ImageId\n" +
+                    "where c._id = "+ Integer.toString(categoryId);
+
+            cursor = db.rawQuery(query, null);
+
+            if (cursor.moveToFirst()) {
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    String _location = cursor.getString(3);
+                    int _imageResourceId = Integer.parseInt(cursor.getString(4));
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(5));
+
+                    // TODO: Use a Mapper?
+                    dao = new ImageDAO();
+                    dao.setId(_id);
+                    dao.setName(_name);
+                    dao.setLongDescription(_longDescription);
+                    dao.setLocation(_location);
+                    dao.setImageResourceId(_imageResourceId);
+                    dao.setActive(_isActive);
             }
 
             return dao;
@@ -626,6 +728,7 @@ import java.util.List;
         ShotListDAO dao = null;
         List<ShotListDAO> daoCategoryList = new ArrayList<ShotListDAO>();
         List<ImageDAO> daoList = new ArrayList<ImageDAO>();
+        ImageDAO img = null;
 
         try {
             db = this.getWritableDatabase();
@@ -633,7 +736,7 @@ import java.util.List;
             daoCategoryList = GetAllCategories();
 
             for (ShotListDAO obj:daoCategoryList) {
-                ImageDAO img = GetImageByCategoryId(obj.getId());
+                img = GetPreviewImageForCategory(obj.getId());
 
                 // When no preview Image for this Category is found. Use the default image.
                 if(img == null) {
@@ -645,8 +748,10 @@ import java.util.List;
                     img.setImageResourceId(0);
                     img.setActive(true);
                 }
-                else
+                else{
+                    // We only need to show the Preview aka 'First' image.
                     img.setName(obj.getName()); // Using the Category Name instead of the Image Name
+                }
 
                 daoList.add(img);
             }

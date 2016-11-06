@@ -176,6 +176,32 @@ public class PSLBusinessHelper {
         }
     }
 
+    public ShotListDO GetCategoryByName(String categoryName) throws PSLException
+    {
+        try {
+            // Use the runtime version of the database
+            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this._context);
+
+            // The name is available for use. Insert the record
+            Logger.Debug(this.getClass().getName(), "Before GetCategoryByName");
+            ShotListDAO category = dbHelper.GetCategoryByName(categoryName);
+            Logger.Debug(this.getClass().getName(), "After GetCategoryByName");
+
+            // TODO: Use Data to Business Mapper
+            ShotListDO sdo = new ShotListDO();
+            sdo.setName(category.getName());
+            sdo.setLongDescription(category.getLongDescription());
+            sdo.setActive(category.isActive());
+            sdo.setId(category.getId());
+
+            return sdo;
+        }
+        catch(Exception ex)
+        {
+            throw new PSLException(ex.getMessage());
+        }
+    }
+
     public ImageDO GetImageByCategoryId(int categoryId) throws PSLException
     {
         try {
@@ -200,7 +226,7 @@ public class PSLBusinessHelper {
 
             // The name is available for use. Insert the record
             Logger.Debug(this.getClass().getName(), "Before GetCategoryById");
-            ImageDAO image = dbHelper.GetImageByCategoryId(categoryId);
+            ImageDAO image = dbHelper.GetPreviewImageForCategory(categoryId);
             Logger.Debug(this.getClass().getName(), "After InsertShotList");
 
             // TODO: Use Data to Business Mapper
@@ -250,6 +276,37 @@ public class PSLBusinessHelper {
             }
 
             return previewImageDOList;
+        }
+        catch(Exception ex)
+        {
+            throw new PSLException(ex.getMessage());
+        }
+    }
+
+    public List<ImageDO> GetAllImagesForCategory(int categoryId) throws PSLException
+    {
+        try {
+            PSLDatabaseHelper dbHelper = new PSLDatabaseHelper(this._context);
+
+            Logger.Debug(this.getClass().getName(), "GetAllImagesForCategory");
+            List<ImageDAO> imgDAOList = dbHelper.GetAllImagesForCategory(categoryId);
+
+            List<ImageDO> imgDOList = new ArrayList<ImageDO>();
+            for (ImageDAO obj:imgDAOList) {
+
+                // TODO: Use Data to Business Mapper
+                ImageDO sdo = new ImageDO();
+                sdo.setName(obj.getName());
+                sdo.setLongDescription(obj.getLongDescription());
+                sdo.setLocation(obj.getLocation());
+                sdo.setImageResourceId(obj.getImageResourceId());
+                sdo.setActive(obj.isActive());
+                sdo.setId(obj.getId());
+
+                imgDOList.add(sdo);
+            }
+
+            return imgDOList;
         }
         catch(Exception ex)
         {

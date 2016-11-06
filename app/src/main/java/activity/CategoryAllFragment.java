@@ -42,6 +42,7 @@ public class CategoryAllFragment extends Fragment {
         List<ImageDO> imageDOList = null;
         PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
         try {
+            // get all the preview images for all categories
             imageDOList = businessHelper.GetPreviewImagesForCategories();
         } catch (PSLException e) {
             e.printStackTrace();
@@ -50,9 +51,9 @@ public class CategoryAllFragment extends Fragment {
         int[] images = new int[imageDOList.size()];
 
         List<Integer> tempImages = new ArrayList<Integer>();
-        List<String> tempNames = new ArrayList<String>();
+        final List<String> tempNames = new ArrayList<String>();
+        final List<Integer> tempCategoryIds = new ArrayList<Integer>();
 
-        // TODO: if there is no matching image in the resoure folder, use category_ina.jpg
         // TODO: enable back button on Category all fragment
         // TODO: Display the correct category name instead of the image name
         // TODO: Implement on click of item in card view
@@ -68,6 +69,9 @@ public class CategoryAllFragment extends Fragment {
 
             tempNames.add(obj.getName());
             tempImages.add(resourceId);
+
+            // get the category id of the to which the image belongs
+            tempCategoryIds.add(obj.getId());
         }
 
         // CAnnot use the List<int> in the ImageAdapter
@@ -85,7 +89,12 @@ public class CategoryAllFragment extends Fragment {
         adapter.setListener(new CaptionedImagesAdapter.Listener(){
             public void onClick(int position){
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.EXTRA_MESSAGE, position);
+
+                // pass in the id of the image
+                intent.putExtra(DetailsActivity.EXTRA_MESSAGE, tempNames.get(position));
+
+                // intent.putExtra(DetailsActivity.EXTRA_MESSAGE, position);
+
                 getActivity().startActivity(intent);
             }
         });
