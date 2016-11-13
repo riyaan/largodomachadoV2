@@ -5,6 +5,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 
+import com.photoshotlist.MainActivity;
 import com.photoshotlist.R;
+import com.photoshotlist.bll.ImageDO;
 import com.photoshotlist.bll.PSLBusinessHelper;
 import com.photoshotlist.bll.ShotListDO;
 import com.photoshotlist.common.Logger;
@@ -61,15 +64,15 @@ public class CategoryDetailFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     //* @param param2 Parameter 2.
      * @return A new instance of fragment CategoryDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CategoryDetailFragment newInstance(String param1, String param2) {
+    public static CategoryDetailFragment newInstance(String param1) {
         CategoryDetailFragment fragment = new CategoryDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,62 +82,106 @@ public class CategoryDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_category_detail, container, false);
-        RecyclerView pizzaRecycler = (RecyclerView)inflater.inflate(
-                R.layout.fragment_category_detail, container, false);
 
-//        String[] pizzaNames = new String[Pizza.pizzas.length];
-//        for (int i = 0; i < pizzaNames.length; i++) {
-//            pizzaNames[i] = Pizza.pizzas[i].getName();
-//        }
+        View view = inflater.inflate(R.layout.fragment_category_detail, container, false);
 
-        List<ShotListDO> list = new ArrayList<ShotListDO>();
+        String output = "";
+        List<ImageDO> imageList = null;
 
+        //Uri bitmap = Uri.parse(getIntent().getStringExtra("image"));
+        //Bitmap bitmap = getIntent().getParcelableExtra("image");
+        //byte[] compressedImage = getIntent().getByteArrayExtra("image");
+        //Bitmap bitmap = Uncompress(compressedImage);
+
+        // Get all images for this Category
         PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
-        Logger.Debug(this.getClass().getName(), "Before InsertShotList");
         try {
-            list = businessHelper.GetAllCategories();
+            ShotListDO category = businessHelper.GetCategoryByName(mParam1);
+
+            // Get all the images for this Category
+            imageList = businessHelper.GetAllImagesForCategory(category.getId());
         } catch (PSLException e) {
             e.printStackTrace();
         }
 
-        List<String> values = new ArrayList<String>();
-        for (ShotListDO obj:list) {
-            values.add(obj.getName());
+        String name = "";
+        for(ImageDO obj:imageList)
+        {
+            if(obj != null)
+                output += obj.getName() + "\n";
+            else
+                output += "No Image \n";
         }
 
-        // TODO: Store the image resource id along with the image in the Category DB.
-        //String[] pizzaNames = values.toArray(new String[0]);
-        String[] pizzaNames = new String[] {"Diavolo", "Funghi", "String3", "String4", "String5","String6","String7", "String8","String9","String10"};
+        TextView titleTextView = (TextView) view.findViewById(R.id.title);
+        titleTextView.setText(output);
 
-//        int[] pizzaImages = new int[Pizza.pizzas.length];
-//        for (int i = 0; i < pizzaImages.length; i++) {
-//            pizzaImages[i] = Pizza.pizzas[i].getImageResourceId();
+        return view;
+
+        //setContentView(R.layout.activity_details);
+
+        //String title = getIntent().getExtras().get(EXTRA_MESSAGE).toString();
+
+
+        //ImageView imageView = (ImageView) findViewById(R.id.image);
+        //imageView.setImageBitmap(bitmap);
+        //imageView.setImageURI(bitmap);
+//        // Inflate the layout for this fragment
+//        //return inflater.inflate(R.layout.fragment_category_detail, container, false);
+//        RecyclerView pizzaRecycler = (RecyclerView)inflater.inflate(
+//                R.layout.fragment_category_detail, container, false);
+//
+////        String[] pizzaNames = new String[Pizza.pizzas.length];
+////        for (int i = 0; i < pizzaNames.length; i++) {
+////            pizzaNames[i] = Pizza.pizzas[i].getName();
+////        }
+//
+//        List<ShotListDO> list = new ArrayList<ShotListDO>();
+//
+//        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
+//        Logger.Debug(this.getClass().getName(), "Before InsertShotList");
+//        try {
+//            list = businessHelper.GetAllCategories();
+//        } catch (PSLException e) {
+//            e.printStackTrace();
 //        }
-        int[] pizzaImages = new int[] {R.drawable.hydrangeas, R.drawable.tulips, R.drawable.desert, R.drawable.chrysanthemum,
-                R.drawable.penguins, R.drawable.lighthouse, R.drawable.album1, R.drawable.album2, R.drawable.album3, R.drawable.album4};
-
-//        int[] pizzaImages = new int[pizzaNames.length];
-//        for(int i=0; i<pizzaNames.length; i++)
-//        {
-//            pizzaImages[i] = R.drawable.category_animals;
+//
+//        List<String> values = new ArrayList<String>();
+//        for (ShotListDO obj:list) {
+//            values.add(obj.getName());
 //        }
-
-        CaptionedCategoryImageAdapter adapter = new CaptionedCategoryImageAdapter(pizzaNames, pizzaImages);
-        pizzaRecycler.setAdapter(adapter);
-
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        pizzaRecycler.setLayoutManager(layoutManager);
-
-        return pizzaRecycler;
+//
+//        // TODO: Store the image resource id along with the image in the Category DB.
+//        //String[] pizzaNames = values.toArray(new String[0]);
+//        String[] pizzaNames = new String[] {"Diavolo", "Funghi", "String3", "String4", "String5","String6","String7", "String8","String9","String10"};
+//
+////        int[] pizzaImages = new int[Pizza.pizzas.length];
+////        for (int i = 0; i < pizzaImages.length; i++) {
+////            pizzaImages[i] = Pizza.pizzas[i].getImageResourceId();
+////        }
+//        int[] pizzaImages = new int[] {R.drawable.hydrangeas, R.drawable.tulips, R.drawable.desert, R.drawable.chrysanthemum,
+//                R.drawable.penguins, R.drawable.lighthouse, R.drawable.album1, R.drawable.album2, R.drawable.album3, R.drawable.album4};
+//
+////        int[] pizzaImages = new int[pizzaNames.length];
+////        for(int i=0; i<pizzaNames.length; i++)
+////        {
+////            pizzaImages[i] = R.drawable.category_animals;
+////        }
+//
+//        CaptionedCategoryImageAdapter adapter = new CaptionedCategoryImageAdapter(pizzaNames, pizzaImages);
+//        pizzaRecycler.setAdapter(adapter);
+//
+//        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+//        pizzaRecycler.setLayoutManager(layoutManager);
+//
+//        return pizzaRecycler;
 
     }
 
@@ -183,6 +230,16 @@ public class CategoryDetailFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //getActivity().setTitle("Category Details");
+        ((MainActivity)getActivity()).getSupportActionBar().setSubtitle(mParam1);
+
+
     }
 
     @Override

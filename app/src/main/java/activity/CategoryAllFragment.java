@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.ListView;
 import android.support.v7.widget.RecyclerView;
 
 import com.photoshotlist.DetailsActivity;
+import com.photoshotlist.MainActivity;
 import com.photoshotlist.R;
 import com.photoshotlist.bll.ImageDO;
 import com.photoshotlist.bll.PSLBusinessHelper;
@@ -88,18 +92,41 @@ public class CategoryAllFragment extends Fragment {
 
         adapter.setListener(new CaptionedImagesAdapter.Listener(){
             public void onClick(int position){
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                //Intent intent = new Intent(getActivity(), DetailsActivity.class);
 
-                // pass in the id of the image
-                intent.putExtra(DetailsActivity.EXTRA_MESSAGE, tempNames.get(position));
+                // pass in the name of the Category. This is unique
+                //intent.putExtra(DetailsActivity.EXTRA_MESSAGE, tempNames.get(position));
+
+                // Call the Category Detail Fragment
+                Fragment fragment = CategoryDetailFragment.newInstance(tempNames.get(position).toString());
+                if (fragment != null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.container_body, fragment);
+
+                    // TODO: Start - This gets the back button to work
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    // TODO: End - This gets the back button to work
+
+                    fragmentTransaction.commit();
+
+                    // set the toolbar title
+                    //getSupportActionBar().setTitle(title);
+                }
 
                 // intent.putExtra(DetailsActivity.EXTRA_MESSAGE, position);
 
-                getActivity().startActivity(intent);
+                //getActivity().startActivity(intent);
             }
         });
 
         return categoryAllRecycler;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private List<String> GetAllCategories()
