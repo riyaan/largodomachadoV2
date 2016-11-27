@@ -43,12 +43,13 @@ public class CaptionedCategoryImageAdapter extends RecyclerView.Adapter<Captione
     @Override
     public void onBindViewHolder(CaptionedCategoryImageAdapter.ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
-        ImageView imageView = (ImageView)cardView.findViewById(R.id.imageViewSample);
+        ImageView imageView = (ImageView)cardView.findViewById(R.id.imageView);
         Drawable drawable = cardView.getResources().getDrawable(imageIds[position]);
         imageView.setImageDrawable(drawable);
         imageView.setContentDescription(captions[position]);
-        TextView textView = (TextView)cardView.findViewById(R.id.textView);
+        TextView textView = (TextView)cardView.findViewById(R.id.textViewImageName);
         textView.setText(captions[position]);
+
     }
 
     @Override

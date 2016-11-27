@@ -5,4 +5,5 @@ dependencies {
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
     compile 'com.google.android:android:4.1.1.4'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }

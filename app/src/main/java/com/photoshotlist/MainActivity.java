@@ -45,9 +45,6 @@ CategoryDetailFragment.OnFragmentInteractionListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize the database
-        // PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(mToolbar);
@@ -108,6 +105,12 @@ CategoryDetailFragment.OnFragmentInteractionListener{
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body, fragment);
+
+            // TODO: Start - This gets the back button to work
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            // TODO: End - This gets the back button to work
+
             fragmentTransaction.commit();
 
             // set the toolbar title
@@ -118,18 +121,13 @@ CategoryDetailFragment.OnFragmentInteractionListener{
 
     public void onClickAddCategory(View view)
     {
-//        EditText categoryName = null;
         TextView display = null;
         Cursor cursor = null;
         SQLiteDatabase db = null;
 
         try
         {
-            /*categoryName = (EditText) findViewById(R.id.editTextCategoryName);
-            String text = categoryName.getText().toString();*/
-
             display = (TextView)findViewById(R.id.textViewDisplayCategory);
-            //display.setText(String.format("Thanks for adding category: %s", text));
 
             PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
             db = dbHelper.getReadableDatabase();
@@ -160,6 +158,12 @@ CategoryDetailFragment.OnFragmentInteractionListener{
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body, fragment);
+
+            // TODO: Start - This gets the back button to work
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            // TODO: End - This gets the back button to work
+
             fragmentTransaction.commit();
 
             // set the toolbar title
@@ -175,48 +179,13 @@ CategoryDetailFragment.OnFragmentInteractionListener{
 
     public void onClickNewShotlist(View view)
     {
-        // Test
-//        Intent intent = new Intent(this, MainShotListActivity.class);
-//        intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
-//        startActivity(intent);
-
         // Invoke the 'Create Shot List' UI
         Intent intent = new Intent(this, NewShotListActivity.class);
         // intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
         startActivity(intent);
     }
 
-//    @Override
-//    public void onListFragmentItemClick(int position) {
-//        getSupportActionBar().setTitle(Integer.toString(position));
-//
-//        // TODO: The list fragment stores the list items starting from 0
-//        // TODO: Is there a way to use the ID retrieved from the DB record
-//        int categoryId = position+1;
-//
-//        // load the category detail fragment.
-//        // pass in the id of the category
-//        CategoryDetailFragment fragment = new CategoryDetailFragment();
-//        if (fragment != null) {
-//            fragment.setCategoryId(categoryId);
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.container_body, fragment);
-//
-//            // TODO: Start - This gets the back button to work
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//            // TODO: End - This gets the back button to work
-//
-//            fragmentTransaction.commit();
-//
-//            // set the toolbar title
-//            getSupportActionBar().setTitle("Detail Fragment");
-//        }
-//    }
-
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 }
