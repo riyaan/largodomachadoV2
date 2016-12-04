@@ -3,10 +3,16 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/largodomachado.iml" filepath="$PROJECT_DIR$/largodomachado.iml" />
       <module fileurl="file://$PROJECT_DIR$/largodomachado.iml" filepath="$PROJECT_DIR$/largodomachado.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.bll/photoshotlist.bll.iml" filepath="$PROJECT_DIR$/photoshotlist.bll/photoshotlist.bll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoshotlist.bll/photoshotlist.bll.iml" filepath="$PROJECT_DIR$/photoshotlist.bll/photoshotlist.bll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" filepath="$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" filepath="$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" filepath="$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" filepath="$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" filepath="$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" filepath="$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" />
     </modules>
   </component>
