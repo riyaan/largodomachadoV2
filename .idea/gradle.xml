@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
+            <option value="$PROJECT_DIR$/photoshotlist.domainlayer" />
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
           </set>
         </option>
@@ -23,6 +24,7 @@
             <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
+            <option value="$PROJECT_DIR$/photoshotlist.domainlayer" />
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
           </set>
         </option>

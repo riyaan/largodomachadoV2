@@ -1,1 +1,1 @@
-include ':app', ':photoshotlist.dal', ':photoshotlist.common', ':photoshotlist.bll', ':photoshotlist.exception'
+include ':app', ':photoshotlist.dal', ':photoshotlist.common', ':photoshotlist.bll', ':photoshotlist.exception', ':photoshotlist.domainlayer'
