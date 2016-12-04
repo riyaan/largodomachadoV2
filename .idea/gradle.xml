@@ -13,8 +13,11 @@
             <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
-            <option value="$PROJECT_DIR$/photoshotlist.domainlayer" />
+            <option value="$PROJECT_DIR$/photoshotlist.domainmodels" />
+            <option value="$PROJECT_DIR$/photoshotlist.domainservices" />
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
+            <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
+            <option value="$PROJECT_DIR$/photoshotlist.persistence" />
           </set>
         </option>
         <option name="myModules">
@@ -24,8 +27,11 @@
             <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
-            <option value="$PROJECT_DIR$/photoshotlist.domainlayer" />
+            <option value="$PROJECT_DIR$/photoshotlist.domainmodels" />
+            <option value="$PROJECT_DIR$/photoshotlist.domainservices" />
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
+            <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
+            <option value="$PROJECT_DIR$/photoshotlist.persistence" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,4 +1,4 @@
-package com.photoshotlist.entities;
+package com.photoshotlist.domainmodels.entities;
 
 /**
  * Created by PhpDev on 2016/08/21.

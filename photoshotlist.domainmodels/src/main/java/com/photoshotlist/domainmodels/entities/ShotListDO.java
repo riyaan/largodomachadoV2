@@ -1,16 +1,16 @@
-package com.photoshotlist.entities;
+package com.photoshotlist.domainmodels.entities;
 
 /**
  * Created by PhpDev on 2016/08/21.
  */
-public class CategoryDO {
+public class ShotListDO {
     private int id;
     private String name;
     private String longDescription;
+    private String createdDate;
     private boolean isActive;
-    private int imageResourceId; // TODO: This will be retrieved from the database
 
-    public CategoryDO() {}
+    public ShotListDO() {}
 
     public int getId() {
         return id;
@@ -36,19 +36,19 @@ public class CategoryDO {
         this.longDescription = longDescription;
     }
 
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public boolean isActive() {
         return isActive;
     }
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public int getImageResourceId() {
-        return imageResourceId;
-    }
-
-    public void setImageResourceId(int imageResourceId) {
-        this.imageResourceId = imageResourceId;
     }
 }

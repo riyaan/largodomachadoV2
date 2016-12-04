@@ -1,4 +1,4 @@
-package com.photoshotlist.services.factories;
+package com.photoshotlist.domainservices.factories;
 
 /**
  * Created by PhpDev on 2016/12/04.
