@@ -3,14 +3,14 @@ package com.photoshotlist.domainmodels.entities;
 /**
  * Created by PhpDev on 2016/08/21.
  */
-public class CategoryDO {
+public class Category {
     private int id;
     private String name;
     private String longDescription;
     private boolean isActive;
     private int imageResourceId; // TODO: This will be retrieved from the database
 
-    public CategoryDO() {}
+    public Category() {}
 
     public int getId() {
         return id;

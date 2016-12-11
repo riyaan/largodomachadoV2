@@ -1,6 +1,6 @@
 package com.photoshotlist.domainservices.repositories;
 
-import com.photoshotlist.domainmodels.entities.CategoryDO;
+import com.photoshotlist.domainmodels.entities.Category;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface ICategoryRepository {
 
-    public List<CategoryDO> GetAllCategories();
+    public List<Category> GetAllCategories() throws Exception;
 }

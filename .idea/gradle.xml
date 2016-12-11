@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
+            <option value="$PROJECT_DIR$/photoshotlist.crosscutting" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
             <option value="$PROJECT_DIR$/photoshotlist.domainmodels" />
             <option value="$PROJECT_DIR$/photoshotlist.domainservices" />
@@ -26,6 +27,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/photoshotlist.bll" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
+            <option value="$PROJECT_DIR$/photoshotlist.crosscutting" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
             <option value="$PROJECT_DIR$/photoshotlist.domainmodels" />
             <option value="$PROJECT_DIR$/photoshotlist.domainservices" />
