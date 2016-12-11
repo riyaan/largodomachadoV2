@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
             <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
             <option value="$PROJECT_DIR$/photoshotlist.persistence" />
+            <option value="$PROJECT_DIR$/photoshotlist.tests" />
           </set>
         </option>
         <option name="myModules">
@@ -34,6 +35,7 @@
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
             <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
             <option value="$PROJECT_DIR$/photoshotlist.persistence" />
+            <option value="$PROJECT_DIR$/photoshotlist.tests" />
           </set>
         </option>
       </GradleProjectSettings>

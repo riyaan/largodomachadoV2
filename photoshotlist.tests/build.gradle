@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'junit:junit:4.12'
+    compile 'com.google.android:android-test:4.1.1.4'
+    compile project(path: ':photoshotlist.persistence')
+    compile 'com.android.support:appcompat-v7:21.0.+'
+}
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
