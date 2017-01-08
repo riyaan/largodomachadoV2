@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ICategoryRepository {
 
-    public Category GetById(int Id);
+    public Category GetById(int id);
     public List<Category> GetAll();
 
 }

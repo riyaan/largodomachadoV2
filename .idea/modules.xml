@@ -11,8 +11,8 @@
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.domainmodels/photoshotlist.domainmodels.iml" filepath="$PROJECT_DIR$/photoshotlist.domainmodels/photoshotlist.domainmodels.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.domainservices/photoshotlist.domainservices.iml" filepath="$PROJECT_DIR$/photoshotlist.domainservices/photoshotlist.domainservices.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" filepath="$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoshotlist.infrastructure/photoshotlist.infrastructure.iml" filepath="$PROJECT_DIR$/photoshotlist.infrastructure/photoshotlist.infrastructure.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.interfaceadapters/photoshotlist.interfaceadapters.iml" filepath="$PROJECT_DIR$/photoshotlist.interfaceadapters/photoshotlist.interfaceadapters.iml" />
-      <module fileurl="file://$PROJECT_DIR$/photoshotlist.persistence/photoshotlist.persistence.iml" filepath="$PROJECT_DIR$/photoshotlist.persistence/photoshotlist.persistence.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.tests/photoshotlist.tests.iml" filepath="$PROJECT_DIR$/photoshotlist.tests/photoshotlist.tests.iml" />
     </modules>
   </component>

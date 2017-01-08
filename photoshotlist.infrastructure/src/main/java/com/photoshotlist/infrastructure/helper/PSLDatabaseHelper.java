@@ -1,4 +1,4 @@
-package com.photoshotlist.persistence.helper;
+package com.photoshotlist.infrastructure.helper;
 
 import android.content.Context;
 import android.database.Cursor;

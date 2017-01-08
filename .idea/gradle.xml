@@ -17,8 +17,8 @@
             <option value="$PROJECT_DIR$/photoshotlist.domainmodels" />
             <option value="$PROJECT_DIR$/photoshotlist.domainservices" />
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
+            <option value="$PROJECT_DIR$/photoshotlist.infrastructure" />
             <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
-            <option value="$PROJECT_DIR$/photoshotlist.persistence" />
             <option value="$PROJECT_DIR$/photoshotlist.tests" />
           </set>
         </option>
