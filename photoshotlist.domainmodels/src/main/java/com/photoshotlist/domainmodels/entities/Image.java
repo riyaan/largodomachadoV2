@@ -3,14 +3,16 @@ package com.photoshotlist.domainmodels.entities;
 /**
  * Created by PhpDev on 2016/08/21.
  */
-public class ShotListDO {
+public class Image {
     private int id;
     private String name;
     private String longDescription;
+    private String location;
+    private int imageResourceId;
     private String createdDate;
     private boolean isActive;
 
-    public ShotListDO() {}
+    public Image() {}
 
     public int getId() {
         return id;
@@ -50,5 +52,21 @@ public class ShotListDO {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getImageResourceId() {
+        return imageResourceId;
+    }
+
+    public void setImageResourceId(int imageResourceId) {
+        this.imageResourceId = imageResourceId;
     }
 }

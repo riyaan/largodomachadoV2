@@ -5,7 +5,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="C:\Program Files\Android\Android Studio\gradle\gradle-2.10" />
+        <option name="gradleHome" value="C:\Program Files\Android\Android Studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -22,22 +22,7 @@
             <option value="$PROJECT_DIR$/photoshotlist.tests" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/photoshotlist.bll" />
-            <option value="$PROJECT_DIR$/photoshotlist.common" />
-            <option value="$PROJECT_DIR$/photoshotlist.crosscutting" />
-            <option value="$PROJECT_DIR$/photoshotlist.dal" />
-            <option value="$PROJECT_DIR$/photoshotlist.domainmodels" />
-            <option value="$PROJECT_DIR$/photoshotlist.domainservices" />
-            <option value="$PROJECT_DIR$/photoshotlist.exception" />
-            <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
-            <option value="$PROJECT_DIR$/photoshotlist.persistence" />
-            <option value="$PROJECT_DIR$/photoshotlist.tests" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
