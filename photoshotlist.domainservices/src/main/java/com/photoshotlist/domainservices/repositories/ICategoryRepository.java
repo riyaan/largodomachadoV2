@@ -9,5 +9,7 @@ import java.util.List;
  */
 public interface ICategoryRepository {
 
-    public List<Category> GetAllCategories() throws Exception;
+    public Category GetById(int Id);
+    public List<Category> GetAll();
+
 }
