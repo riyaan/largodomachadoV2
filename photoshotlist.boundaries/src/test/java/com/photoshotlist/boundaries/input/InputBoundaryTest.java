@@ -4,6 +4,9 @@ import com.photoshotlist.boundaries.Input.CategoryRequestModel;
 import com.photoshotlist.boundaries.Input.CategoryResponseModel;
 import com.photoshotlist.boundaries.Input.IInputBoundary;
 
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -16,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class InputBoundaryTest {
 
     @Test
-    public void GetCategoryById_Success() {
+    public void testGetCategoryById_Success() {
 
         CategoryRequestModel requestModel = new CategoryRequestModel();
         requestModel.setCategoryId(1);
@@ -35,7 +38,7 @@ public class InputBoundaryTest {
     }
 
     @Test
-    public void GetCategoryById_Fail() {
+    public void testGetCategoryById_Fail() {
 
         CategoryRequestModel requestModel = new CategoryRequestModel();
         requestModel.setCategoryId(1);
