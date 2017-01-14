@@ -15,9 +15,11 @@ public class CategoryRepositoryTest {
     @Test
     public void GetById_Success() {
 
-        CategoryRepository categoryRepository = new CategoryRepository();
-        Category category = categoryRepository.GetById(1);
+//        CategoryRepository categoryRepository = new CategoryRepository();
+//        Category category = categoryRepository.GetById(1);
+//
+//        Assert.assertEquals(1, category.getId());
 
-        Assert.assertEquals(1, category.getId());
+        Assert.fail("Fix this unit test");
     }
 }

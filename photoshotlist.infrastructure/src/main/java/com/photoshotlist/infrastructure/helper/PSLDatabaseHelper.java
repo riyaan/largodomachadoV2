@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.photoshotlist.domainmodels.entities.Category;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
@@ -55,11 +54,11 @@ import java.util.List;
         // updateMyDatabase(db, DB_OLD_VERSION, DB_VERSION);
     }
 
-    public List<Category> GetAllCategories() throws Exception {
+    public List<CategoryDAO> GetAllCategories() throws Exception {
         SQLiteDatabase db = null;
         Cursor cursor = null;
-        Category category = null;
-        List<Category> categoryList = new ArrayList<Category>();
+        CategoryDAO category = null;
+        List<CategoryDAO> categoryList = new ArrayList<CategoryDAO>();
 
         try {
             db = this.getWritableDatabase();
@@ -78,7 +77,7 @@ import java.util.List;
                     boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
 
                     // TODO: Use a Mapper?
-                    category = new Category();
+                    category = new CategoryDAO();
                     category.setId(_id);
                     category.setName(_name);
                     category.setLongDescription(_longDescription);
@@ -101,5 +100,48 @@ import java.util.List;
                 db.close();
         }
     }
+
+
+    public CategoryDAO GetCategoryById(int id) throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            CategoryDAO category = new CategoryDAO();
+            List<CategoryDAO> categoryList = new ArrayList<CategoryDAO>();
+
+            try {
+                db = this.getWritableDatabase();
+
+                cursor = db.query("Category",
+                        new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                        "_id = ?",
+                        new String[]{Integer.toString(id)},
+                        null, null, null);
+
+                if (cursor.moveToFirst()) {
+                        // output the first row
+                        int _id = Integer.parseInt(cursor.getString(0));
+                        String _name = cursor.getString(1);
+                        String _longDescription = cursor.getString(2);
+                        boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                        // TODO: Use a Mapper?
+                        category.setId(_id);
+                        category.setName(_name);
+                        category.setLongDescription(_longDescription);
+                        category.setActive(_isActive);
+                }
+
+                return category;
+
+            } catch (Exception ex) {
+                throw new Exception(ex);
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
 
 }

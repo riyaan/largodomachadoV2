@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/largodomachado.iml" filepath="$PROJECT_DIR$/largodomachado.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.bll/photoshotlist.bll.iml" filepath="$PROJECT_DIR$/photoshotlist.bll/photoshotlist.bll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoshotlist.boundaries/photoshotlist.boundaries.iml" filepath="$PROJECT_DIR$/photoshotlist.boundaries/photoshotlist.boundaries.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" filepath="$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.crosscutting/photoshotlist.crosscutting.iml" filepath="$PROJECT_DIR$/photoshotlist.crosscutting/photoshotlist.crosscutting.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" filepath="$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" />
@@ -12,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.domainservices/photoshotlist.domainservices.iml" filepath="$PROJECT_DIR$/photoshotlist.domainservices/photoshotlist.domainservices.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" filepath="$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.infrastructure/photoshotlist.infrastructure.iml" filepath="$PROJECT_DIR$/photoshotlist.infrastructure/photoshotlist.infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoshotlist.interactors/photoshotlist.interactors.iml" filepath="$PROJECT_DIR$/photoshotlist.interactors/photoshotlist.interactors.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.interfaceadapters/photoshotlist.interfaceadapters.iml" filepath="$PROJECT_DIR$/photoshotlist.interfaceadapters/photoshotlist.interfaceadapters.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.tests/photoshotlist.tests.iml" filepath="$PROJECT_DIR$/photoshotlist.tests/photoshotlist.tests.iml" />
     </modules>

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/photoshotlist.bll" />
+            <option value="$PROJECT_DIR$/photoshotlist.boundaries" />
             <option value="$PROJECT_DIR$/photoshotlist.common" />
             <option value="$PROJECT_DIR$/photoshotlist.crosscutting" />
             <option value="$PROJECT_DIR$/photoshotlist.dal" />
@@ -18,6 +19,7 @@
             <option value="$PROJECT_DIR$/photoshotlist.domainservices" />
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
             <option value="$PROJECT_DIR$/photoshotlist.infrastructure" />
+            <option value="$PROJECT_DIR$/photoshotlist.interactors" />
             <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
             <option value="$PROJECT_DIR$/photoshotlist.tests" />
           </set>

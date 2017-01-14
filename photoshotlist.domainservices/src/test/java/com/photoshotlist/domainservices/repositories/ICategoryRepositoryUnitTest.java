@@ -22,6 +22,7 @@ public class ICategoryRepositoryUnitTest {
     @Test
     public void getCategoryById_Success() throws Exception {
 
+
         Category category = Mockito.mock(Category.class);
         when (category.getId()).thenReturn(42);
 

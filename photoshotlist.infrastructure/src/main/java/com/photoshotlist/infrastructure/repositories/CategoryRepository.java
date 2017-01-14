@@ -1,7 +1,11 @@
 package com.photoshotlist.infrastructure.repositories;
 
+import android.content.Context;
+
 import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
+import com.photoshotlist.infrastructure.helper.CategoryDAO;
+import com.photoshotlist.infrastructure.helper.PSLDatabaseHelper;
 
 import java.util.List;
 
@@ -10,24 +14,34 @@ import java.util.List;
  */
 public class CategoryRepository implements ICategoryRepository {
 
-    public CategoryRepository(){
+    private Context _context;
+
+    public CategoryRepository(Context context){
+        this._context = context;
     }
 
     @Override
     public Category GetById(int id) {
 
-        // TODO: Replace this Stub Method
-        Category category = new Category();
-        category.setId(1);
-        category.setName("Stub Category");
-        category.setActive(true);
-        category.setImageResourceId(1);
-        category.setLongDescription("Stub long description");
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
 
-        if(category.getId() == id)
-            return category;
-        else
-            return null;
+        // TODO: Create a factory method
+        CategoryDAO categoryDAO = new CategoryDAO();
+
+        try {
+            categoryDAO = databaseHelper.GetCategoryById(id);
+        }catch (Exception ex) {
+        }
+
+        // TODO: Category Factory
+        Category category = new Category();
+        category.setId(categoryDAO.getId()) ;
+        category.setName(categoryDAO.getName());
+        category.setActive(categoryDAO.isActive());
+        category.setImageResourceId(categoryDAO.getImageResourceId());
+        category.setLongDescription(categoryDAO.getLongDescription());
+
+        return category;
     }
 
     @Override
