@@ -5,6 +5,7 @@ dependencies {
     compile 'junit:junit:4.12'
     compile project(':photoshotlist.boundaries')
     compile project(':photoshotlist.interactors')
+    compile 'junit:junit:4.12'
 }
 
 sourceCompatibility = "1.7"
