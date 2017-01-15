@@ -4,6 +4,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':photoshotlist.domainmodels')
     compile project(':photoshotlist.infrastructure')
+    compile project(path: ':photoshotlist.boundaries')
 }
 
 sourceCompatibility = "1.7"

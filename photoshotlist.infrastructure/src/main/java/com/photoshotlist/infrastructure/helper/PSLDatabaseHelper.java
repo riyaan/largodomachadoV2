@@ -54,6 +54,11 @@ import java.util.List;
         // updateMyDatabase(db, DB_OLD_VERSION, DB_VERSION);
     }
 
+        /**
+         * Retrieve all Categories from the Persistence mechanism
+         @return A list of Categories or an empty list when no Categories exist
+         @exception  Exception
+         */
     public List<CategoryDAO> GetAllCategories() throws Exception {
         SQLiteDatabase db = null;
         Cursor cursor = null;
@@ -101,11 +106,15 @@ import java.util.List;
         }
     }
 
-
+    /**
+     * Retrieve a Category from the Persistence mechanism
+    @return A Category or NULL object when the category does not exist
+    @exception  Exception
+    */
     public CategoryDAO GetCategoryById(int id) throws Exception {
             SQLiteDatabase db = null;
             Cursor cursor = null;
-            CategoryDAO category = new CategoryDAO();
+            CategoryDAO category = null;
             List<CategoryDAO> categoryList = new ArrayList<CategoryDAO>();
 
             try {
@@ -125,6 +134,7 @@ import java.util.List;
                         boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
 
                         // TODO: Use a Mapper?
+                        category = new CategoryDAO();
                         category.setId(_id);
                         category.setName(_name);
                         category.setLongDescription(_longDescription);

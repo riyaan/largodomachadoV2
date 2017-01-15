@@ -1,7 +1,5 @@
 package com.photoshotlist.infrastructure.repositories;
 
-import com.photoshotlist.domainmodels.entities.Category;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,6 +12,8 @@ public class InfrastructureCategoryRepositoryTest {
 
     @Test
     public void GetById_Success() {
+
+        // TODO: test the actual connection to the database
 
 //        CategoryRepository categoryRepository = new CategoryRepository();
 //        Category category = categoryRepository.GetById(1);
