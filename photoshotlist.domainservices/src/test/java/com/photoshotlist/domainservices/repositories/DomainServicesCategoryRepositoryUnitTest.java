@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
  */
 
 //@RunWith(MockitoJUnitRunner.class)
-public class ICategoryRepositoryUnitTest {
+public class DomainServicesCategoryRepositoryUnitTest {
 
     @Test
     public void getCategoryById_Success() throws Exception {

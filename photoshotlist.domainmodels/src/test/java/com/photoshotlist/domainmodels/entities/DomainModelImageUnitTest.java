@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
-public class ImageUnitTest {
+public class DomainModelImageUnitTest {
     @Test
     public void getImageName_Success() throws Exception {
 

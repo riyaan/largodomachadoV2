@@ -14,9 +14,7 @@
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" filepath="$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.infrastructure/photoshotlist.infrastructure.iml" filepath="$PROJECT_DIR$/photoshotlist.infrastructure/photoshotlist.infrastructure.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.interactors/photoshotlist.interactors.iml" filepath="$PROJECT_DIR$/photoshotlist.interactors/photoshotlist.interactors.iml" />
-      <module fileurl="file://$PROJECT_DIR$/photoshotlist.interfaceadapters/photoshotlist.interfaceadapters.iml" filepath="$PROJECT_DIR$/photoshotlist.interfaceadapters/photoshotlist.interfaceadapters.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.tests/photoshotlist.tests.iml" filepath="$PROJECT_DIR$/photoshotlist.tests/photoshotlist.tests.iml" />
-      <module fileurl="file://$PROJECT_DIR$/photoshotlist.testsuite/photoshotlist.testsuite.iml" filepath="$PROJECT_DIR$/photoshotlist.testsuite/photoshotlist.testsuite.iml" />
     </modules>
   </component>
 </project>

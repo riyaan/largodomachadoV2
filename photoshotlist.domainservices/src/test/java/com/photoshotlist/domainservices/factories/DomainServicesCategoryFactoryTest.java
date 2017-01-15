@@ -12,17 +12,17 @@ import static org.mockito.Mockito.when;
 /**
  * Created by PhpDev on 2016/12/18.
  */
-public class CategoryFactoryTest {
+public class DomainServicesCategoryFactoryTest {
 
     @Test
     public void CreateCategory_Success() {
 
-        Category expected = new Category();
-        expected.setId(1);
-        expected.setName("Abstract");
-        expected.setLongDescription("Blah blah blah");
-        expected.setImageResourceId(2);
-        expected.setActive(true);
+        Category expected = Mockito.mock(Category.class);
+        when (expected.getId()).thenReturn(1);
+        when (expected.getName()).thenReturn("Abstract");
+        when (expected.getLongDescription()).thenReturn("Blah blah blah");
+        when (expected.getImageResourceId()).thenReturn(2);
+        when (expected.isActive()).thenReturn(true);
 
         Category category = CategoryFactory.getInstance().create("Abstract", "Blah blah blah", 2, true);
 
@@ -32,12 +32,12 @@ public class CategoryFactoryTest {
     @Test
     public void CreateCategory_Fail() {
 
-        Category unexpected = new Category();
-        unexpected.setId(1);
-        unexpected.setName("Abstract");
-        unexpected.setLongDescription("Blah blah blah");
-        unexpected.setImageResourceId(2);
-        unexpected.setActive(true);
+        Category unexpected = Mockito.mock(Category.class);
+        when (unexpected.getId()).thenReturn(1);
+        when (unexpected.getName()).thenReturn("Abstract");
+        when (unexpected.getLongDescription()).thenReturn("Blah blah blah");
+        when (unexpected.getImageResourceId()).thenReturn(2);
+        when (unexpected.isActive()).thenReturn(true);
 
         Category category = CategoryFactory.getInstance().create("Closeup", "Lorem ipsum", 3, true);
 

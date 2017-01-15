@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
-public class ShotListUnitTest {
+public class DomainModelShotListUnitTest {
     @Test
     public void getShotListName_Success() throws Exception {
 

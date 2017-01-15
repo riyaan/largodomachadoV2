@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by PhpDev on 2016/12/18.
  */
-public class InputBoundaryTest {
+public class BoundariesInputBoundaryTest {
 
     @Test
     public void testGetCategoryById_Success() {

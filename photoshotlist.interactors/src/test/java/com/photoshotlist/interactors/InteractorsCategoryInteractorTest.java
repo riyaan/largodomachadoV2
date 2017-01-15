@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by PhpDev on 2016/12/18.
  */
-public class CategoryInteractorTest {
+public class InteractorsCategoryInteractorTest {
 
     @Test
     public void GetById_Success() {

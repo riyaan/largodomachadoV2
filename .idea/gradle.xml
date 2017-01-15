@@ -20,9 +20,7 @@
             <option value="$PROJECT_DIR$/photoshotlist.exception" />
             <option value="$PROJECT_DIR$/photoshotlist.infrastructure" />
             <option value="$PROJECT_DIR$/photoshotlist.interactors" />
-            <option value="$PROJECT_DIR$/photoshotlist.interfaceadapters" />
             <option value="$PROJECT_DIR$/photoshotlist.tests" />
-            <option value="$PROJECT_DIR$/photoshotlist.testsuite" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
