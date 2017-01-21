@@ -46,9 +46,14 @@ public class ImageRepository implements IImageRepository {
 
         for(ImageDAO item : imageDAOs){
 
+            if(item != null) {
+                // We only need to show the Preview aka 'First' image.
+                image.setName(item.getName()); // Using the Category Name instead of the Image Name
+            }
             Image image = ImageFactory.getInstance().create(item.getId(), item.getName(),
                     item.getLongDescription(), item.getLocation(), item.getImageResourceId(),
                     item.getCreatedDate(), item.isActive());
+
 
             images.add(image);
         }

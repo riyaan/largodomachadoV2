@@ -10,4 +10,5 @@ public interface IInputBoundary {
 
     CategoryResponseModel GetCategoryById(CategoryRequestModel requestModel);
     List<CategoryResponseModel> GetAllCategories();
+    CategoryResponseModel GetCategoryByName(CategoryRequestModel requestModel);
 }

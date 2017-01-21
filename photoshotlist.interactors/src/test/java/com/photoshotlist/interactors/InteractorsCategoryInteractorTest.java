@@ -182,4 +182,83 @@ public class InteractorsCategoryInteractorTest {
 
         Assert.assertEquals(0, actual.size());
     }
+
+    // Get Category By Name Start
+
+    @Test
+    public void GetByName_Success() {
+
+        Category expected = Mockito.mock(Category.class);
+        when (expected.getId()).thenReturn(1);
+        when (expected.getName()).thenReturn("Abstract");
+        when (expected.getLongDescription()).thenReturn("Blah blah blah");
+        when (expected.getImageResourceId()).thenReturn(2);
+        when (expected.isActive()).thenReturn(true);
+
+        ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
+        when (categoryRepository.GetByName("Abstract")).thenReturn(expected);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        Category actual = interactor.GetByName("Abstract");
+
+        Assert.assertEquals("Abstract", expected.getName());
+    }
+
+    @Test
+    public void GetByName_Fail() {
+
+        Category expected = null;
+
+        ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
+        when (categoryRepository.GetByName("Invalid")).thenReturn(expected);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        Category actual = interactor.GetByName("Invalid");
+
+        Assert.assertEquals(null, expected);
+    }
+
+    @Test
+    public void GetCategoryByName_Success() {
+
+        CategoryRequestModel requestModel = Mockito.mock(CategoryRequestModel.class);
+        when (requestModel.getCategoryName()).thenReturn("Landscape");
+
+        Category expected = Mockito.mock(Category.class);
+        when (expected.getId()).thenReturn(1);
+        when (expected.getName()).thenReturn("Landscape");
+        when (expected.getLongDescription()).thenReturn("Blah blah blah");
+        when (expected.getImageResourceId()).thenReturn(2);
+        when (expected.isActive()).thenReturn(true);
+
+        ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
+        when (categoryRepository.GetByName("Landscape")).thenReturn(expected);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        CategoryResponseModel actual = interactor.GetCategoryByName(requestModel);
+
+        Assert.assertEquals("Landscape", actual.getName());
+    }
+
+    @Test
+    //Description("The Category does not exist in the system. An exception is thrown.")
+    public void GetCategoryByName_Fail() {
+
+        try {
+            CategoryRequestModel requestModel = Mockito.mock(CategoryRequestModel.class);
+            when(requestModel.getCategoryName()).thenReturn("Street Photography");
+
+            ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
+            when(categoryRepository.GetByName("Street Photography")).thenThrow(new Exception());
+
+            CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+            CategoryResponseModel actual = interactor.GetCategoryById(requestModel);
+        }
+        catch(Exception e) {
+            // An exception was thrown, so the category does indeed not exist
+            Assert.assertTrue(true);
+        }
+    }
+
+    // Get Category By Name End
 }

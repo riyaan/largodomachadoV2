@@ -5,4 +5,6 @@ dependencies {
     compile project(':photoshotlist.domainmodels')
     compile 'junit:junit:4.12'
     compile 'org.mockito:mockito-core:2.5.5'
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 }

@@ -35,6 +35,12 @@ public class CategoryInteractor implements ICategoryInteractor, IInputBoundary {
         return categoryList;
     }
 
+    @Override
+    public Category GetByName(String name) {
+        Category category = this.categoryRepository.GetByName(name);
+        return category;
+    }
+
 
     // IInputBoundary Implementation
 
@@ -74,5 +80,21 @@ public class CategoryInteractor implements ICategoryInteractor, IInputBoundary {
         }
 
         return categoryResponseModels;
+    }
+
+    @Override
+    public CategoryResponseModel GetCategoryByName(CategoryRequestModel requestModel) {
+
+        Category category = GetByName(requestModel.getCategoryName());
+
+        // TODO: Use a Factory method
+        CategoryResponseModel responseModel = new CategoryResponseModel();
+        responseModel.setId(category.getId());
+        responseModel.setName(category.getName());
+        responseModel.setLongDescription(category.getLongDescription());
+        responseModel.setImageResourceId(category.getImageResourceId());
+        responseModel.setActive(category.isActive());
+
+        return responseModel;
     }
 }

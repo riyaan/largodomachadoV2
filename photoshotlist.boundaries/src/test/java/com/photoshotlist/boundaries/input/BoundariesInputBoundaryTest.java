@@ -71,6 +71,25 @@ public class BoundariesInputBoundaryTest {
         Assert.assertEquals(2, imageResponseModels.size());
     }
 
+    @Test
+    public void testGetCategoryByName_Success() {
+
+        CategoryRequestModel requestModel = new CategoryRequestModel();
+        requestModel.setCategoryName("Abstract");
+
+        CategoryResponseModel responseModel = new CategoryResponseModel();
+        responseModel.setId(1);
+        responseModel.setActive(true);
+        responseModel.setName("Abstract");
+        responseModel.setImageResourceId(2);
+        responseModel.setLongDescription("Blah blah blah");
+
+        IInputBoundary inputBoundary = Mockito.mock(IInputBoundary.class);
+        when (inputBoundary.GetCategoryByName(requestModel)).thenReturn(responseModel);
+
+        Assert.assertEquals(1, responseModel.getId());
+    }
+
 //    @Test
 //    public void testGetCategoryById_Fail() {
 //

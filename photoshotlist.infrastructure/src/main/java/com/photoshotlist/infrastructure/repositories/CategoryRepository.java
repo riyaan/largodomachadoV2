@@ -85,4 +85,33 @@ public class CategoryRepository implements ICategoryRepository {
 
         return categoryList;
     }
+
+    @Override
+    /**
+     * Retrieve a Category from the Persistence mechanism
+     @return A Category or NULL object when the category does not exist
+     @exception  Exception
+     */
+    public Category GetByName(String name) {
+
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+
+        // TODO: Create a factory method
+        CategoryDAO categoryDAO = null;
+        Category category = null;
+
+        try {
+            categoryDAO = databaseHelper.GetCategoryByName(name);
+        }catch (Exception ex) {
+        }
+
+        if(categoryDAO == null)
+            return  category;
+
+        category = CategoryFactory.getInstance().create(categoryDAO.getId(), categoryDAO.getName(),
+                categoryDAO.getLongDescription(), categoryDAO.getImageResourceId(),
+                categoryDAO.isActive());
+
+        return category;
+    }
 }

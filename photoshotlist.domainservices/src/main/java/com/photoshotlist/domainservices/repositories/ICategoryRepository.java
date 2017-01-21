@@ -11,5 +11,6 @@ public interface ICategoryRepository {
 
     public Category GetById(int id);
     public List<Category> GetAll();
+    public Category GetByName(String name);
 
 }

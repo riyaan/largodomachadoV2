@@ -8,4 +8,6 @@ dependencies {
     compile project(':photoshotlist.domainservices')
     testCompile 'junit:junit:4.12'
     compile 'com.google.android:android-test:4.1.1.4'
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 }

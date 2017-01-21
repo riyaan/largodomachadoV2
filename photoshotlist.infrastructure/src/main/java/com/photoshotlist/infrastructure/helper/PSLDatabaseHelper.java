@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.photoshotlist.domainmodels.entities.Category;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
@@ -195,6 +196,49 @@ import java.util.List;
                 }
 
                 return daoList;
+
+            } catch (Exception ex) {
+                //display.setText(String.format("Error: %s", e.getMessage()));
+                throw new Exception(ex);
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
+        public CategoryDAO GetCategoryByName(String categoryName) throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            CategoryDAO dao = null;
+
+            try {
+                db = this.getWritableDatabase();
+
+                cursor = db.query("Category",
+                        new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                        "Name = ?",
+                        new String[]{categoryName},
+                        null, null, null);
+
+                if (cursor.moveToFirst()) {
+                        // output the first row
+                        int _id = Integer.parseInt(cursor.getString(0));
+                        String _name = cursor.getString(1);
+                        String _longDescription = cursor.getString(2);
+                        boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                        // TODO: Use a Mapper?
+                        dao = new CategoryDAO();
+                        dao.setId(_id);
+                        dao.setName(_name);
+                        dao.setLongDescription(_longDescription);
+                        dao.setActive(_isActive);
+                }
+
+                return dao;
 
             } catch (Exception ex) {
                 //display.setText(String.format("Error: %s", e.getMessage()));

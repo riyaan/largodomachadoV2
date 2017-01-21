@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,15 @@ import android.view.ViewGroup;
 import com.photoshotlist.R;
 import com.photoshotlist.bll.ImageDO;
 import com.photoshotlist.bll.PSLBusinessHelper;
+import com.photoshotlist.boundaries.input.CategoryResponseModel;
+import com.photoshotlist.boundaries.input.ImageRequestModel;
+import com.photoshotlist.boundaries.input.ImageResponseModel;
+import com.photoshotlist.domainservices.repositories.IImageRepository;
 import com.photoshotlist.exception.PSLException;
+import com.photoshotlist.infrastructure.repositories.CategoryRepository;
+import com.photoshotlist.infrastructure.repositories.ImageRepository;
+import com.photoshotlist.interactors.CategoryInteractor;
+import com.photoshotlist.interactors.ImageInteractor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +41,46 @@ public class CategoryAllFragment extends Fragment {
         RecyclerView categoryAllRecycler = (RecyclerView)inflater.inflate(
                 R.layout.fragment_categories_all, container, false);
 
-        List<ImageDO> imageDOList = null;
-        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
-        try {
-            // get all the preview images for all categories
-            imageDOList = businessHelper.GetPreviewImagesForCategories();
-        } catch (PSLException e) {
-            e.printStackTrace();
+//        // Old Code
+        List<ImageDO> imageDOList = new ArrayList<ImageDO>();
+//        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
+//        try {
+//            // get all the preview images for all categories
+//            imageDOList = businessHelper.GetPreviewImagesForCategories();
+//        } catch (PSLException e) {
+//            e.printStackTrace();
+//        }
+
+        // New Code
+        Context context = getActivity();
+
+        CategoryInteractor categoryInteractor = new CategoryInteractor(
+                new CategoryRepository(context));
+
+        List<CategoryResponseModel> categoryResponseModels = categoryInteractor.GetAllCategories();
+
+        for(CategoryResponseModel crm : categoryResponseModels) {
+
+            ImageRequestModel irm = new ImageRequestModel();
+            irm.setCategoryId(crm.getId());
+
+            ImageInteractor imageInteractor = new ImageInteractor(new ImageRepository(context));
+            List<ImageResponseModel> imageResponseModels = imageInteractor.GetImagesByCategory(irm);
+
+            for(ImageResponseModel item : imageResponseModels){
+
+                ImageDO temp = new ImageDO();
+                temp.setCreatedDate(item.getCreatedDate());
+                temp.setLocation(item.getLocation());
+                temp.setActive(item.isActive());
+                temp.setId(item.getId());
+                temp.setImageResourceId(item.getImageResourceId());
+                temp.setLongDescription(item.getLongDescription());
+                temp.setName(item.getName());
+
+                imageDOList.add(temp);
+            }
+
         }
 
         int[] images = new int[imageDOList.size()];
