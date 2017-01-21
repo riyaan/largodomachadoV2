@@ -1,6 +1,6 @@
-package com.photoshotlist.boundaries.Input.factories;
+package com.photoshotlist.boundaries.input.factories;
 
-import com.photoshotlist.boundaries.Input.ImageResponseModel;
+import com.photoshotlist.boundaries.input.ImageResponseModel;
 
 /**
  * Created by PhpDev on 2016/12/04.

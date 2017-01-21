@@ -1,13 +1,9 @@
 package com.photoshotlist.interactors;
 
-import com.photoshotlist.boundaries.Input.CategoryRequestModel;
-import com.photoshotlist.boundaries.Input.CategoryResponseModel;
-import com.photoshotlist.boundaries.Input.ImageRequestModel;
-import com.photoshotlist.boundaries.Input.ImageResponseModel;
-import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.boundaries.input.ImageRequestModel;
+import com.photoshotlist.boundaries.input.ImageResponseModel;
 import com.photoshotlist.domainmodels.entities.Image;
 import com.photoshotlist.domainservices.factories.ImageFactory;
-import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
 
 import org.junit.Assert;

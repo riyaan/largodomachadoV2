@@ -1,13 +1,12 @@
 package com.photoshotlist.interactors;
 
-import com.photoshotlist.boundaries.Input.CategoryRequestModel;
-import com.photoshotlist.boundaries.Input.CategoryResponseModel;
+import com.photoshotlist.boundaries.input.CategoryRequestModel;
+import com.photoshotlist.boundaries.input.CategoryResponseModel;
 import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;

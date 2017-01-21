@@ -30,7 +30,7 @@ public class CategoryFactory implements ICategoryFactory {
             category.setId(id);
 
         // The name is mandatory. If not filled in return a NULL
-        if ((name == null) && (name.length() == 0))
+        if ((name == null) || (name.length() == 0))
             return null;
         else
             category.setName(name);

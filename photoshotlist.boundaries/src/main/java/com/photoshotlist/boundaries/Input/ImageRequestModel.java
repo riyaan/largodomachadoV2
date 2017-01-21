@@ -1,4 +1,4 @@
-package com.photoshotlist.boundaries.Input;
+package com.photoshotlist.boundaries.input;
 
 /**
  * Created by PhpDev on 2017/01/14.

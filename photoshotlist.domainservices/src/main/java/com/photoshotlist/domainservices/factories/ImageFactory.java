@@ -31,7 +31,7 @@ public class ImageFactory implements IImageFactory {
             image.setId(id);
 
         // The name is mandatory. If not filled in return a NULL
-        if ((name == null) && (name.length() == 0))
+        if ((name == null) || (name.length() == 0))
             return null;
         else
             image.setName(name);

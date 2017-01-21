@@ -1,15 +1,6 @@
 package com.photoshotlist.boundaries.input;
 
-import com.photoshotlist.boundaries.Input.CategoryRequestModel;
-import com.photoshotlist.boundaries.Input.CategoryResponseModel;
-import com.photoshotlist.boundaries.Input.IImageInputBoundary;
-import com.photoshotlist.boundaries.Input.IInputBoundary;
-import com.photoshotlist.boundaries.Input.ImageRequestModel;
-import com.photoshotlist.boundaries.Input.ImageResponseModel;
-import com.photoshotlist.boundaries.Input.factories.ImageResponseModelFactory;
-
-import junit.framework.TestResult;
-import junit.framework.TestSuite;
+import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 
 import org.junit.Assert;
 import org.junit.Test;

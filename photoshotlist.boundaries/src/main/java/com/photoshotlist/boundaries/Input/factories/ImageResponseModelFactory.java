@@ -1,6 +1,6 @@
-package com.photoshotlist.boundaries.Input.factories;
+package com.photoshotlist.boundaries.input.factories;
 
-import com.photoshotlist.boundaries.Input.ImageResponseModel;
+import com.photoshotlist.boundaries.input.ImageResponseModel;
 
 /**
  * Created by PhpDev on 2016/12/04.
@@ -31,7 +31,7 @@ public class ImageResponseModelFactory implements IImageResponseModelFactory {
             irm.setId(id);
 
         // The name is mandatory. If not filled in return a NULL
-        if ((name == null) && (name.length() == 0))
+        if ((name == null) || (name.length() == 0))
             return null;
         else
             irm.setName(name);

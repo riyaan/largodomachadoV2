@@ -1,4 +1,4 @@
-package com.photoshotlist.boundaries.Input;
+package com.photoshotlist.boundaries.input;
 
 import java.util.List;
 

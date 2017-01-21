@@ -1,9 +1,9 @@
 package com.photoshotlist.interactors;
 
-import com.photoshotlist.boundaries.Input.IImageInputBoundary;
-import com.photoshotlist.boundaries.Input.ImageRequestModel;
-import com.photoshotlist.boundaries.Input.ImageResponseModel;
-import com.photoshotlist.boundaries.Input.factories.ImageResponseModelFactory;
+import com.photoshotlist.boundaries.input.IImageInputBoundary;
+import com.photoshotlist.boundaries.input.ImageRequestModel;
+import com.photoshotlist.boundaries.input.ImageResponseModel;
+import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Image;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
 
@@ -24,7 +24,7 @@ public class ImageInteractor implements IImageInteractor, IImageInputBoundary {
 
     // IInputBoundary Implementation
 
-    // This is called by the Delivery Mechanism -> Input Boundary -> Interactor
+    // This is called by the Delivery Mechanism -> input Boundary -> Interactor
 
     @Override
     public List<ImageResponseModel> GetImagesByCategory(ImageRequestModel requestModel) {

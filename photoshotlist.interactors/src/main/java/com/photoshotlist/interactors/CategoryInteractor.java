@@ -1,8 +1,8 @@
 package com.photoshotlist.interactors;
 
-import com.photoshotlist.boundaries.Input.CategoryRequestModel;
-import com.photoshotlist.boundaries.Input.CategoryResponseModel;
-import com.photoshotlist.boundaries.Input.IInputBoundary;
+import com.photoshotlist.boundaries.input.CategoryRequestModel;
+import com.photoshotlist.boundaries.input.CategoryResponseModel;
+import com.photoshotlist.boundaries.input.IInputBoundary;
 import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 
@@ -38,7 +38,7 @@ public class CategoryInteractor implements ICategoryInteractor, IInputBoundary {
 
     // IInputBoundary Implementation
 
-    // This is called by the Delivery Mechanism -> Input Boundary -> Interactor
+    // This is called by the Delivery Mechanism -> input Boundary -> Interactor
     @Override
     public CategoryResponseModel GetCategoryById(CategoryRequestModel requestModel) {
 
