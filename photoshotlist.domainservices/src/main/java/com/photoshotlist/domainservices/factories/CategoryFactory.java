@@ -26,6 +26,8 @@ public class CategoryFactory implements ICategoryFactory {
 
         if(id < 0)
             return null;
+        else
+            category.setId(id);
 
         // The name is mandatory. If not filled in return a NULL
         if ((name == null) && (name.length() == 0))

@@ -2,7 +2,11 @@ package com.photoshotlist.boundaries.input;
 
 import com.photoshotlist.boundaries.Input.CategoryRequestModel;
 import com.photoshotlist.boundaries.Input.CategoryResponseModel;
+import com.photoshotlist.boundaries.Input.IImageInputBoundary;
 import com.photoshotlist.boundaries.Input.IInputBoundary;
+import com.photoshotlist.boundaries.Input.ImageRequestModel;
+import com.photoshotlist.boundaries.Input.ImageResponseModel;
+import com.photoshotlist.boundaries.Input.factories.ImageResponseModelFactory;
 
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
@@ -10,6 +14,9 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -50,4 +57,40 @@ public class BoundariesInputBoundaryTest {
 
         Assert.assertEquals(null, responseModel);
     }
+
+    @Test
+    public void testGetImagesByCategory_Success() {
+
+        ImageRequestModel requestModel = new ImageRequestModel();
+        requestModel.setCategoryId(1);
+
+        ImageResponseModel irmOne = ImageResponseModelFactory.getInstance().create(1, "Summer",
+                "Lorum ipsum", "/filePath", 12, "2017/01/21", true);
+
+        ImageResponseModel irmTwo = ImageResponseModelFactory.getInstance().create(1, "Winter",
+                "Lorum ipsum", "/filePath2", 12, "2017/01/21", true);
+
+        List<ImageResponseModel> imageResponseModels = new ArrayList<ImageResponseModel>();
+        imageResponseModels.add(irmOne);
+        imageResponseModels.add(irmTwo);
+
+        IImageInputBoundary inputBoundary = Mockito.mock(IImageInputBoundary.class);
+        when (inputBoundary.GetImagesByCategory(requestModel)).thenReturn(imageResponseModels);
+
+        Assert.assertEquals(2, imageResponseModels.size());
+    }
+
+//    @Test
+//    public void testGetCategoryById_Fail() {
+//
+//        CategoryRequestModel requestModel = new CategoryRequestModel();
+//        requestModel.setCategoryId(1);
+//
+//        CategoryResponseModel responseModel = null;
+//
+//        IInputBoundary inputBoundary = Mockito.mock(IInputBoundary.class);
+//        when (inputBoundary.GetCategoryById(requestModel)).thenReturn(responseModel);
+//
+//        Assert.assertEquals(null, responseModel);
+//    }
 }

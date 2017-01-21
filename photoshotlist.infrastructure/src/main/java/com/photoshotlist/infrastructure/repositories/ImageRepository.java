@@ -3,6 +3,7 @@ package com.photoshotlist.infrastructure.repositories;
 import android.content.Context;
 
 import com.photoshotlist.domainmodels.entities.Image;
+import com.photoshotlist.domainservices.factories.ImageFactory;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
 import com.photoshotlist.infrastructure.helper.ImageDAO;
 import com.photoshotlist.infrastructure.helper.PSLDatabaseHelper;
@@ -45,15 +46,9 @@ public class ImageRepository implements IImageRepository {
 
         for(ImageDAO item : imageDAOs){
 
-            // TODO: Create a Category Factory
-            Image image = new Image();
-            image.setId(item.getId()) ;
-            image.setName(item.getName());
-            image.setActive(item.isActive());
-            image.setImageResourceId(item.getImageResourceId());
-            image.setLongDescription(item.getLongDescription());
-            image.setCreatedDate(item.getCreatedDate());
-            image.setLocation(item.getLocation());
+            Image image = ImageFactory.getInstance().create(item.getId(), item.getName(),
+                    item.getLongDescription(), item.getLocation(), item.getImageResourceId(),
+                    item.getCreatedDate(), item.isActive());
 
             images.add(image);
         }

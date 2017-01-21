@@ -1,14 +1,10 @@
 package com.photoshotlist.interactors;
 
-import com.photoshotlist.boundaries.Input.CategoryRequestModel;
-import com.photoshotlist.boundaries.Input.CategoryResponseModel;
 import com.photoshotlist.boundaries.Input.IImageInputBoundary;
-import com.photoshotlist.boundaries.Input.IInputBoundary;
 import com.photoshotlist.boundaries.Input.ImageRequestModel;
 import com.photoshotlist.boundaries.Input.ImageResponseModel;
-import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.boundaries.Input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Image;
-import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
 
 import java.util.ArrayList;
@@ -38,15 +34,9 @@ public class ImageInteractor implements IImageInteractor, IImageInputBoundary {
 
         for(Image item : images){
 
-            ImageResponseModel irm = new ImageResponseModel();
-            irm.setActive(item.isActive());
-            irm.setLocation(item.getLocation());
-            irm.setCreatedDate(item.getCreatedDate());
-            irm.setLongDescription(item.getLongDescription());
-            irm.setLocation(item.getLocation());
-            irm.setId(item.getId());
-            irm.setImageResourceId(item.getImageResourceId());
-            irm.setName(item.getName());
+            ImageResponseModel irm = ImageResponseModelFactory.getInstance().create(
+                    item.getId(), item.getName(), item.getLongDescription(), item.getLocation(),
+                    item.getImageResourceId(), item.getCreatedDate(), item.isActive());
 
             imageResponseModels.add(irm);
         }
@@ -58,7 +48,7 @@ public class ImageInteractor implements IImageInteractor, IImageInputBoundary {
     public List<Image> GetImagesByCategory(int categoryId) {
 
         List<Image> images = new ArrayList<Image>();
-        images = this.GetImagesByCategory(categoryId);
+        images = this.imageRepository.GetByCategory(categoryId);
         return images;
     }
 }
