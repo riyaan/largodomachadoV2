@@ -35,17 +35,14 @@ import java.util.List;
 
     //
     public static PSLDatabaseHelper getInstance(Context context) {
-        if (context == null) {
-            // Use the test db.
-        } else {
+        if (instance == null) {
+            try {
+                instance = new PSLDatabaseHelper(context);
+            }catch (Exception ex) {
 
-            if (instance == null) {
-                try {
-                    instance = new PSLDatabaseHelper(context);
-                } catch (Exception ex) {
-                }
             }
         }
+
         return instance;
     }
 
@@ -144,6 +141,63 @@ import java.util.List;
                 return category;
 
             } catch (Exception ex) {
+                throw ex;
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
+
+        public List<ImageDAO> GetImagesForCategory(int categoryId) throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            List<ImageDAO> daoList = new ArrayList<ImageDAO>();
+
+            try {
+                db = getReadableDatabase();
+
+                String query = "select i._id, i.Name, i.LongDescription, i.Location, i.ImageResourceId, i.IsActive " +
+                        "from Category c\n " +
+                        "inner join CategoryImage ci on ci.CategoryId = c._id\n" +
+                        "inner join Image i on i._id = ci.ImageId\n" +
+                        "where c._id = "+ Integer.toString(categoryId);
+
+                cursor = db.rawQuery(query, null);
+
+                if (cursor.moveToFirst()) {
+
+                    do {
+
+                        // output the first row
+                        int _id = Integer.parseInt(cursor.getString(0));
+                        String _name = cursor.getString(1);
+                        String _longDescription = cursor.getString(2);
+                        String _location = cursor.getString(3);
+                        int _imageResourceId = Integer.parseInt(cursor.getString(4));
+                        boolean _isActive = Boolean.parseBoolean(cursor.getString(5));
+
+                        // TODO: Use a Mapper?
+                        ImageDAO dao = new ImageDAO();
+                        dao.setId(_id);
+                        dao.setName(_name);
+                        dao.setLongDescription(_longDescription);
+                        dao.setLocation(_location);
+                        dao.setImageResourceId(_imageResourceId);
+                        dao.setActive(_isActive);
+
+                        daoList.add(dao);
+
+                    }while(cursor.moveToNext());
+                }
+
+                return daoList;
+
+            } catch (Exception ex) {
+                //display.setText(String.format("Error: %s", e.getMessage()));
                 throw new Exception(ex);
             } finally {
                 if (cursor != null)

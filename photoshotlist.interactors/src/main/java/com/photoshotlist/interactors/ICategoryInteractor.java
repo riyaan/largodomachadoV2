@@ -2,6 +2,8 @@ package com.photoshotlist.interactors;
 
 import com.photoshotlist.domainmodels.entities.Category;
 
+import java.util.List;
+
 /**
  * Created by PhpDev on 2017/01/14.
  */
@@ -9,4 +11,5 @@ import com.photoshotlist.domainmodels.entities.Category;
 public interface ICategoryInteractor {
 
     public Category GetById(int id);
+    public List<Category> GetAll();
 }

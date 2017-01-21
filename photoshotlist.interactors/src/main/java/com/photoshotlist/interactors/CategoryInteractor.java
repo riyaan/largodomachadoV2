@@ -6,6 +6,9 @@ import com.photoshotlist.boundaries.Input.IInputBoundary;
 import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by PhpDev on 2017/01/14.
  */
@@ -18,12 +21,22 @@ public class CategoryInteractor implements ICategoryInteractor, IInputBoundary {
         this.categoryRepository = categoryRepository;
     }
 
+    // ICategoryInteractor Implementation
     @Override
     public Category GetById(int id) {
         Category category = this.categoryRepository.GetById(id);
         return category;
     }
 
+    @Override
+    public List<Category> GetAll() {
+        List<Category> categoryList = new ArrayList<Category>();
+        categoryList = this.categoryRepository.GetAll();
+        return categoryList;
+    }
+
+
+    // IInputBoundary Implementation
 
     // This is called by the Delivery Mechanism -> Input Boundary -> Interactor
     @Override
@@ -40,5 +53,26 @@ public class CategoryInteractor implements ICategoryInteractor, IInputBoundary {
         responseModel.setActive(category.isActive());
 
         return responseModel;
+    }
+
+    @Override
+    public List<CategoryResponseModel> GetAllCategories() {
+        List<Category> categories = GetAll();
+
+        List<CategoryResponseModel> categoryResponseModels = new ArrayList<CategoryResponseModel>();
+
+        for(Category item : categories){
+
+            CategoryResponseModel crm = new CategoryResponseModel();
+            crm.setId(item.getId());
+            crm.setName(item.getName());
+            crm.setLongDescription(item.getLongDescription());
+            crm.setImageResourceId(item.getImageResourceId());
+            crm.setActive(item.isActive());
+
+            categoryResponseModels.add(crm);
+        }
+
+        return categoryResponseModels;
     }
 }

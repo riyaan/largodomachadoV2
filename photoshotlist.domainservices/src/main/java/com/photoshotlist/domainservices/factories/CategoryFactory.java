@@ -20,9 +20,12 @@ public class CategoryFactory implements ICategoryFactory {
     }
 
     // TODO: How to get the client not to call this
-    public Category create(String name, String longDescription, int imageResourceId, boolean active) {
+    public Category create(int id, String name, String longDescription, int imageResourceId, boolean active) {
 
         Category category = new Category();
+
+        if(id < 0)
+            return null;
 
         // The name is mandatory. If not filled in return a NULL
         if ((name == null) && (name.length() == 0))

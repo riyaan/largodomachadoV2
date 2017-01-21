@@ -24,7 +24,7 @@ public class DomainServicesCategoryFactoryTest {
         when (expected.getImageResourceId()).thenReturn(2);
         when (expected.isActive()).thenReturn(true);
 
-        Category category = CategoryFactory.getInstance().create("Abstract", "Blah blah blah", 2, true);
+        Category category = CategoryFactory.getInstance().create(1, "Abstract", "Blah blah blah", 2, true);
 
         Assert.assertEquals(category.getName(), expected.getName());
     }
@@ -39,7 +39,7 @@ public class DomainServicesCategoryFactoryTest {
         when (unexpected.getImageResourceId()).thenReturn(2);
         when (unexpected.isActive()).thenReturn(true);
 
-        Category category = CategoryFactory.getInstance().create("Closeup", "Lorem ipsum", 3, true);
+        Category category = CategoryFactory.getInstance().create(2, "Closeup", "Lorem ipsum", 3, true);
 
         Assert.assertNotEquals(unexpected.getName(), category.getName());
     }
