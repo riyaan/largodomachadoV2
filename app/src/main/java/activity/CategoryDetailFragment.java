@@ -80,7 +80,7 @@ public class CategoryDetailFragment extends Fragment {
                 R.layout.fragment_category_detail, container, false);
 
         // Get all images for this Category
-        List<ImageDO> imageList = null;
+        List<ImageDO> imageList = new ArrayList<ImageDO>();
 
         // Old Code
 //        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
@@ -97,7 +97,7 @@ public class CategoryDetailFragment extends Fragment {
         Context context = getActivity();
 
         CategoryInteractor categoryInteractor = new CategoryInteractor(
-                new CategoryRepository(context));
+                new CategoryRepository(context), new ImageRepository(context));
 
         CategoryRequestModel requestModel = new CategoryRequestModel();
         requestModel.setCategoryName(mParam1);
@@ -105,14 +105,14 @@ public class CategoryDetailFragment extends Fragment {
         CategoryResponseModel categoryResponseModel =
                 categoryInteractor.GetCategoryByName(requestModel);
 
-            ImageRequestModel imageRequestModel = new ImageRequestModel();
-            imageRequestModel.setCategoryId(categoryResponseModel.getId());
+//            ImageRequestModel imageRequestModel = new ImageRequestModel();
+//            imageRequestModel.setCategoryId(categoryResponseModel.getId());
+//
+//            ImageInteractor imageInteractor = new ImageInteractor(new ImageRepository(context));
+//            List<ImageResponseModel> imageResponseModels =
+//                    imageInteractor.GetImagesByCategory(imageRequestModel);
 
-            ImageInteractor imageInteractor = new ImageInteractor(new ImageRepository(context));
-            List<ImageResponseModel> imageResponseModels =
-                    imageInteractor.GetImagesByCategory(imageRequestModel);
-
-            for(ImageResponseModel item : imageResponseModels){
+            for(ImageResponseModel item : categoryResponseModel.getImageResponseModels()){
 
                 ImageDO temp = new ImageDO();
                 temp.setCreatedDate(item.getCreatedDate());

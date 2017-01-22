@@ -42,7 +42,7 @@ public class CategoryAllFragment extends Fragment {
                 R.layout.fragment_categories_all, container, false);
 
 //        // Old Code
-        List<ImageDO> imageDOList = new ArrayList<ImageDO>();
+        // List<ImageDO> imageDOList = new ArrayList<ImageDO>();
 //        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
 //        try {
 //            // get all the preview images for all categories
@@ -52,61 +52,82 @@ public class CategoryAllFragment extends Fragment {
 //        }
 
         // New Code
+        List<ImageResponseModel> imageResponseModels = new ArrayList<ImageResponseModel>();
         Context context = getActivity();
 
         CategoryInteractor categoryInteractor = new CategoryInteractor(
-                new CategoryRepository(context));
+                new CategoryRepository(context), new ImageRepository(context));
 
         List<CategoryResponseModel> categoryResponseModels = categoryInteractor.GetAllCategories();
 
-        for(CategoryResponseModel crm : categoryResponseModels) {
+//        for(CategoryResponseModel crm : categoryResponseModels) {
+//
+//            ImageRequestModel irm = new ImageRequestModel();
+//            irm.setCategoryId(crm.getId());
+//
+//            ImageInteractor imageInteractor = new ImageInteractor(new ImageRepository(context));
+//            List<ImageResponseModel> imageResponseModels = imageInteractor.GetImagesByCategory(irm);
+//
+//            for(ImageResponseModel item : imageResponseModels){
+//
+//                ImageDO temp = new ImageDO();
+//                temp.setCreatedDate(item.getCreatedDate());
+//                temp.setLocation(item.getLocation());
+//                temp.setActive(item.isActive());
+//                temp.setId(item.getId());
+//                temp.setImageResourceId(item.getImageResourceId());
+//                temp.setLongDescription(item.getLongDescription());
+//                temp.setName(item.getName());
+//
+//                imageDOList.add(temp);
+//            }
+//
+//        }
 
-            ImageRequestModel irm = new ImageRequestModel();
-            irm.setCategoryId(crm.getId());
-
-            ImageInteractor imageInteractor = new ImageInteractor(new ImageRepository(context));
-            List<ImageResponseModel> imageResponseModels = imageInteractor.GetImagesByCategory(irm);
-
-            for(ImageResponseModel item : imageResponseModels){
-
-                ImageDO temp = new ImageDO();
-                temp.setCreatedDate(item.getCreatedDate());
-                temp.setLocation(item.getLocation());
-                temp.setActive(item.isActive());
-                temp.setId(item.getId());
-                temp.setImageResourceId(item.getImageResourceId());
-                temp.setLongDescription(item.getLongDescription());
-                temp.setName(item.getName());
-
-                imageDOList.add(temp);
-            }
-
-        }
-
-        int[] images = new int[imageDOList.size()];
+        // int[] images = new int[imageDOList.size()];
+        int[] images = new int[categoryResponseModels.size()];
 
         List<Integer> tempImages = new ArrayList<Integer>();
         final List<String> tempNames = new ArrayList<String>();
         final List<Integer> tempCategoryIds = new ArrayList<Integer>();
 
-        for (ImageDO obj:imageDOList) {
-            String[] temp = obj.getLocation().split(Pattern.quote("."));
+//        for (ImageDO obj:imageDOList) {
+//            String[] temp = obj.getLocation().split(Pattern.quote("."));
+//
+//            Resources resources = getActivity().getResources();
+//            final int resourceId = resources.getIdentifier(temp[2], "drawable",
+//                    getActivity().getPackageName());
+//
+//            tempNames.add(obj.getName());
+//            tempImages.add(resourceId);
+//
+//            // get the category id of the to which the image belongs
+//            tempCategoryIds.add(obj.getId());
+//        }
+//
+//        // CAnnot use the List<int> in the ImageAdapter
+//        for(int i=0; i<tempImages.size(); i++){
+//            images[i] = tempImages.get(i);
+//        }
+
+        // ** New Code
+        for(CategoryResponseModel crm : categoryResponseModels){
+            tempNames.add(crm.getName());
+
+            String[] temp = crm.getImageResponseModels().get(0).getLocation().split(Pattern.quote("."));
 
             Resources resources = getActivity().getResources();
             final int resourceId = resources.getIdentifier(temp[2], "drawable",
                     getActivity().getPackageName());
 
-            tempNames.add(obj.getName());
             tempImages.add(resourceId);
-
-            // get the category id of the to which the image belongs
-            tempCategoryIds.add(obj.getId());
+            tempCategoryIds.add(crm.getId());
         }
 
-        // CAnnot use the List<int> in the ImageAdapter
         for(int i=0; i<tempImages.size(); i++){
             images[i] = tempImages.get(i);
         }
+        /** End of new Code**/
 
         CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(
                 tempNames.toArray(new String[0]),images);

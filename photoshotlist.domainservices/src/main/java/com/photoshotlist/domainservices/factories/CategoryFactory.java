@@ -1,6 +1,10 @@
 package com.photoshotlist.domainservices.factories;
 
 import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.domainmodels.entities.Image;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by PhpDev on 2016/12/04.
@@ -20,7 +24,7 @@ public class CategoryFactory implements ICategoryFactory {
     }
 
     // TODO: How to get the client not to call this
-    public Category create(int id, String name, String longDescription, int imageResourceId, boolean active) {
+    public Category create(int id, String name, String longDescription, int imageResourceId, boolean active, List<Image> imageList) {
 
         Category category = new Category();
 
@@ -42,6 +46,11 @@ public class CategoryFactory implements ICategoryFactory {
             category.setImageResourceId(imageResourceId);
 
         category.setActive(active);
+
+        if(imageList.size() == 0)
+            category.setImages(new ArrayList<Image>());
+        else
+            category.setImages(imageList);
 
         return category;
     }

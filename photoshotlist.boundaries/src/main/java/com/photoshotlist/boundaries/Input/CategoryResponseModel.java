@@ -1,5 +1,7 @@
 package com.photoshotlist.boundaries.input;
 
+import java.util.List;
+
 /**
  * Created by PhpDev on 2017/01/14.
  */
@@ -10,6 +12,7 @@ public class CategoryResponseModel {
     private String longDescription;
     private boolean isActive;
     private int imageResourceId;
+    private List<ImageResponseModel> imageResponseModels;
 
     public int getId() {
         return id;
@@ -49,5 +52,13 @@ public class CategoryResponseModel {
 
     public void setImageResourceId(int imageResourceId) {
         this.imageResourceId = imageResourceId;
+    }
+
+    public List<ImageResponseModel> getImageResponseModels() {
+        return imageResponseModels;
+    }
+
+    public void setImageResponseModels(List<ImageResponseModel> imageResponseModels) {
+        this.imageResponseModels = imageResponseModels;
     }
 }

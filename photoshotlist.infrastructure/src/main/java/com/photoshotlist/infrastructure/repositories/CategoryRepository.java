@@ -3,6 +3,7 @@ package com.photoshotlist.infrastructure.repositories;
 import android.content.Context;
 
 import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.domainmodels.entities.Image;
 import com.photoshotlist.domainservices.factories.CategoryFactory;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 import com.photoshotlist.infrastructure.helper.CategoryDAO;
@@ -46,7 +47,7 @@ public class CategoryRepository implements ICategoryRepository {
 
         category = CategoryFactory.getInstance().create(categoryDAO.getId(), categoryDAO.getName(),
                 categoryDAO.getLongDescription(), categoryDAO.getImageResourceId(),
-                categoryDAO.isActive());
+                categoryDAO.isActive(), new ArrayList<Image>());
 
         return category;
     }
@@ -78,7 +79,7 @@ public class CategoryRepository implements ICategoryRepository {
 
             Category category = CategoryFactory.getInstance().create(item.getId(), item.getName(),
                     item.getLongDescription(), item.getImageResourceId(),
-                    item.isActive());
+                    item.isActive(), new ArrayList<Image>());
 
             categoryList.add(category);
         }
@@ -110,7 +111,7 @@ public class CategoryRepository implements ICategoryRepository {
 
         category = CategoryFactory.getInstance().create(categoryDAO.getId(), categoryDAO.getName(),
                 categoryDAO.getLongDescription(), categoryDAO.getImageResourceId(),
-                categoryDAO.isActive());
+                categoryDAO.isActive(), new ArrayList<Image>());
 
         return category;
     }

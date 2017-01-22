@@ -3,7 +3,9 @@ package com.photoshotlist.interactors;
 import com.photoshotlist.boundaries.input.CategoryRequestModel;
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
 import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.domainmodels.entities.Image;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
+import com.photoshotlist.domainservices.repositories.IImageRepository;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,11 +30,35 @@ public class InteractorsCategoryInteractorTest {
         when (expected.getLongDescription()).thenReturn("Blah blah blah");
         when (expected.getImageResourceId()).thenReturn(2);
         when (expected.isActive()).thenReturn(true);
+        when (expected.getImages()).thenReturn(new ArrayList<Image>());
 
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetById(1)).thenReturn(expected);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        Image image = Mockito.mock(Image.class);
+        when(image.getName()).thenReturn("Sunrise");
+        when(image.getCreatedDate()).thenReturn("2017/01/22");
+        when(image.getImageResourceId()).thenReturn(2);
+        when(image.getLongDescription()).thenReturn("Long Description");
+        when(image.getId()).thenReturn(1);
+        when(image.getLocation()).thenReturn("filepath");
+
+        Image image2 = Mockito.mock(Image.class);
+        when(image2.getName()).thenReturn("Sunset");
+        when(image2.getCreatedDate()).thenReturn("2017/01/22");
+        when(image2.getImageResourceId()).thenReturn(3);
+        when(image2.getLongDescription()).thenReturn("Long Description");
+        when(image2.getId()).thenReturn(2);
+        when(image2.getLocation()).thenReturn("filepath");
+
+        List<Image> images = new ArrayList<Image>();
+        images.add(image);
+        images.add(image2);
+
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when (imageRepository.GetByCategory(1)).thenReturn(images);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         Category actual = interactor.GetById(1);
 
         Assert.assertEquals(1, expected.getId());
@@ -46,7 +72,10 @@ public class InteractorsCategoryInteractorTest {
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetById(1)).thenReturn(expected);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when (imageRepository.GetByCategory(1)).thenReturn(new ArrayList<Image>());
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         Category actual = interactor.GetById(1);
 
         Assert.assertEquals(null, expected);
@@ -64,11 +93,35 @@ public class InteractorsCategoryInteractorTest {
         when (expected.getLongDescription()).thenReturn("Blah blah blah");
         when (expected.getImageResourceId()).thenReturn(2);
         when (expected.isActive()).thenReturn(true);
+        when (expected.getImages()).thenReturn(new ArrayList<Image>());
 
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetById(1)).thenReturn(expected);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        Image image = Mockito.mock(Image.class);
+        when(image.getName()).thenReturn("Sunrise");
+        when(image.getCreatedDate()).thenReturn("2017/01/22");
+        when(image.getImageResourceId()).thenReturn(2);
+        when(image.getLongDescription()).thenReturn("Long Description");
+        when(image.getId()).thenReturn(1);
+        when(image.getLocation()).thenReturn("filepath");
+
+        Image image2 = Mockito.mock(Image.class);
+        when(image2.getName()).thenReturn("Sunset");
+        when(image2.getCreatedDate()).thenReturn("2017/01/22");
+        when(image2.getImageResourceId()).thenReturn(3);
+        when(image2.getLongDescription()).thenReturn("Long Description");
+        when(image2.getId()).thenReturn(2);
+        when(image2.getLocation()).thenReturn("filepath");
+
+        List<Image> images = new ArrayList<Image>();
+        images.add(image);
+        images.add(image2);
+
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when (imageRepository.GetByCategory(1)).thenReturn(images);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         CategoryResponseModel actual = interactor.GetCategoryById(requestModel);
 
         Assert.assertEquals(1, actual.getId());
@@ -85,7 +138,10 @@ public class InteractorsCategoryInteractorTest {
             ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
             when(categoryRepository.GetById(1)).thenThrow(new Exception());
 
-            CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+            IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+            when(imageRepository.GetByCategory(1)).thenThrow(new Exception());
+
+            CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
             CategoryResponseModel actual = interactor.GetCategoryById(requestModel);
         }
         catch(Exception e) {
@@ -103,6 +159,7 @@ public class InteractorsCategoryInteractorTest {
         when (categoryOne.getLongDescription()).thenReturn("Blah blah blah");
         when (categoryOne.getImageResourceId()).thenReturn(2);
         when (categoryOne.isActive()).thenReturn(true);
+        when (categoryOne.getImages()).thenReturn(new ArrayList<Image>());
 
         Category categoryTwo = Mockito.mock(Category.class);
         when (categoryTwo.getId()).thenReturn(2);
@@ -115,10 +172,33 @@ public class InteractorsCategoryInteractorTest {
         categories.add(categoryOne);
         categories.add(categoryTwo);
 
+        Image image = Mockito.mock(Image.class);
+        when(image.getName()).thenReturn("Sunrise");
+        when(image.getCreatedDate()).thenReturn("2017/01/22");
+        when(image.getImageResourceId()).thenReturn(2);
+        when(image.getLongDescription()).thenReturn("Long Description");
+        when(image.getId()).thenReturn(1);
+        when(image.getLocation()).thenReturn("filepath");
+
+        Image image2 = Mockito.mock(Image.class);
+        when(image2.getName()).thenReturn("Sunset");
+        when(image2.getCreatedDate()).thenReturn("2017/01/22");
+        when(image2.getImageResourceId()).thenReturn(3);
+        when(image2.getLongDescription()).thenReturn("Long Description");
+        when(image2.getId()).thenReturn(2);
+        when(image2.getLocation()).thenReturn("filepath");
+
+        List<Image> images = new ArrayList<Image>();
+        images.add(image);
+        images.add(image2);
+
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when (imageRepository.GetByCategory(1)).thenReturn(images);
+
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetAll()).thenReturn(categories);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         List<Category> actual = interactor.GetAll();
 
         Assert.assertEquals(2, actual.size());
@@ -132,7 +212,10 @@ public class InteractorsCategoryInteractorTest {
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetAll()).thenReturn(categories);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when(imageRepository.GetByCategory(1)).thenReturn(new ArrayList<Image>());
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         List<Category> actual = interactor.GetAll();
 
         Assert.assertEquals(0, actual.size());
@@ -162,7 +245,30 @@ public class InteractorsCategoryInteractorTest {
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetAll()).thenReturn(categories);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        Image image = Mockito.mock(Image.class);
+        when(image.getName()).thenReturn("Sunrise");
+        when(image.getCreatedDate()).thenReturn("2017/01/22");
+        when(image.getImageResourceId()).thenReturn(2);
+        when(image.getLongDescription()).thenReturn("Long Description");
+        when(image.getId()).thenReturn(1);
+        when(image.getLocation()).thenReturn("filepath");
+
+        Image image2 = Mockito.mock(Image.class);
+        when(image2.getName()).thenReturn("Sunset");
+        when(image2.getCreatedDate()).thenReturn("2017/01/22");
+        when(image2.getImageResourceId()).thenReturn(3);
+        when(image2.getLongDescription()).thenReturn("Long Description");
+        when(image2.getId()).thenReturn(2);
+        when(image2.getLocation()).thenReturn("filepath");
+
+        List<Image> images = new ArrayList<Image>();
+        images.add(image);
+        images.add(image2);
+
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when (imageRepository.GetByCategory(1)).thenReturn(images);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         List<CategoryResponseModel> actual = interactor.GetAllCategories();
 
         Assert.assertEquals(2, actual.size());
@@ -177,7 +283,10 @@ public class InteractorsCategoryInteractorTest {
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetAll()).thenReturn(categories);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when(imageRepository.GetByCategory(1)).thenReturn(new ArrayList<Image>());
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         List<CategoryResponseModel> actual = interactor.GetAllCategories();
 
         Assert.assertEquals(0, actual.size());
@@ -198,7 +307,30 @@ public class InteractorsCategoryInteractorTest {
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetByName("Abstract")).thenReturn(expected);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        Image image = Mockito.mock(Image.class);
+        when(image.getName()).thenReturn("Sunrise");
+        when(image.getCreatedDate()).thenReturn("2017/01/22");
+        when(image.getImageResourceId()).thenReturn(2);
+        when(image.getLongDescription()).thenReturn("Long Description");
+        when(image.getId()).thenReturn(1);
+        when(image.getLocation()).thenReturn("filepath");
+
+        Image image2 = Mockito.mock(Image.class);
+        when(image2.getName()).thenReturn("Sunset");
+        when(image2.getCreatedDate()).thenReturn("2017/01/22");
+        when(image2.getImageResourceId()).thenReturn(3);
+        when(image2.getLongDescription()).thenReturn("Long Description");
+        when(image2.getId()).thenReturn(2);
+        when(image2.getLocation()).thenReturn("filepath");
+
+        List<Image> images = new ArrayList<Image>();
+        images.add(image);
+        images.add(image2);
+
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when (imageRepository.GetByCategory(1)).thenReturn(images);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         Category actual = interactor.GetByName("Abstract");
 
         Assert.assertEquals("Abstract", expected.getName());
@@ -212,7 +344,10 @@ public class InteractorsCategoryInteractorTest {
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetByName("Invalid")).thenReturn(expected);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when(imageRepository.GetByCategory(1)).thenReturn(new ArrayList<Image>());
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         Category actual = interactor.GetByName("Invalid");
 
         Assert.assertEquals(null, expected);
@@ -234,7 +369,30 @@ public class InteractorsCategoryInteractorTest {
         ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
         when (categoryRepository.GetByName("Landscape")).thenReturn(expected);
 
-        CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+        Image image = Mockito.mock(Image.class);
+        when(image.getName()).thenReturn("Sunrise");
+        when(image.getCreatedDate()).thenReturn("2017/01/22");
+        when(image.getImageResourceId()).thenReturn(2);
+        when(image.getLongDescription()).thenReturn("Long Description");
+        when(image.getId()).thenReturn(1);
+        when(image.getLocation()).thenReturn("filepath");
+
+        Image image2 = Mockito.mock(Image.class);
+        when(image2.getName()).thenReturn("Sunset");
+        when(image2.getCreatedDate()).thenReturn("2017/01/22");
+        when(image2.getImageResourceId()).thenReturn(3);
+        when(image2.getLongDescription()).thenReturn("Long Description");
+        when(image2.getId()).thenReturn(2);
+        when(image2.getLocation()).thenReturn("filepath");
+
+        List<Image> images = new ArrayList<Image>();
+        images.add(image);
+        images.add(image2);
+
+        IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+        when (imageRepository.GetByCategory(1)).thenReturn(images);
+
+        CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
         CategoryResponseModel actual = interactor.GetCategoryByName(requestModel);
 
         Assert.assertEquals("Landscape", actual.getName());
@@ -251,7 +409,10 @@ public class InteractorsCategoryInteractorTest {
             ICategoryRepository categoryRepository = Mockito.mock(ICategoryRepository.class);
             when(categoryRepository.GetByName("Street Photography")).thenThrow(new Exception());
 
-            CategoryInteractor interactor = new CategoryInteractor(categoryRepository);
+            IImageRepository imageRepository = Mockito.mock(IImageRepository.class);
+            when(imageRepository.GetByCategory(1)).thenThrow(new Exception());
+
+            CategoryInteractor interactor = new CategoryInteractor(categoryRepository, imageRepository);
             CategoryResponseModel actual = interactor.GetCategoryById(requestModel);
         }
         catch(Exception e) {
