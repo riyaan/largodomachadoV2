@@ -26,7 +26,7 @@ import java.util.List;
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    private static final int DB_VERSION = 8; // TODO: Read from configuration file
+    private static final int DB_VERSION = 10; // TODO: Read from configuration file
 
     public PSLDatabaseHelper(Context context) throws Exception {
         super(context, DB_NAME, null, DB_VERSION);
@@ -104,6 +104,58 @@ import java.util.List;
         }
     }
 
+        /**
+         * Retrieve all Compositions from the Persistence mechanism
+         @return A list of Compositions or an empty list when no Compositions exist
+         @exception  Exception
+         */
+        public List<CompositionDAO> GetAllCompositions() throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            CompositionDAO composition = null;
+            List<CompositionDAO> compositionList = new ArrayList<CompositionDAO>();
+
+            try {
+                db = this.getWritableDatabase();
+
+                cursor = db.query("Composition",
+                        new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                        null, null, null, null, null);
+
+                if (cursor.moveToFirst()) {
+
+                    do {
+                        // output the first row
+                        int _id = Integer.parseInt(cursor.getString(0));
+                        String _name = cursor.getString(1);
+                        String _longDescription = cursor.getString(2);
+                        boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                        // TODO: Use a Mapper?
+                        composition = new CompositionDAO();
+                        composition.setId(_id);
+                        composition.setName(_name);
+                        composition.setLongDescription(_longDescription);
+                        composition.setActive(_isActive);
+
+                        compositionList.add(composition);
+
+                    } while (cursor.moveToNext());
+                }
+
+                return compositionList;
+
+            } catch (Exception ex) {
+                throw new Exception(ex);
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
     /**
      * Retrieve a Category from the Persistence mechanism
     @return A Category or NULL object when the category does not exist
@@ -140,6 +192,54 @@ import java.util.List;
                 }
 
                 return category;
+
+            } catch (Exception ex) {
+                throw ex;
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
+        /**
+         * Retrieve a Composition from the Persistence mechanism
+         @return A Composition or NULL object when the composition does not exist
+         @exception  Exception
+         */
+        public CompositionDAO GetCompositionById(int id) throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            CompositionDAO composition = null;
+            List<CompositionDAO> compositionList = new ArrayList<CompositionDAO>();
+
+            try {
+                db = this.getWritableDatabase();
+
+                cursor = db.query("Composition",
+                        new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                        "_id = ?",
+                        new String[]{Integer.toString(id)},
+                        null, null, null);
+
+                if (cursor.moveToFirst()) {
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                    // TODO: Use a Mapper?
+                    composition = new CompositionDAO();
+                    composition.setId(_id);
+                    composition.setName(_name);
+                    composition.setLongDescription(_longDescription);
+                    composition.setActive(_isActive);
+                }
+
+                return composition;
 
             } catch (Exception ex) {
                 throw ex;
@@ -209,6 +309,62 @@ import java.util.List;
             }
         }
 
+        public List<ImageDAO> GetImagesForComposition(int compositionId) throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            List<ImageDAO> daoList = new ArrayList<ImageDAO>();
+
+            try {
+                db = getReadableDatabase();
+
+                String query = "select i._id, i.Name, i.LongDescription, i.Location, i.ImageResourceId, i.IsActive " +
+                        "from Composition c\n " +
+                        "inner join CompositionImage ci on ci.CompositionId = c._id\n" +
+                        "inner join Image i on i._id = ci.ImageId\n" +
+                        "where c._id = "+ Integer.toString(compositionId);
+
+                cursor = db.rawQuery(query, null);
+
+                if (cursor.moveToFirst()) {
+
+                    do {
+
+                        // output the first row
+                        int _id = Integer.parseInt(cursor.getString(0));
+                        String _name = cursor.getString(1);
+                        String _longDescription = cursor.getString(2);
+                        String _location = cursor.getString(3);
+                        int _imageResourceId = Integer.parseInt(cursor.getString(4));
+                        boolean _isActive = Boolean.parseBoolean(cursor.getString(5));
+
+                        // TODO: Use a Mapper?
+                        ImageDAO dao = new ImageDAO();
+                        dao.setId(_id);
+                        dao.setName(_name);
+                        dao.setLongDescription(_longDescription);
+                        dao.setLocation(_location);
+                        dao.setImageResourceId(_imageResourceId);
+                        dao.setActive(_isActive);
+
+                        daoList.add(dao);
+
+                    }while(cursor.moveToNext());
+                }
+
+                return daoList;
+
+            } catch (Exception ex) {
+                //display.setText(String.format("Error: %s", e.getMessage()));
+                throw new Exception(ex);
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
         public CategoryDAO GetCategoryByName(String categoryName) throws Exception {
             SQLiteDatabase db = null;
             Cursor cursor = null;
@@ -224,18 +380,61 @@ import java.util.List;
                         null, null, null);
 
                 if (cursor.moveToFirst()) {
-                        // output the first row
-                        int _id = Integer.parseInt(cursor.getString(0));
-                        String _name = cursor.getString(1);
-                        String _longDescription = cursor.getString(2);
-                        boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
 
-                        // TODO: Use a Mapper?
-                        dao = new CategoryDAO();
-                        dao.setId(_id);
-                        dao.setName(_name);
-                        dao.setLongDescription(_longDescription);
-                        dao.setActive(_isActive);
+                    // TODO: Use a Mapper?
+                    dao = new CategoryDAO();
+                    dao.setId(_id);
+                    dao.setName(_name);
+                    dao.setLongDescription(_longDescription);
+                    dao.setActive(_isActive);
+                }
+
+                return dao;
+
+            } catch (Exception ex) {
+                //display.setText(String.format("Error: %s", e.getMessage()));
+                throw new Exception(ex);
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
+        public CompositionDAO GetCompositionByName(String compositionName) throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            CompositionDAO dao = null;
+
+            try {
+                db = this.getWritableDatabase();
+
+                cursor = db.query("Composition",
+                        new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                        "Name = ?",
+                        new String[]{compositionName},
+                        null, null, null);
+
+                if (cursor.moveToFirst()) {
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                    // TODO: Use a Mapper?
+                    dao = new CompositionDAO();
+                    dao.setId(_id);
+                    dao.setName(_name);
+                    dao.setLongDescription(_longDescription);
+                    dao.setActive(_isActive);
                 }
 
                 return dao;

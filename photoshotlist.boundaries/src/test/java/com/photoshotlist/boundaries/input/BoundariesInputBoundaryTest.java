@@ -36,6 +36,25 @@ public class BoundariesInputBoundaryTest {
     }
 
     @Test
+    public void testGetCompositionById_Success() {
+
+        CompositionRequestModel requestModel = new CompositionRequestModel();
+        requestModel.setCompositionId(1);
+
+        CompositionResponseModel responseModel = new CompositionResponseModel();
+        responseModel.setId(1);
+        responseModel.setActive(true);
+        responseModel.setName("Rule of Thirds");
+        responseModel.setImageResourceId(2);
+        responseModel.setLongDescription("Blah blah blah");
+
+        ICompositionInputBoundary inputBoundary = Mockito.mock(ICompositionInputBoundary.class);
+        when (inputBoundary.GetCompositionById(requestModel)).thenReturn(responseModel);
+
+        Assert.assertEquals(1, responseModel.getId());
+    }
+
+    @Test
     public void testGetCategoryById_Fail() {
 
         CategoryRequestModel requestModel = new CategoryRequestModel();

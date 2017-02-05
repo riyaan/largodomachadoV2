@@ -11,4 +11,5 @@ import java.util.List;
 public interface IImageInteractor {
 
     public List<Image> GetImagesByCategory(int categoryId);
+    public List<Image> GetImagesByComposition(int compositionId);
 }

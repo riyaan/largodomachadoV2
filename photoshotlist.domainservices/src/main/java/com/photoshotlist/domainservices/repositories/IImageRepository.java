@@ -13,5 +13,6 @@ public interface IImageRepository {
 //    public Image GetById(int id);
 //    public List<Image> GetAll();
     public List<Image> GetByCategory(int categoryId);
+    public List<Image> GetByComposition(int compositionId);
 
 }

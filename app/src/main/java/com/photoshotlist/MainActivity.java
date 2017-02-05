@@ -26,6 +26,8 @@ import java.util.List;
 import activity.CategoryAllFragment;
 import activity.CategoryDetailFragment;
 import activity.CategoryFragment;
+import activity.CompositionAllFragment;
+import activity.CompositionFragment;
 import activity.Drawer;
 import activity.HomeFragment;
 import activity.ShotListFragment;
@@ -97,6 +99,10 @@ CategoryDetailFragment.OnFragmentInteractionListener{
                 fragment = new CategoryFragment();
                 title = getString(R.string.title_categories);
                 break;
+            case 3:
+                fragment = new CompositionFragment();
+                title = getString(R.string.title_compositions);
+                break;
             default:
                 break;
         }
@@ -151,9 +157,61 @@ CategoryDetailFragment.OnFragmentInteractionListener{
         }
     }
 
+    public void onClickAddComposition(View view)
+    {
+        TextView display = null;
+        Cursor cursor = null;
+        SQLiteDatabase db = null;
+
+        try
+        {
+            display = (TextView)findViewById(R.id.textViewDisplayComposition);
+
+            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
+            db = dbHelper.getReadableDatabase();
+            cursor = db.query("Composition", new String[]{"Name"}, null, null, null, null, "RANDOM() LIMIT 1");
+
+            if(cursor.moveToFirst()){
+                // output the first row
+                String dbCompositionName = cursor.getString(0);
+                display.setText(String.format("Random category: %s", dbCompositionName));
+            }
+        }
+        catch(Exception e){
+            display.setText(String.format("Error: %s", e.getMessage()));
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+
+            if(db != null)
+                db.close();
+        }
+    }
+
     public void onClickViewAllCategory(View view)
     {
         Fragment fragment = new CategoryAllFragment();
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+
+            // TODO: Start - This gets the back button to work
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            // TODO: End - This gets the back button to work
+
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+            // getSupportActionBar().setTitle("All Categories");
+        }
+    }
+
+    public void onClickViewAllCompositions(View view)
+    {
+        Fragment fragment = new CompositionAllFragment();
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -9,4 +9,5 @@ import java.util.List;
 public interface IImageInputBoundary {
 
     List<ImageResponseModel> GetImagesByCategory(ImageRequestModel requestModel);
+    List<ImageResponseModel> GetImagesByComposition(ImageRequestModel requestModel);
 }

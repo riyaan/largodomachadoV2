@@ -6,6 +6,7 @@ package com.photoshotlist.boundaries.input;
 
 public class ImageRequestModel {
     private int categoryId;
+    private int compositionId;
 
     public int getCategoryId() {
         return categoryId;
@@ -13,5 +14,13 @@ public class ImageRequestModel {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public int getCompositionId() {
+        return compositionId;
+    }
+
+    public void setCompositionId(int compositionId) {
+        this.compositionId = compositionId;
     }
 }

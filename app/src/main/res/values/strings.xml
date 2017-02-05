@@ -2,6 +2,8 @@
     <string name="app_name">PhotoShotList</string>
     <string name="button_add_category">Random Category</string>
     <string name="button_all_categories">All Categories</string>
+    <string name="button_add_composition">Random Composition</string>
+    <string name="button_all_compositions">All Compositions</string>
     <string name="button_new_shotlist">Shot Lists</string>
     <string name="hint_edittext_shotlist_name">Shot List Name</string>
     <string name="hint_edittext_shotlist_description">Shot List Description</string>
@@ -15,16 +17,19 @@
     <string name="nav_item_home">Home</string>
     <string name="nav_item_shotlists">Shot Lists</string>
     <string name="nav_item_categories">Categories</string>
+    <string name="nav_item_compositions">Compositions</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_home</item>
         <item>@string/nav_item_shotlists</item>
         <item>@string/nav_item_categories</item>
+        <item>@string/nav_item_compositions</item>
     </string-array>
 
     <string name="title_shotlists">Shot Lists</string>
     <string name="title_categories">Categories</string>
+    <string name="title_compositions">Compositions</string>
     <string name="title_home">Home</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -51,4 +51,30 @@ public class ImageInteractor implements IImageInteractor, IImageInputBoundary {
         images = this.imageRepository.GetByCategory(categoryId);
         return images;
     }
+
+    @Override
+    public List<ImageResponseModel> GetImagesByComposition(ImageRequestModel requestModel) {
+
+        List<Image> images = GetImagesByComposition(requestModel.getCompositionId());
+        List<ImageResponseModel> imageResponseModels = new ArrayList<ImageResponseModel>();
+
+        for(Image item : images){
+
+            ImageResponseModel irm = ImageResponseModelFactory.getInstance().create(
+                    item.getId(), item.getName(), item.getLongDescription(), item.getLocation(),
+                    item.getImageResourceId(), item.getCreatedDate(), item.isActive());
+
+            imageResponseModels.add(irm);
+        }
+
+        return imageResponseModels;
+    }
+
+    @Override
+    public List<Image> GetImagesByComposition(int compositionId) {
+
+        List<Image> images = new ArrayList<Image>();
+        images = this.imageRepository.GetByComposition(compositionId);
+        return images;
+    }
 }
