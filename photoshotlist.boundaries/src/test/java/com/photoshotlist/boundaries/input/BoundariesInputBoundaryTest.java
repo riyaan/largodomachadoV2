@@ -29,7 +29,7 @@ public class BoundariesInputBoundaryTest {
         responseModel.setImageResourceId(2);
         responseModel.setLongDescription("Blah blah blah");
 
-        IInputBoundary inputBoundary = Mockito.mock(IInputBoundary.class);
+        ICategoryInputBoundary inputBoundary = Mockito.mock(ICategoryInputBoundary.class);
         when (inputBoundary.GetCategoryById(requestModel)).thenReturn(responseModel);
 
         Assert.assertEquals(1, responseModel.getId());
@@ -43,7 +43,7 @@ public class BoundariesInputBoundaryTest {
 
         CategoryResponseModel responseModel = null;
 
-        IInputBoundary inputBoundary = Mockito.mock(IInputBoundary.class);
+        ICategoryInputBoundary inputBoundary = Mockito.mock(ICategoryInputBoundary.class);
         when (inputBoundary.GetCategoryById(requestModel)).thenReturn(responseModel);
 
         Assert.assertEquals(null, responseModel);
@@ -84,7 +84,7 @@ public class BoundariesInputBoundaryTest {
         responseModel.setImageResourceId(2);
         responseModel.setLongDescription("Blah blah blah");
 
-        IInputBoundary inputBoundary = Mockito.mock(IInputBoundary.class);
+        ICategoryInputBoundary inputBoundary = Mockito.mock(ICategoryInputBoundary.class);
         when (inputBoundary.GetCategoryByName(requestModel)).thenReturn(responseModel);
 
         Assert.assertEquals(1, responseModel.getId());
@@ -98,7 +98,7 @@ public class BoundariesInputBoundaryTest {
 //
 //        CategoryResponseModel responseModel = null;
 //
-//        IInputBoundary inputBoundary = Mockito.mock(IInputBoundary.class);
+//        ICategoryInputBoundary inputBoundary = Mockito.mock(ICategoryInputBoundary.class);
 //        when (inputBoundary.GetCategoryById(requestModel)).thenReturn(responseModel);
 //
 //        Assert.assertEquals(null, responseModel);

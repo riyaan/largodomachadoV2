@@ -22,7 +22,7 @@ public class ImageInteractor implements IImageInteractor, IImageInputBoundary {
         this.imageRepository = imageRepository;
     }
 
-    // IInputBoundary Implementation
+    // ICategoryInputBoundary Implementation
 
     // This is called by the Delivery Mechanism -> input Boundary -> Interactor
 

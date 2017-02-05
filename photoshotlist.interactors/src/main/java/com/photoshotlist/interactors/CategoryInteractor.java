@@ -2,7 +2,7 @@ package com.photoshotlist.interactors;
 
 import com.photoshotlist.boundaries.input.CategoryRequestModel;
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
-import com.photoshotlist.boundaries.input.IInputBoundary;
+import com.photoshotlist.boundaries.input.ICategoryInputBoundary;
 import com.photoshotlist.boundaries.input.ImageResponseModel;
 import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Category;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by PhpDev on 2017/01/14.
  */
 
-public class CategoryInteractor implements ICategoryInteractor, IInputBoundary {
+public class CategoryInteractor implements ICategoryInteractor, ICategoryInputBoundary {
 
     private ICategoryRepository categoryRepository;
     private IImageRepository imageRepository;
@@ -93,7 +93,7 @@ public class CategoryInteractor implements ICategoryInteractor, IInputBoundary {
     }
 
 
-    // IInputBoundary Implementation
+    // ICategoryInputBoundary Implementation
 
     // This is called by the Delivery Mechanism -> input Boundary -> Interactor
     @Override

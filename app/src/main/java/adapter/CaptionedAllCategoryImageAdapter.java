@@ -49,6 +49,9 @@ public class CaptionedAllCategoryImageAdapter extends RecyclerView.Adapter<Capti
         imageView.setContentDescription(captions[position]);
         TextView textView = (TextView)cardView.findViewById(R.id.textViewCategoryAll);
         textView.setText(captions[position]);
+
+        TextView textViewWriteup = (TextView)cardView.findViewById(R.id.textViewWriteUp);
+        textViewWriteup.setText("test");
     }
 
     @Override

@@ -167,7 +167,7 @@ CategoryDetailFragment.OnFragmentInteractionListener{
             fragmentTransaction.commit();
 
             // set the toolbar title
-            getSupportActionBar().setTitle("All Categories");
+            // getSupportActionBar().setTitle("All Categories");
         }
     }
 

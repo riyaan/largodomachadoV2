@@ -82,18 +82,6 @@ public class CategoryDetailFragment extends Fragment {
         // Get all images for this Category
         List<ImageDO> imageList = new ArrayList<ImageDO>();
 
-        // Old Code
-//        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(getActivity());
-//        try {
-//            ShotListDO category = businessHelper.GetCategoryByName(mParam1);
-//
-//            // Get all the images for this Category
-//            imageList = businessHelper.GetAllImagesForCategory(category.getId());
-//        } catch (PSLException e) {
-//            e.printStackTrace();
-//        }
-
-        // New Code
         Context context = getActivity();
 
         CategoryInteractor categoryInteractor = new CategoryInteractor(
@@ -104,13 +92,6 @@ public class CategoryDetailFragment extends Fragment {
 
         CategoryResponseModel categoryResponseModel =
                 categoryInteractor.GetCategoryByName(requestModel);
-
-//            ImageRequestModel imageRequestModel = new ImageRequestModel();
-//            imageRequestModel.setCategoryId(categoryResponseModel.getId());
-//
-//            ImageInteractor imageInteractor = new ImageInteractor(new ImageRepository(context));
-//            List<ImageResponseModel> imageResponseModels =
-//                    imageInteractor.GetImagesByCategory(imageRequestModel);
 
             for(ImageResponseModel item : categoryResponseModel.getImageResponseModels()){
 
