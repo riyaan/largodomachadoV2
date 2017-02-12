@@ -1,9 +1,6 @@
 package com.photoshotlist;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,17 +8,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.photoshotlist.dal.PSLDatabaseHelper;
-import com.photoshotlist.dal.ShotListDAO;
-
-import java.util.List;
+import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.domainmodels.entities.Composition;
+import com.photoshotlist.infrastructure.repositories.CategoryRepository;
+import com.photoshotlist.infrastructure.repositories.CompositionRepository;
+import com.photoshotlist.infrastructure.repositories.ImageRepository;
+import com.photoshotlist.interactors.ChallengeMeInteractor;
 
 import activity.CategoryAllFragment;
 import activity.CategoryDetailFragment;
@@ -31,8 +29,6 @@ import activity.CompositionFragment;
 import activity.Drawer;
 import activity.HomeFragment;
 import activity.ShotListFragment;
-import adapter.AlbumsAdapter;
-import model.Album;
 
 public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener,
 CategoryDetailFragment.OnFragmentInteractionListener{
@@ -128,65 +124,31 @@ CategoryDetailFragment.OnFragmentInteractionListener{
     public void onClickAddCategory(View view)
     {
         TextView display = null;
-        Cursor cursor = null;
-        SQLiteDatabase db = null;
+        display = (TextView)findViewById(R.id.textViewDisplayCategory);
 
-        try
-        {
-            display = (TextView)findViewById(R.id.textViewDisplayCategory);
+        ChallengeMeInteractor cmi = new ChallengeMeInteractor(new CompositionRepository(this),
+                new CategoryRepository(this), new ImageRepository(this));
+        Category category = cmi.GetRandomCategory();
 
-            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
-            db = dbHelper.getReadableDatabase();
-            cursor = db.query("Category", new String[]{"Name"}, null, null, null, null, "RANDOM() LIMIT 1");
-
-            if(cursor.moveToFirst()){
-                // output the first row
-                String dbCategoryName = cursor.getString(0);
-                display.setText(String.format("Random category: %s", dbCategoryName));
-            }
-        }
-        catch(Exception e){
-            display.setText(String.format("Error: %s", e.getMessage()));
-        }
-        finally {
-            if(cursor != null)
-                cursor.close();
-
-            if(db != null)
-                db.close();
-        }
+        if(category != null)
+            display.setText(category.getName());
+        else
+            display.setText("Could not retrieve a random Category.");
     }
 
     public void onClickAddComposition(View view)
     {
         TextView display = null;
-        Cursor cursor = null;
-        SQLiteDatabase db = null;
+        display = (TextView)findViewById(R.id.textViewDisplayComposition);
 
-        try
-        {
-            display = (TextView)findViewById(R.id.textViewDisplayComposition);
+        ChallengeMeInteractor cmi = new ChallengeMeInteractor(new CompositionRepository(this),
+                new CategoryRepository(this), new ImageRepository(this));
+        Composition composition = cmi.GetRandomComposition();
 
-            PSLDatabaseHelper dbHelper = PSLDatabaseHelper.getInstance(this);
-            db = dbHelper.getReadableDatabase();
-            cursor = db.query("Composition", new String[]{"Name"}, null, null, null, null, "RANDOM() LIMIT 1");
-
-            if(cursor.moveToFirst()){
-                // output the first row
-                String dbCompositionName = cursor.getString(0);
-                display.setText(String.format("Random category: %s", dbCompositionName));
-            }
-        }
-        catch(Exception e){
-            display.setText(String.format("Error: %s", e.getMessage()));
-        }
-        finally {
-            if(cursor != null)
-                cursor.close();
-
-            if(db != null)
-                db.close();
-        }
+        if(composition != null)
+            display.setText(composition.getName());
+        else
+            display.setText("Could not retrieve a random Composition.");
     }
 
     public void onClickViewAllCategory(View view)

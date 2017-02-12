@@ -119,4 +119,27 @@ public class CompositionRepository implements ICompositionRepository {
 
         return composition;
     }
+
+    @Override
+    public Composition RandomComposition() {
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+
+        // TODO: Create a factory method
+        CompositionDAO compositionDAO = null;
+        Composition composition = null;
+
+        try {
+            compositionDAO = databaseHelper.RandomComposition();
+        }catch (Exception ex) {
+        }
+
+        if(compositionDAO == null)
+            return  composition;
+
+        composition = CompositionFactory.getInstance().create(compositionDAO.getId(), compositionDAO.getName(),
+                compositionDAO.getLongDescription(), compositionDAO.getImageResourceId(),
+                compositionDAO.isActive(), new ArrayList<Image>());
+
+        return composition;
+    }
 }

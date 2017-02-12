@@ -451,4 +451,92 @@ import java.util.List;
             }
         }
 
+        /**
+         * Retrieve a random Category from the Persistence mechanism
+         @return A Category or NULL object if an error occurs
+         @exception  Exception
+         */
+        public CategoryDAO RandomCategory() throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            CategoryDAO category = null;
+
+            try {
+
+                db = this.getReadableDatabase();
+                cursor = db.query("Category", new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                        null, null, null, null, "RANDOM() LIMIT 1");
+
+                if (cursor.moveToFirst()) {
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                    // TODO: Use a Mapper?
+                    category = new CategoryDAO();
+                    category.setId(_id);
+                    category.setName(_name);
+                    category.setLongDescription(_longDescription);
+                    category.setActive(_isActive);
+                }
+
+                return category;
+
+            } catch (Exception ex) {
+                throw ex;
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
+        /**
+         * Retrieve a random Composition from the Persistence mechanism
+         @return A Composition or NULL object if an error occurs
+         @exception  Exception
+         */
+        public CompositionDAO RandomComposition() throws Exception {
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
+            CompositionDAO composition = null;
+
+            try {
+
+                db = this.getReadableDatabase();
+                cursor = db.query("Composition", new String[]{"_id", "Name", "LongDescription", "IsActive"},
+                        null, null, null, null, "RANDOM() LIMIT 1");
+
+                if (cursor.moveToFirst()) {
+                    // output the first row
+                    int _id = Integer.parseInt(cursor.getString(0));
+                    String _name = cursor.getString(1);
+                    String _longDescription = cursor.getString(2);
+                    boolean _isActive = Boolean.parseBoolean(cursor.getString(3));
+
+                    // TODO: Use a Mapper?
+                    composition = new CompositionDAO();
+                    composition.setId(_id);
+                    composition.setName(_name);
+                    composition.setLongDescription(_longDescription);
+                    composition.setActive(_isActive);
+                }
+
+                return composition;
+
+            } catch (Exception ex) {
+                throw ex;
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+
+                if (db != null)
+                    db.close();
+            }
+        }
+
 }

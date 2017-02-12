@@ -115,4 +115,29 @@ public class CategoryRepository implements ICategoryRepository {
 
         return category;
     }
+
+    @Override
+    public Category RandomCategory()
+    {
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+
+        // TODO: Create a factory method
+        CategoryDAO categoryDAO = null;
+        Category category = null;
+
+        try {
+            categoryDAO = databaseHelper.RandomCategory();
+        }catch (Exception ex) {
+        }
+
+        if(categoryDAO == null)
+            return  category;
+
+        category = CategoryFactory.getInstance().create(categoryDAO.getId(), categoryDAO.getName(),
+                categoryDAO.getLongDescription(), categoryDAO.getImageResourceId(),
+                categoryDAO.isActive(), new ArrayList<Image>());
+
+        return category;
+    }
+
 }

@@ -12,5 +12,5 @@ public interface ICompositionRepository {
     public Composition GetById(int id);
     public List<Composition> GetAll();
     public Composition GetByName(String name);
-
+    public Composition RandomComposition();
 }
