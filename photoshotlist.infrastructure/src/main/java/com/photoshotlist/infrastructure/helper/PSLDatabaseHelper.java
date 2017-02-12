@@ -26,7 +26,7 @@ import java.util.List;
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    private static final int DB_VERSION = 10; // TODO: Read from configuration file
+    private static final int DB_VERSION = 12; // TODO: Read from configuration file
 
     public PSLDatabaseHelper(Context context) throws Exception {
         super(context, DB_NAME, null, DB_VERSION);
