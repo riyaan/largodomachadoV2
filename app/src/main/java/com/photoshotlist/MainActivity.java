@@ -25,13 +25,15 @@ import activity.CategoryAllFragment;
 import activity.CategoryDetailFragment;
 import activity.CategoryFragment;
 import activity.CompositionAllFragment;
+import activity.CompositionDetailFragment;
 import activity.CompositionFragment;
 import activity.Drawer;
 import activity.HomeFragment;
 import activity.ShotListFragment;
 
 public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener,
-CategoryDetailFragment.OnFragmentInteractionListener{
+CategoryDetailFragment.OnFragmentInteractionListener,
+        CompositionDetailFragment.OnFragmentInteractionListener{
 
     private static String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolbar;
