@@ -151,7 +151,7 @@ public class InteractorsCompositionInteractorTest {
     }
 
     @Test
-    public void GetAll_Success() {
+    public void GetAllCompositions_Success() {
 
         Composition compositionOne = Mockito.mock(Composition.class);
         when (compositionOne.getId()).thenReturn(1);
@@ -205,7 +205,7 @@ public class InteractorsCompositionInteractorTest {
     }
 
     @Test
-    public void GetAll_Fail() {
+    public void GetAllCompositions_Fail() {
 
         List<Composition> compositions = new ArrayList<Composition>();
 
@@ -222,7 +222,7 @@ public class InteractorsCompositionInteractorTest {
     }
 
     @Test
-    public void GetAllCompositions_Success() {
+    public void GetAllCompositionResponseModels_Success() {
 
         Composition compositionOne = Mockito.mock(Composition.class);
         when (compositionOne.getId()).thenReturn(1);
@@ -276,7 +276,7 @@ public class InteractorsCompositionInteractorTest {
 
 
     @Test
-    public void GetAllCompositions_Fail() {
+    public void GetAllCompositionResponseModels_Fail() {
 
         List<Composition> compositions = new ArrayList<Composition>();
 

@@ -1,10 +1,11 @@
 package com.photoshotlist.interactors;
 
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
-import com.photoshotlist.boundaries.input.CompositionRequestModel;
 import com.photoshotlist.boundaries.input.CompositionResponseModel;
 import com.photoshotlist.boundaries.input.IChallengeMeInputBoundary;
 import com.photoshotlist.boundaries.input.ImageResponseModel;
+import com.photoshotlist.boundaries.input.factories.CategoryResponseModelFactory;
+import com.photoshotlist.boundaries.input.factories.CompositionResponseModelFactory;
 import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainmodels.entities.Composition;
@@ -26,7 +27,9 @@ public class ChallengeMeInteractor implements IChallengeMeInteractor, IChallenge
     private ICategoryRepository categoryRepository;
     private IImageRepository imageRepository;
 
-    public ChallengeMeInteractor(ICompositionRepository compositionRepository, ICategoryRepository categoryRepository, IImageRepository imageRepository){
+    public ChallengeMeInteractor(ICompositionRepository compositionRepository,
+                                 ICategoryRepository categoryRepository,
+                                 IImageRepository imageRepository){
         this.compositionRepository = compositionRepository;
         this.categoryRepository = categoryRepository;
         this.imageRepository = imageRepository;
@@ -78,14 +81,10 @@ public class ChallengeMeInteractor implements IChallengeMeInteractor, IChallenge
     public CompositionResponseModel RandomComposition() {
         Composition composition = GetRandomComposition();
 
-        // TODO: Use a Factory method
-        CompositionResponseModel responseModel = new CompositionResponseModel();
-        responseModel.setId(composition.getId());
-        responseModel.setName(composition.getName());
-        responseModel.setLongDescription(composition.getLongDescription());
-        responseModel.setImageResourceId(composition.getImageResourceId());
-        responseModel.setActive(composition.isActive());
-        responseModel.setImageResponseModels(LoadImages(composition.getImages()));
+        CompositionResponseModel responseModel = CompositionResponseModelFactory.getInstance().
+                create(composition.getId(), composition.getName(), composition.getLongDescription(),
+                        composition.getImageResourceId(), composition.isActive(),
+                        LoadImages(composition.getImages()));
 
         return responseModel;
     }
@@ -94,13 +93,10 @@ public class ChallengeMeInteractor implements IChallengeMeInteractor, IChallenge
     public CategoryResponseModel RandomCategory() {
         Category category = GetRandomCategory();
 
-        CategoryResponseModel responseModel = new CategoryResponseModel();
-        responseModel.setId(category.getId());
-        responseModel.setName(category.getName());
-        responseModel.setLongDescription(category.getLongDescription());
-        responseModel.setImageResourceId(category.getImageResourceId());
-        responseModel.setActive(category.isActive());
-        responseModel.setImageResponseModels(LoadImages(category.getImages()));
+        CategoryResponseModel responseModel = CategoryResponseModelFactory.getInstance()
+                .create(category.getId(), category.getName(), category.getLongDescription(),
+                        category.getImageResourceId(), category.isActive(),
+                        LoadImages(category.getImages()));
 
         return responseModel;
     }

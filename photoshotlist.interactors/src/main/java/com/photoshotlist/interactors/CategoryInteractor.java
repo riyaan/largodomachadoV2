@@ -4,11 +4,13 @@ import com.photoshotlist.boundaries.input.CategoryRequestModel;
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
 import com.photoshotlist.boundaries.input.ICategoryInputBoundary;
 import com.photoshotlist.boundaries.input.ImageResponseModel;
+import com.photoshotlist.boundaries.input.factories.CategoryResponseModelFactory;
 import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainmodels.entities.Image;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
+import com.photoshotlist.helpers.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,14 +103,10 @@ public class CategoryInteractor implements ICategoryInteractor, ICategoryInputBo
 
         Category category = GetById(requestModel.getCategoryId());
 
-        // TODO: Use a Factory method
-        CategoryResponseModel responseModel = new CategoryResponseModel();
-        responseModel.setId(category.getId());
-        responseModel.setName(category.getName());
-        responseModel.setLongDescription(category.getLongDescription());
-        responseModel.setImageResourceId(category.getImageResourceId());
-        responseModel.setActive(category.isActive());
-        responseModel.setImageResponseModels(LoadImages(category.getImages()));
+        CategoryResponseModel responseModel = CategoryResponseModelFactory.getInstance().
+                create(category.getId(), category.getName(), category.getLongDescription(),
+                        category.getImageResourceId(), category.isActive(),
+                        ImageHelper.LoadImages(category.getImages()));
 
         return responseModel;
     }
@@ -121,13 +119,10 @@ public class CategoryInteractor implements ICategoryInteractor, ICategoryInputBo
 
         for(Category item : categories){
 
-            CategoryResponseModel crm = new CategoryResponseModel();
-            crm.setId(item.getId());
-            crm.setName(item.getName());
-            crm.setLongDescription(item.getLongDescription());
-            crm.setImageResourceId(item.getImageResourceId());
-            crm.setActive(item.isActive());
-            crm.setImageResponseModels(LoadImages(item.getImages()));
+            CategoryResponseModel crm = CategoryResponseModelFactory.getInstance().
+                    create(item.getId(), item.getName(), item.getLongDescription(),
+                            item.getImageResourceId(), item.isActive(),
+                            ImageHelper.LoadImages(item.getImages()));
 
             categoryResponseModels.add(crm);
         }
@@ -140,31 +135,11 @@ public class CategoryInteractor implements ICategoryInteractor, ICategoryInputBo
 
         Category category = GetByName(requestModel.getCategoryName());
 
-        // TODO: Use a Factory method
-        CategoryResponseModel responseModel = new CategoryResponseModel();
-        responseModel.setId(category.getId());
-        responseModel.setName(category.getName());
-        responseModel.setLongDescription(category.getLongDescription());
-        responseModel.setImageResourceId(category.getImageResourceId());
-        responseModel.setActive(category.isActive());
-        responseModel.setImageResponseModels(LoadImages(category.getImages()));
+        CategoryResponseModel responseModel = CategoryResponseModelFactory.getInstance().
+                create(category.getId(), category.getName(), category.getLongDescription(),
+                        category.getImageResourceId(), category.isActive(),
+                        ImageHelper.LoadImages(category.getImages()));
 
         return responseModel;
-    }
-
-    private List<ImageResponseModel> LoadImages(List<Image> imageList)
-    {
-        List<ImageResponseModel> imageResponseModels = new ArrayList<ImageResponseModel>();
-        for(Image image: imageList){
-
-            ImageResponseModel irm = ImageResponseModelFactory.getInstance().create(image.getId(),
-                    image.getName(), image.getLongDescription(), image.getLocation(),
-                    image.getImageResourceId(), image.getCreatedDate(), image.isActive()
-            );
-
-            imageResponseModels.add(irm);
-        }
-
-        return imageResponseModels;
     }
 }

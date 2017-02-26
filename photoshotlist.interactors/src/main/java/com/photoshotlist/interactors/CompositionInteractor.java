@@ -4,11 +4,13 @@ import com.photoshotlist.boundaries.input.CompositionRequestModel;
 import com.photoshotlist.boundaries.input.CompositionResponseModel;
 import com.photoshotlist.boundaries.input.ICompositionInputBoundary;
 import com.photoshotlist.boundaries.input.ImageResponseModel;
+import com.photoshotlist.boundaries.input.factories.CompositionResponseModelFactory;
 import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Composition;
 import com.photoshotlist.domainmodels.entities.Image;
 import com.photoshotlist.domainservices.repositories.ICompositionRepository;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
+import com.photoshotlist.helpers.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,14 +103,10 @@ public class CompositionInteractor implements ICompositionInteractor, ICompositi
 
         Composition composition = GetById(requestModel.getCompositionId());
 
-        // TODO: Use a Factory method
-        CompositionResponseModel responseModel = new CompositionResponseModel();
-        responseModel.setId(composition.getId());
-        responseModel.setName(composition.getName());
-        responseModel.setLongDescription(composition.getLongDescription());
-        responseModel.setImageResourceId(composition.getImageResourceId());
-        responseModel.setActive(composition.isActive());
-        responseModel.setImageResponseModels(LoadImages(composition.getImages()));
+        CompositionResponseModel responseModel = CompositionResponseModelFactory.getInstance().
+                create(composition.getId(), composition.getName(), composition.getLongDescription(),
+                        composition.getImageResourceId(), composition.isActive(),
+                        ImageHelper.LoadImages(composition.getImages()));
 
         return responseModel;
     }
@@ -127,7 +125,7 @@ public class CompositionInteractor implements ICompositionInteractor, ICompositi
             crm.setLongDescription(item.getLongDescription());
             crm.setImageResourceId(item.getImageResourceId());
             crm.setActive(item.isActive());
-            crm.setImageResponseModels(LoadImages(item.getImages()));
+            crm.setImageResponseModels(ImageHelper.LoadImages(item.getImages()));
 
             compositionResponseModels.add(crm);
         }
@@ -140,31 +138,11 @@ public class CompositionInteractor implements ICompositionInteractor, ICompositi
 
         Composition composition = GetByName(requestModel.getCompositionName());
 
-        // TODO: Use a Factory method
-        CompositionResponseModel responseModel = new CompositionResponseModel();
-        responseModel.setId(composition.getId());
-        responseModel.setName(composition.getName());
-        responseModel.setLongDescription(composition.getLongDescription());
-        responseModel.setImageResourceId(composition.getImageResourceId());
-        responseModel.setActive(composition.isActive());
-        responseModel.setImageResponseModels(LoadImages(composition.getImages()));
+        CompositionResponseModel responseModel = CompositionResponseModelFactory.getInstance().
+                create(composition.getId(), composition.getName(), composition.getLongDescription(),
+                        composition.getImageResourceId(), composition.isActive(),
+                        ImageHelper.LoadImages(composition.getImages()));
 
         return responseModel;
-    }
-
-    private List<ImageResponseModel> LoadImages(List<Image> imageList)
-    {
-        List<ImageResponseModel> imageResponseModels = new ArrayList<ImageResponseModel>();
-        for(Image image: imageList){
-
-            ImageResponseModel irm = ImageResponseModelFactory.getInstance().create(image.getId(),
-                    image.getName(), image.getLongDescription(), image.getLocation(),
-                    image.getImageResourceId(), image.getCreatedDate(), image.isActive()
-            );
-
-            imageResponseModels.add(irm);
-        }
-
-        return imageResponseModels;
     }
 }
