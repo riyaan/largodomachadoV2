@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.domainmodels.entities.ChallengeMe;
 import com.photoshotlist.domainmodels.entities.Composition;
 import com.photoshotlist.infrastructure.repositories.CategoryRepository;
 import com.photoshotlist.infrastructure.repositories.CompositionRepository;
@@ -130,12 +131,15 @@ CategoryDetailFragment.OnFragmentInteractionListener,
 
         ChallengeMeInteractor cmi = new ChallengeMeInteractor(new CompositionRepository(this),
                 new CategoryRepository(this), new ImageRepository(this));
-        Category category = cmi.GetRandomCategory();
+        ChallengeMe cm = cmi.GetRandom();
 
-        if(category != null)
-            display.setText(category.getName());
+        if(cm != null)
+            //display.setText(category.getName());
+            display.setText(String.format("Category: %s %n Composition: %s",
+                    cm.getCategory().getName(), cm.getComposition().getName()));
+
         else
-            display.setText("Could not retrieve a random Category.");
+            display.setText("Could not retrieve a Challenge Me item.");
     }
 
     public void onClickAddComposition(View view)
@@ -143,14 +147,14 @@ CategoryDetailFragment.OnFragmentInteractionListener,
         TextView display = null;
         display = (TextView)findViewById(R.id.textViewDisplayComposition);
 
-        ChallengeMeInteractor cmi = new ChallengeMeInteractor(new CompositionRepository(this),
-                new CategoryRepository(this), new ImageRepository(this));
-        Composition composition = cmi.GetRandomComposition();
-
-        if(composition != null)
-            display.setText(composition.getName());
-        else
-            display.setText("Could not retrieve a random Composition.");
+//        ChallengeMeInteractor cmi = new ChallengeMeInteractor(new CompositionRepository(this),
+//                new CategoryRepository(this), new ImageRepository(this));
+//        Composition composition = cmi.GetRandomComposition();
+//
+//        if(composition != null)
+//            display.setText(composition.getName());
+//        else
+//            display.setText("Could not retrieve a random Composition.");
     }
 
     public void onClickViewAllCategory(View view)

@@ -3,9 +3,7 @@ package com.photoshotlist.interactors;
 import com.photoshotlist.boundaries.input.CompositionRequestModel;
 import com.photoshotlist.boundaries.input.CompositionResponseModel;
 import com.photoshotlist.boundaries.input.ICompositionInputBoundary;
-import com.photoshotlist.boundaries.input.ImageResponseModel;
 import com.photoshotlist.boundaries.input.factories.CompositionResponseModelFactory;
-import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Composition;
 import com.photoshotlist.domainmodels.entities.Image;
 import com.photoshotlist.domainservices.repositories.ICompositionRepository;
@@ -119,13 +117,10 @@ public class CompositionInteractor implements ICompositionInteractor, ICompositi
 
         for(Composition item : categories){
 
-            CompositionResponseModel crm = new CompositionResponseModel();
-            crm.setId(item.getId());
-            crm.setName(item.getName());
-            crm.setLongDescription(item.getLongDescription());
-            crm.setImageResourceId(item.getImageResourceId());
-            crm.setActive(item.isActive());
-            crm.setImageResponseModels(ImageHelper.LoadImages(item.getImages()));
+            CompositionResponseModel crm = CompositionResponseModelFactory.getInstance().
+                    create(item.getId(), item.getName(), item.getLongDescription(),
+                            item.getImageResourceId(), item.isActive(),
+                            ImageHelper.LoadImages(item.getImages()));
 
             compositionResponseModels.add(crm);
         }

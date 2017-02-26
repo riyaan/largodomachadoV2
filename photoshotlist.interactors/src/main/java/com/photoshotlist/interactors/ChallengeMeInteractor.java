@@ -1,21 +1,20 @@
 package com.photoshotlist.interactors;
 
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
+import com.photoshotlist.boundaries.input.ChallengeMeResponseModel;
 import com.photoshotlist.boundaries.input.CompositionResponseModel;
 import com.photoshotlist.boundaries.input.IChallengeMeInputBoundary;
-import com.photoshotlist.boundaries.input.ImageResponseModel;
 import com.photoshotlist.boundaries.input.factories.CategoryResponseModelFactory;
+import com.photoshotlist.boundaries.input.factories.ChallengeMeResponseModelFactory;
 import com.photoshotlist.boundaries.input.factories.CompositionResponseModelFactory;
-import com.photoshotlist.boundaries.input.factories.ImageResponseModelFactory;
 import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.domainmodels.entities.ChallengeMe;
 import com.photoshotlist.domainmodels.entities.Composition;
-import com.photoshotlist.domainmodels.entities.Image;
+import com.photoshotlist.domainservices.factories.ChallengeMeFactory;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 import com.photoshotlist.domainservices.repositories.ICompositionRepository;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.photoshotlist.helpers.ImageHelper;
 
 /**
  * Created by PhpDev on 2017/01/14.
@@ -35,24 +34,7 @@ public class ChallengeMeInteractor implements IChallengeMeInteractor, IChallenge
         this.imageRepository = imageRepository;
     }
 
-    private List<ImageResponseModel> LoadImages(List<Image> imageList)
-    {
-        List<ImageResponseModel> imageResponseModels = new ArrayList<ImageResponseModel>();
-        for(Image image: imageList){
-
-            ImageResponseModel irm = ImageResponseModelFactory.getInstance().create(image.getId(),
-                    image.getName(), image.getLongDescription(), image.getLocation(),
-                    image.getImageResourceId(), image.getCreatedDate(), image.isActive()
-            );
-
-            imageResponseModels.add(irm);
-        }
-
-        return imageResponseModels;
-    }
-
-    @Override
-    public Composition GetRandomComposition() {
+    private Composition GetRandomComposition() {
         Composition composition = null;
         composition = this.compositionRepository.RandomComposition();
 
@@ -64,8 +46,7 @@ public class ChallengeMeInteractor implements IChallengeMeInteractor, IChallenge
         return composition;
     }
 
-    @Override
-    public Category GetRandomCategory() {
+    private Category GetRandomCategory() {
         Category category = null;
         category = this.categoryRepository.RandomCategory();
 
@@ -78,26 +59,39 @@ public class ChallengeMeInteractor implements IChallengeMeInteractor, IChallenge
     }
 
     @Override
-    public CompositionResponseModel RandomComposition() {
-        Composition composition = GetRandomComposition();
+    public ChallengeMe GetRandom() {
 
-        CompositionResponseModel responseModel = CompositionResponseModelFactory.getInstance().
-                create(composition.getId(), composition.getName(), composition.getLongDescription(),
-                        composition.getImageResourceId(), composition.isActive(),
-                        LoadImages(composition.getImages()));
+        ChallengeMe challengeMe = ChallengeMeFactory.getInstance().create(GetRandomCategory(),
+                GetRandomComposition());
 
-        return responseModel;
+        return challengeMe;
     }
 
     @Override
-    public CategoryResponseModel RandomCategory() {
-        Category category = GetRandomCategory();
+    public ChallengeMeResponseModel Random() {
 
-        CategoryResponseModel responseModel = CategoryResponseModelFactory.getInstance()
-                .create(category.getId(), category.getName(), category.getLongDescription(),
-                        category.getImageResourceId(), category.isActive(),
-                        LoadImages(category.getImages()));
+        ChallengeMe challengeMe = GetRandom();
+
+        CategoryResponseModel categoryResponseModel = CategoryResponseModelFactory.getInstance()
+                .create(challengeMe.getCategory().getId(),
+                        challengeMe.getCategory().getName(),
+                        challengeMe.getCategory().getLongDescription(),
+                        challengeMe.getCategory().getImageResourceId(),
+                        challengeMe.getCategory().isActive(),
+                        ImageHelper.LoadImages(challengeMe.getCategory().getImages()));
+
+        CompositionResponseModel compositionResponseModel = CompositionResponseModelFactory.getInstance()
+                .create(challengeMe.getComposition().getId(),
+                        challengeMe.getComposition().getName(),
+                        challengeMe.getComposition().getLongDescription(),
+                        challengeMe.getComposition().getImageResourceId(),
+                        challengeMe.getComposition().isActive(),
+                        ImageHelper.LoadImages(challengeMe.getComposition().getImages()));
+
+        ChallengeMeResponseModel responseModel = ChallengeMeResponseModelFactory.getInstance().
+                create(categoryResponseModel, compositionResponseModel);
 
         return responseModel;
+
     }
 }

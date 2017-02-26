@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface IChallengeMeInputBoundary {
 
-    CompositionResponseModel RandomComposition();
-    CategoryResponseModel RandomCategory();
+    ChallengeMeResponseModel Random();
 }

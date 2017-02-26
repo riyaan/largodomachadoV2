@@ -1,9 +1,5 @@
 package com.photoshotlist.interactors;
-
-import com.photoshotlist.domainmodels.entities.Category;
-import com.photoshotlist.domainmodels.entities.Composition;
-
-import java.util.List;
+import com.photoshotlist.domainmodels.entities.ChallengeMe;
 
 /**
  * Created by PhpDev on 2017/01/14.
@@ -11,6 +7,5 @@ import java.util.List;
 
 public interface IChallengeMeInteractor {
 
-    public Composition GetRandomComposition();
-    public Category GetRandomCategory();
+    public ChallengeMe GetRandom();
 }
