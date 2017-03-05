@@ -14,9 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.photoshotlist.domainmodels.entities.Category;
+// TODO: Why is this model being referenced in the MainActivity?
 import com.photoshotlist.domainmodels.entities.ChallengeMe;
-import com.photoshotlist.domainmodels.entities.Composition;
 import com.photoshotlist.infrastructure.repositories.CategoryRepository;
 import com.photoshotlist.infrastructure.repositories.CompositionRepository;
 import com.photoshotlist.infrastructure.repositories.ImageRepository;
@@ -25,6 +24,9 @@ import com.photoshotlist.interactors.ChallengeMeInteractor;
 import activity.CategoryAllFragment;
 import activity.CategoryDetailFragment;
 import activity.CategoryFragment;
+import activity.ChallengeMeAllFragment;
+import activity.ChallengeMeDetailFragment;
+import activity.ChallengeMeFragment;
 import activity.CompositionAllFragment;
 import activity.CompositionDetailFragment;
 import activity.CompositionFragment;
@@ -33,8 +35,9 @@ import activity.HomeFragment;
 import activity.ShotListFragment;
 
 public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener,
-CategoryDetailFragment.OnFragmentInteractionListener,
-        CompositionDetailFragment.OnFragmentInteractionListener{
+        CategoryDetailFragment.OnFragmentInteractionListener,
+        CompositionDetailFragment.OnFragmentInteractionListener,
+        ChallengeMeDetailFragment.OnFragmentInteractionListener{
 
     private static String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolbar;
@@ -83,6 +86,7 @@ CategoryDetailFragment.OnFragmentInteractionListener,
     }
 
     private void displayView(int position) {
+        // TODO: Store the Titles in resource file
         Fragment fragment = null;
         String title = getString(R.string.app_name);
         switch (position) {
@@ -101,6 +105,10 @@ CategoryDetailFragment.OnFragmentInteractionListener,
             case 3:
                 fragment = new CompositionFragment();
                 title = getString(R.string.title_compositions);
+                break;
+            case 4:
+                fragment = new ChallengeMeFragment();
+                title = getString(R.string.title_challengeme);
                 break;
             default:
                 break;
@@ -180,6 +188,26 @@ CategoryDetailFragment.OnFragmentInteractionListener,
     public void onClickViewAllCompositions(View view)
     {
         Fragment fragment = new CompositionAllFragment();
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+
+            // TODO: Start - This gets the back button to work
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            // TODO: End - This gets the back button to work
+
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+            // getSupportActionBar().setTitle("All Categories");
+        }
+    }
+
+    public void onClickChallengeMe(View view)
+    {
+        Fragment fragment = new ChallengeMeAllFragment();
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

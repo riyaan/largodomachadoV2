@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
  */
 public class InteractorsChallengeMeInteractorTest {
 
+    // TODO: Fix these tests. Some of the methods are not pass of this Interactor
     @Test
     public void GetById_Success() {
 
