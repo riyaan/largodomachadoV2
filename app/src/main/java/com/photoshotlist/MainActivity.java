@@ -2,6 +2,7 @@ package com.photoshotlist;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,12 @@ import com.photoshotlist.infrastructure.repositories.CategoryRepository;
 import com.photoshotlist.infrastructure.repositories.CompositionRepository;
 import com.photoshotlist.infrastructure.repositories.ImageRepository;
 import com.photoshotlist.interactors.ChallengeMeInteractor;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+import java.util.Date;
 
 import activity.CategoryAllFragment;
 import activity.CategoryDetailFragment;
@@ -241,5 +248,41 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+    }
+
+    // Miscellaneous method to get the latest backup
+    public void onClickBackupDB(View view)
+    {
+        TextView display = null;
+        display = (TextView)findViewById(R.id.textViewDisplayCategory);
+
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "/data/data/" + getPackageName() + "/databases/PhotoShotList";
+                String backupDBPath = "backup.db";
+                File currentDB = new File(currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+
+                    display.setText("Done copying.");
+                }
+                else
+                    display.setText("Current DB " + currentDBPath + " does not exist.");
+            }
+            else {
+                display.setText("Cannot write to SD card.");
+            }
+        } catch (Exception e) {
+            display.setText(e.getMessage());
+        }
     }
 }

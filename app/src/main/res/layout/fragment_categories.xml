@@ -70,4 +70,14 @@
         android:layout_marginLeft="42dp"
         android:layout_marginStart="42dp" />
 
+    <!--<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/backupDB"
+        android:text="Backup DB"
+        android:onClick="onClickBackupDB"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />-->
+
 </RelativeLayout>

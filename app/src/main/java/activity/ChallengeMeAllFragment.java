@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.photoshotlist.R;
 import com.photoshotlist.boundaries.input.ChallengeMeResponseModel;
@@ -20,6 +21,7 @@ import com.photoshotlist.infrastructure.repositories.CompositionRepository;
 import com.photoshotlist.infrastructure.repositories.ImageRepository;
 import com.photoshotlist.interactors.ChallengeMeInteractor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -28,6 +30,9 @@ import adapter.CaptionedChallengeMeImagesAdapter;
 
 
 public class ChallengeMeAllFragment extends Fragment {
+
+    private ChallengeMeResponseModel challengeMeResponseModel;
+    private Bundle outState;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +50,7 @@ public class ChallengeMeAllFragment extends Fragment {
 
         // TODO: Consider adding a Polymorphic Random method that accepts a number. This paramater
         // TODO: will determine how many Random items to return.
-        ChallengeMeResponseModel challengeMeResponseModel = challengeMeInteractor.Random();
+        challengeMeResponseModel = challengeMeInteractor.Random();
 
         int numberOfImages = challengeMeResponseModel.getCategoryResponseModel().
                 getImageResponseModels().size() +
@@ -124,6 +129,37 @@ public class ChallengeMeAllFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        // super.onActivityCreated(savedInstanceState);
+
+        super.onActivityCreated(outState);
+
+        //if(savedInstanceState != null)
+        if(outState != null)
+        {
+            Toast.makeText(getActivity(), "Instance was saved. Do the reload here.",
+                    Toast.LENGTH_SHORT);
+
+            challengeMeResponseModel = (ChallengeMeResponseModel)
+                    savedInstanceState.getSerializable("responseModel");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("responseModel", (Serializable)challengeMeResponseModel);
+
+        getFragmentManager().putFragment(outState, "ChallengeMeAllFragment", this);
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        // outState.putSerializable("responseModel", (Serializable)challengeMeResponseModel);
+
+        // getFragmentManager().putFragment(outState, "ChallengeMeAllFragment", this);
     }
 }

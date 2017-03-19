@@ -28,7 +28,7 @@ import java.util.List;
     private SQLiteDatabase myDataBase;
     private final Context myContext;
 
-    private static final int DB_VERSION = 12; // TODO: Read from configuration file
+    private static final int DB_VERSION = 13; // TODO: Read from configuration file
 //    private static final int DB_OLD_VERSION = 2;
 
 //    private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE Category (_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT, LongDescription TEXT, IsActive INTEGER);";
