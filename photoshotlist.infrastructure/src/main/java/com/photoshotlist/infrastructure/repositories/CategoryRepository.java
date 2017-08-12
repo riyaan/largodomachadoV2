@@ -33,7 +33,6 @@ public class CategoryRepository implements ICategoryRepository {
 
         PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
 
-        // TODO: Create a factory method
         CategoryDAO categoryDAO = null;
         Category category = null;
 
@@ -62,7 +61,6 @@ public class CategoryRepository implements ICategoryRepository {
 
         PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
 
-        // TODO: Create a factory method
         List<CategoryDAO> categoryDAOList = new ArrayList<CategoryDAO>();
         List<Category> categoryList = new ArrayList<Category>();
 
@@ -97,7 +95,6 @@ public class CategoryRepository implements ICategoryRepository {
 
         PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
 
-        // TODO: Create a factory method
         CategoryDAO categoryDAO = null;
         Category category = null;
 
@@ -121,7 +118,6 @@ public class CategoryRepository implements ICategoryRepository {
     {
         PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
 
-        // TODO: Create a factory method
         CategoryDAO categoryDAO = null;
         Category category = null;
 
@@ -139,5 +135,4 @@ public class CategoryRepository implements ICategoryRepository {
 
         return category;
     }
-
 }

@@ -54,6 +54,7 @@ public class CategoryAllFragment extends Fragment {
         List<Integer> tempImages = new ArrayList<Integer>();
         final List<String> tempNames = new ArrayList<String>();
         final List<Integer> tempCategoryIds = new ArrayList<Integer>();
+        final List<String> tempDescriptions = new ArrayList<String>();
 
         for(CategoryResponseModel crm : categoryResponseModels){
             tempNames.add(crm.getName());
@@ -66,6 +67,7 @@ public class CategoryAllFragment extends Fragment {
 
             tempImages.add(resourceId);
             tempCategoryIds.add(crm.getId());
+            tempDescriptions.add(crm.getLongDescription());
         }
 
         for(int i=0; i<tempImages.size(); i++){
@@ -73,7 +75,8 @@ public class CategoryAllFragment extends Fragment {
         }
 
         CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(
-                tempNames.toArray(new String[0]),images);
+                tempNames.toArray(new String[0]),images,
+                tempDescriptions.toArray(new String[0]));
 
         categoryAllRecycler.setAdapter(adapter);
         GridLayoutManager glm = new GridLayoutManager(getActivity(), 2);

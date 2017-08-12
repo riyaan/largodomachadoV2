@@ -162,4 +162,11 @@ public class ChallengeMeAllFragment extends Fragment {
 
         // getFragmentManager().putFragment(outState, "ChallengeMeAllFragment", this);
     }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+    }
+
 }
