@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
      xmlns:android="http://schemas.android.com/apk/res/android"
      xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_category_all"
     android:layout_width="match_parent"
     android:layout_height="200dp"
@@ -11,35 +12,40 @@
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1">
+        android:weightSum="1"
+        android:orientation="vertical">
 
         <TextView
             android:layout_centerInParent="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
+            android:textSize="14sp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="Add Text Here"
-            android:id="@+id/textViewCategoryAll" />
+            android:id="@+id/textViewCategoryAll"
+            android:textStyle="normal|bold"
+            android:textAllCaps="true"
+            android:textAlignment="center" />
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="128dp"
             android:id="@+id/imageViewSampleCategoryAll"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="centerInside"
+            card_view:srcCompat="@drawable/album1"
+            android:layout_width="match_parent" />
 
         <TextView
-            android:layout_centerInParent="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
+            android:textSize="8sp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:id="@+id/textViewCategoryDescription" />
+            android:id="@+id/textViewCategoryDescription"
+            android:text="Place the subject (this will be blacked out) in front of some source of light and force your camer to set its exposure based upon the brightest part of your picture (the background) and not the subject of your image."
+            android:textAlignment="viewStart" />
 </LinearLayout>
 
 </android.support.v7.widget.CardView>
