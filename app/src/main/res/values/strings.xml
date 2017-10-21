@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhotoShotList</string>
+    <string name="app_name">Photo Shot List</string>
     <string name="button_add_category">Random Category</string>
     <string name="button_all_categories">All Categories</string>
     <string name="button_add_composition">Random Composition</string>
