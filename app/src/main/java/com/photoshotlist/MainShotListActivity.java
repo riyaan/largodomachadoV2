@@ -103,9 +103,9 @@ public class MainShotListActivity extends AppCompatActivity {
     }
 
     private Integer[] mThumbIds = {
-            R.drawable.chrysanthemum, R.drawable.desert,
-            R.drawable.hydrangeas, R.drawable.jellyfish,
-            R.drawable.koala, R.drawable.lighthouse,
-            R.drawable.penguins, R.drawable.tulips
+            R.drawable.category_abstract_01, R.drawable.composition_framing,
+            R.drawable.category_aerial, R.drawable.composition_depth,
+            R.drawable.composition_symmetry, R.drawable.category_abc,
+            R.drawable.category_kids, R.drawable.composition_goldenratio
     };
 }

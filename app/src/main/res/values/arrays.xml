@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="image_ids">
-        <item>@drawable/chrysanthemum</item>
-        <item>@drawable/desert</item>
-        <item>@drawable/hydrangeas</item>
-        <item>@drawable/jellyfish</item>
-        <item>@drawable/koala</item>
-        <item>@drawable/lighthouse</item>
-        <item>@drawable/penguins</item>
-        <item>@drawable/tulips</item>
+        <item>@drawable/composition_ruleofthirds_01</item>
+        <item>@drawable/category_abc</item>
+        <item>@drawable/composition_goldenratio</item>
+        <item>@drawable/composition_goldentrianglespiral</item>
+        <item>@drawable/category_architecture</item>
+        <item>@drawable/composition_symmetry</item>
+        <item>@drawable/category_markets</item>
+        <item>@drawable/composition_simplification</item>
     </integer-array>
 </resources>
