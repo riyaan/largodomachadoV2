@@ -3,8 +3,6 @@ package com.photoshotlist.common;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-
 /**
  * Created by PhpDev on 2016/11/27.
  */

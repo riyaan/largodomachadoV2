@@ -1,7 +1,6 @@
 package com.photoshotlist.bll;
 
 import android.content.Context;
-import android.database.SQLException;
 
 import com.photoshotlist.common.Logger;
 import com.photoshotlist.dal.ImageDAO;
@@ -22,7 +21,7 @@ public class PSLBusinessHelper {
     // TODO: Cannot use isEmpty()?
     private static final String EMPTY_STRING = "";
 
-    private PSLBusinessHelper(Context context) { _context = context; };
+    private PSLBusinessHelper(Context context) { _context = context; }
 
     public static PSLBusinessHelper getInstance(Context context)
     {
@@ -39,7 +38,7 @@ public class PSLBusinessHelper {
             if (domainObject == null)
                 throw new PSLException("Null ShotList object.");
 
-            if (domainObject.getName() == null || domainObject.getName().toString().equals(EMPTY_STRING))
+            if (domainObject.getName() == null || domainObject.getName().equals(EMPTY_STRING))
                 throw new PSLException("Name is mandatory when creating a new ShotList.");
 
             // Setup link to data functionality

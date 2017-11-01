@@ -354,7 +354,7 @@ import java.util.List;
 
         try {
 
-            if (name == null || name.toString().isEmpty())
+            if (name == null || name.isEmpty())
                 throw new Exception("Null or Empty values for ShotList Name field.");
 
             db = this.getWritableDatabase();

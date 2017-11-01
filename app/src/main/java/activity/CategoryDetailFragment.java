@@ -13,17 +13,12 @@ import android.view.ViewGroup;
 
 import com.photoshotlist.R;
 import com.photoshotlist.bll.ImageDO;
-import com.photoshotlist.bll.PSLBusinessHelper;
-import com.photoshotlist.bll.ShotListDO;
 import com.photoshotlist.boundaries.input.CategoryRequestModel;
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
-import com.photoshotlist.boundaries.input.ImageRequestModel;
 import com.photoshotlist.boundaries.input.ImageResponseModel;
-import com.photoshotlist.exception.PSLException;
 import com.photoshotlist.infrastructure.repositories.CategoryRepository;
 import com.photoshotlist.infrastructure.repositories.ImageRepository;
 import com.photoshotlist.interactors.CategoryInteractor;
-import com.photoshotlist.interactors.ImageInteractor;
 
 import java.util.ArrayList;
 import java.util.List;

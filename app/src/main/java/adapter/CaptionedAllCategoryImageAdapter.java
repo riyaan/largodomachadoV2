@@ -1,5 +1,6 @@
 package adapter;
 
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -51,8 +52,12 @@ public class CaptionedAllCategoryImageAdapter extends RecyclerView.Adapter<Capti
         textView.setText(captions[position]);
 
         // TextView textViewWriteup = (TextView)cardView.findViewById(R.id.textViewWriteUp);
+
+        Resources res = Resources.getSystem();
+        String text = res.getString(R.string.textview_category_description);
+
         TextView textViewWriteup = (TextView)cardView.findViewById(R.id.textViewCategoryDescription);
-        textViewWriteup.setText("test");
+        textViewWriteup.setText(text);
     }
 
     @Override

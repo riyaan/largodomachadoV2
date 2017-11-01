@@ -136,8 +136,8 @@ public class ChallengeMeAllFragment extends Fragment {
         //if(savedInstanceState != null)
         if(outState != null)
         {
-            Toast.makeText(getActivity(), "Instance was saved. Do the reload here.",
-                    Toast.LENGTH_SHORT);
+//            Toast.makeText(getActivity(), "Instance was saved. Do the reload here.",
+//                    Toast.LENGTH_SHORT);
 
             challengeMeResponseModel = (ChallengeMeResponseModel)
                     savedInstanceState.getSerializable("responseModel");

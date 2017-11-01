@@ -11,10 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.photoshotlist.R;
-import com.photoshotlist.common.IImageLoader;
-import com.photoshotlist.common.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -1,6 +1,7 @@
 package com.photoshotlist;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
-import java.util.Date;
 
 import activity.CategoryAllFragment;
 import activity.CategoryDetailFragment;
@@ -153,8 +153,12 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
             display.setText(String.format("Category: %s %n Composition: %s",
                     cm.getCategory().getName(), cm.getComposition().getName()));
 
-        else
-            display.setText("Could not retrieve a Challenge Me item.");
+        else {
+
+            Resources res = getResources();
+            String text = res.getString(R.string.could_not_retrieve_challengeme_item);
+            display.setText(text);
+        }
     }
 
     public void onClickAddComposition(View view)
@@ -273,13 +277,20 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
                     src.close();
                     dst.close();
 
-                    display.setText("Done copying.");
+                    Resources res = getResources();
+                    String text = res.getString(R.string.done_copying);
+                    display.setText(text);
                 }
-                else
-                    display.setText("Current DB " + currentDBPath + " does not exist.");
+                else {
+                    Resources res = getResources();
+                    String text = res.getString(R.string.invalid_db_path, currentDB);
+                    display.setText(text);
+                }
             }
             else {
-                display.setText("Cannot write to SD card.");
+                Resources res = getResources();
+                String text = res.getString(R.string.cannot_write_to_sdcard);
+                display.setText(text);
             }
         } catch (Exception e) {
             display.setText(e.getMessage());

@@ -1,6 +1,5 @@
 package com.photoshotlist.domainservices.factories;
 
-import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainmodels.entities.Composition;
 import com.photoshotlist.domainmodels.entities.Image;
 

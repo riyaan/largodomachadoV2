@@ -6,4 +6,6 @@ dependencies {
     targetCompatibility = 1.7
     compile 'com.google.android:android:4.1.1.4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'junit:junit:4.12'
+    compile 'org.mockito:mockito-core:2.6.2'
 }

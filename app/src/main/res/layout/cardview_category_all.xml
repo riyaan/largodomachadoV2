@@ -22,7 +22,7 @@
             android:textSize="14sp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="Add Text Here"
+            android:text="@string/add_text_here"
             android:id="@+id/textViewCategoryAll"
             android:textStyle="normal|bold"
             android:textAllCaps="true"
@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:id="@+id/textViewCategoryDescription"
-            android:text="Place the subject (this will be blacked out) in front of some source of light and force your camer to set its exposure based upon the brightest part of your picture (the background) and not the subject of your image."
+            android:text="@string/cardview_category_text"
             android:textAlignment="viewStart" />
 </LinearLayout>
 

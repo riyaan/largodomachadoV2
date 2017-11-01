@@ -21,7 +21,7 @@
             android:textSize="12dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="Add Text Here"
+            android:text="@string/add_text_here"
             android:id="@+id/textViewCompositionAll" />
 
         <ImageView

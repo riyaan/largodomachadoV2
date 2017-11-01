@@ -1,6 +1,5 @@
 package com.photoshotlist.domainservices.repositories;
 
-import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainmodels.entities.Image;
 
 import java.util.List;

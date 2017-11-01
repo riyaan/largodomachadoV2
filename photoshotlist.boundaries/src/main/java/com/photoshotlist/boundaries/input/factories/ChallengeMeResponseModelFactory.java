@@ -3,10 +3,6 @@ package com.photoshotlist.boundaries.input.factories;
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
 import com.photoshotlist.boundaries.input.ChallengeMeResponseModel;
 import com.photoshotlist.boundaries.input.CompositionResponseModel;
-import com.photoshotlist.domainmodels.entities.Category;
-import com.photoshotlist.domainmodels.entities.Composition;
-
-import java.util.List;
 
 /**
  * Created by PhpDev on 2016/12/04.

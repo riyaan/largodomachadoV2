@@ -2,14 +2,10 @@ package com.photoshotlist.infrastructure.repositories;
 
 import android.content.Context;
 
-import com.photoshotlist.domainmodels.entities.Category;
 import com.photoshotlist.domainmodels.entities.Composition;
 import com.photoshotlist.domainmodels.entities.Image;
-import com.photoshotlist.domainservices.factories.CategoryFactory;
 import com.photoshotlist.domainservices.factories.CompositionFactory;
-import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 import com.photoshotlist.domainservices.repositories.ICompositionRepository;
-import com.photoshotlist.infrastructure.helper.CategoryDAO;
 import com.photoshotlist.infrastructure.helper.CompositionDAO;
 import com.photoshotlist.infrastructure.helper.PSLDatabaseHelper;
 

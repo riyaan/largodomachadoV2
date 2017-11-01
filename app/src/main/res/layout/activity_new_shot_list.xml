@@ -16,7 +16,6 @@
         android:enabled="true"
         android:inputType="text"
         android:hint="@string/hint_edittext_shotlist_name"
-        android:editable="true"
         android:layout_marginTop="35dp"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/buttonCreateShotList"
@@ -48,7 +47,6 @@
         android:enabled="true"
         android:inputType="text"
         android:hint="@string/hint_edittext_shotlist_description"
-        android:editable="true"
         android:layout_below="@+id/editTextShotListName"
         android:layout_alignLeft="@+id/editTextShotListName"
         android:layout_alignStart="@+id/editTextShotListName" />
