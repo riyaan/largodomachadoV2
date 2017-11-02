@@ -50,4 +50,14 @@
         android:layout_below="@+id/editTextShotListName"
         android:layout_alignLeft="@+id/editTextShotListName"
         android:layout_alignStart="@+id/editTextShotListName" />
+
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Force Crash!"
+        android:onClick="forceCrash"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

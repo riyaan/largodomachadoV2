@@ -22,6 +22,7 @@ import com.photoshotlist.infrastructure.repositories.CategoryRepository;
 import com.photoshotlist.infrastructure.repositories.CompositionRepository;
 import com.photoshotlist.infrastructure.repositories.ImageRepository;
 import com.photoshotlist.interactors.ChallengeMeInteractor;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,6 +42,9 @@ import activity.Drawer;
 import activity.HomeFragment;
 import activity.ShotListFragment;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
+
 public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener,
         CategoryDetailFragment.OnFragmentInteractionListener,
         CompositionDetailFragment.OnFragmentInteractionListener,
@@ -54,6 +58,14 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Fabric.with(this, new Crashlytics());
+
+        if(LeakCanary.isInAnalyzerProcess(this)){
+            return;
+        }
+        LeakCanary.install(getApplication());
+
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -305,4 +317,9 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
             super.onBackPressed();
         }
     }
+
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
+    }
+
 }
