@@ -6,7 +6,7 @@ import java.util.List;
  * Created by PhpDev on 2017/01/14.
  */
 
-public class CompositionResponseModel {
+public class CompositionResponseModel implements IInputResponseModel{
     private int id;
     private String name;
     private String longDescription;
@@ -53,6 +53,7 @@ public class CompositionResponseModel {
     public void setImageResourceId(int imageResourceId) {
         this.imageResourceId = imageResourceId;
     }
+
 
     public List<ImageResponseModel> getImageResponseModels() {
         return imageResponseModels;

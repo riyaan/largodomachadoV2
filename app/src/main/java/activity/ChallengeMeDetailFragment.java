@@ -15,13 +15,23 @@ import com.photoshotlist.R;
 import com.photoshotlist.bll.ImageDO;
 import com.photoshotlist.boundaries.input.CategoryRequestModel;
 import com.photoshotlist.boundaries.input.CategoryResponseModel;
+import com.photoshotlist.boundaries.input.ChallengeMeResponseModel;
+import com.photoshotlist.boundaries.input.CompositionResponseModel;
+import com.photoshotlist.boundaries.input.IInputResponseModel;
 import com.photoshotlist.boundaries.input.ImageResponseModel;
+import com.photoshotlist.domainmodels.entities.Category;
+import com.photoshotlist.domainmodels.entities.Composition;
+import com.photoshotlist.domainservices.factories.CategoryFactory;
 import com.photoshotlist.infrastructure.repositories.CategoryRepository;
+import com.photoshotlist.infrastructure.repositories.CompositionRepository;
 import com.photoshotlist.infrastructure.repositories.ImageRepository;
 import com.photoshotlist.interactors.CategoryInteractor;
+import com.photoshotlist.interactors.ChallengeMeInteractor;
+import com.photoshotlist.interactors.CompositionInteractor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import adapter.CaptionedChallengeMeDetailImagesAdapter;
@@ -79,16 +89,40 @@ public class ChallengeMeDetailFragment extends Fragment {
 
         Context context = getActivity();
 
-        CategoryInteractor categoryInteractor = new CategoryInteractor(
-                new CategoryRepository(context), new ImageRepository(context));
+//        CategoryInteractor categoryInteractor = new CategoryInteractor(
+//                new CategoryRepository(context), new ImageRepository(context));
+//
+//        CategoryRequestModel requestModel = new CategoryRequestModel();
+//        requestModel.setCategoryName(mParam1);
 
-        CategoryRequestModel requestModel = new CategoryRequestModel();
-        requestModel.setCategoryName(mParam1);
+//        CategoryResponseModel categoryResponseModel =
+//                categoryInteractor.GetCategoryByName(requestModel);
 
-        CategoryResponseModel categoryResponseModel =
-                categoryInteractor.GetCategoryByName(requestModel);
+        // mParam1 can be either a Category or a Composition.
+        // search for it in Category, if not found search Composition
+        ChallengeMeInteractor challengeMeInteractor = new ChallengeMeInteractor(
+                new CompositionRepository(context), new CategoryRepository(context),
+                new ImageRepository(context));
 
-            for(ImageResponseModel item : categoryResponseModel.getImageResponseModels()){
+        ChallengeMeResponseModel challengeMeResponseModel = challengeMeInteractor.Random();
+
+        IInputResponseModel inputResponseModel = null;
+
+        CategoryInteractor ci = new CategoryInteractor(new CategoryRepository(context),
+                new ImageRepository(context));
+        Category category = ci.GetByName(mParam1);
+
+        CompositionInteractor ci2 = new CompositionInteractor(new CompositionRepository(context),
+                new ImageRepository(context));
+        Composition composition = ci2.GetByName(mParam1);
+
+        if(category != null)
+            inputResponseModel = challengeMeResponseModel.getCategoryResponseModel();
+        else if(composition != null)
+            inputResponseModel = challengeMeResponseModel.getCompositionResponseModel();
+
+            //for(ImageResponseModel item : categoryResponseModel.getImageResponseModels()){
+        for(ImageResponseModel item : inputResponseModel.getImageResponseModels()){
 
                 // TODO: Create a Factory
                 ImageDO temp = new ImageDO();

@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
                 title = getString(R.string.title_categories);
                 break;
             case 3:
-                fragment = new CompositionFragment();
                 title = getString(R.string.title_compositions);
                 break;
             case 4:

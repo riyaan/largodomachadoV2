@@ -6,7 +6,7 @@ import java.util.List;
  * Created by PhpDev on 2017/01/14.
  */
 
-public class CategoryResponseModel {
+public class CategoryResponseModel implements IInputResponseModel {
     private int id;
     private String name;
     private String longDescription;
