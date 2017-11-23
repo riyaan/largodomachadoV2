@@ -8,6 +8,7 @@ import com.photoshotlist.domainservices.factories.CompositionFactory;
 import com.photoshotlist.domainservices.repositories.ICompositionRepository;
 import com.photoshotlist.infrastructure.helper.CompositionDAO;
 import com.photoshotlist.infrastructure.helper.PSLDatabaseHelper;
+import com.photoshotlist.infrastructure.helper.PSLDatabaseHelperFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class CompositionRepository implements ICompositionRepository {
      */
     public Composition GetById(int id) {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         // TODO: Create a factory method
         CompositionDAO compositionDAO = null;
@@ -60,7 +61,7 @@ public class CompositionRepository implements ICompositionRepository {
      */
     public List<Composition> GetAll() {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         // TODO: Create a factory method
         List<CompositionDAO> compositionDAOList = new ArrayList<CompositionDAO>();
@@ -95,7 +96,7 @@ public class CompositionRepository implements ICompositionRepository {
      */
     public Composition GetByName(String name) {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         // TODO: Create a factory method
         CompositionDAO compositionDAO = null;
@@ -118,7 +119,7 @@ public class CompositionRepository implements ICompositionRepository {
 
     @Override
     public Composition RandomComposition() {
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         // TODO: Create a factory method
         CompositionDAO compositionDAO = null;

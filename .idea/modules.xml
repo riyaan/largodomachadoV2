@@ -8,7 +8,6 @@
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.boundaries/photoshotlist.boundaries.iml" filepath="$PROJECT_DIR$/photoshotlist.boundaries/photoshotlist.boundaries.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" filepath="$PROJECT_DIR$/photoshotlist.common/photoshotlist.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.crosscutting/photoshotlist.crosscutting.iml" filepath="$PROJECT_DIR$/photoshotlist.crosscutting/photoshotlist.crosscutting.iml" />
-      <module fileurl="file://$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" filepath="$PROJECT_DIR$/photoshotlist.dal/photoshotlist.dal.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.domainmodels/photoshotlist.domainmodels.iml" filepath="$PROJECT_DIR$/photoshotlist.domainmodels/photoshotlist.domainmodels.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.domainservices/photoshotlist.domainservices.iml" filepath="$PROJECT_DIR$/photoshotlist.domainservices/photoshotlist.domainservices.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" filepath="$PROJECT_DIR$/photoshotlist.exception/photoshotlist.exception.iml" />

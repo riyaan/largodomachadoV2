@@ -7,6 +7,7 @@ import com.photoshotlist.domainservices.factories.ImageFactory;
 import com.photoshotlist.domainservices.repositories.IImageRepository;
 import com.photoshotlist.infrastructure.helper.ImageDAO;
 import com.photoshotlist.infrastructure.helper.PSLDatabaseHelper;
+import com.photoshotlist.infrastructure.helper.PSLDatabaseHelperFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ImageRepository implements IImageRepository {
      */
     public List<Image> GetByCategory(int id) {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         // TODO: Create a factory method
         List<ImageDAO> imageDAOs = new ArrayList<ImageDAO>();
@@ -70,7 +71,7 @@ public class ImageRepository implements IImageRepository {
      */
     public List<Image> GetByComposition(int id) {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         // TODO: Create a factory method
         List<ImageDAO> imageDAOs = new ArrayList<ImageDAO>();

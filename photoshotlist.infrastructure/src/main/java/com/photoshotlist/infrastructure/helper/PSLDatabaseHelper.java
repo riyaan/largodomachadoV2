@@ -14,7 +14,7 @@ import java.util.List;
 
     public class PSLDatabaseHelper extends SQLiteAssetHelper {
 
-    private static PSLDatabaseHelper instance;
+    private PSLDatabaseHelper instance;
 
     private static final String DB_NAME = "PhotoShotList.db";
 
@@ -34,7 +34,7 @@ import java.util.List;
     }
 
     //
-    public static PSLDatabaseHelper getInstance(Context context) {
+    public PSLDatabaseHelper getInstance(Context context) {
         if (instance == null) {
             try {
                 instance = new PSLDatabaseHelper(context);
@@ -538,4 +538,5 @@ import java.util.List;
             }
         }
 
-}
+
+    }

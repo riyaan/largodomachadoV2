@@ -8,6 +8,7 @@ import com.photoshotlist.domainservices.factories.CategoryFactory;
 import com.photoshotlist.domainservices.repositories.ICategoryRepository;
 import com.photoshotlist.infrastructure.helper.CategoryDAO;
 import com.photoshotlist.infrastructure.helper.PSLDatabaseHelper;
+import com.photoshotlist.infrastructure.helper.PSLDatabaseHelperFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class CategoryRepository implements ICategoryRepository {
      */
     public Category GetById(int id) {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         CategoryDAO categoryDAO = null;
         Category category = null;
@@ -59,7 +60,7 @@ public class CategoryRepository implements ICategoryRepository {
      */
     public List<Category> GetAll() {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         List<CategoryDAO> categoryDAOList = new ArrayList<CategoryDAO>();
         List<Category> categoryList = new ArrayList<Category>();
@@ -93,7 +94,7 @@ public class CategoryRepository implements ICategoryRepository {
      */
     public Category GetByName(String name) {
 
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         CategoryDAO categoryDAO = null;
         Category category = null;
@@ -116,7 +117,7 @@ public class CategoryRepository implements ICategoryRepository {
     @Override
     public Category RandomCategory()
     {
-        PSLDatabaseHelper databaseHelper = PSLDatabaseHelper.getInstance(_context);
+        PSLDatabaseHelper databaseHelper = PSLDatabaseHelperFactory.getInstance().create(_context);
 
         CategoryDAO categoryDAO = null;
         Category category = null;

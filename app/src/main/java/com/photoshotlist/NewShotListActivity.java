@@ -7,8 +7,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.photoshotlist.bll.PSLBusinessHelper;
+import com.photoshotlist.bll.PSLBusinessHelperFactory;
 import com.photoshotlist.bll.ShotListDO;
-import com.photoshotlist.common.Logger;
+import com.photoshotlist.crosscutting.logging.Logger;
 
 public class NewShotListActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class NewShotListActivity extends AppCompatActivity {
 
     public void onClickNewShotlist(View view){
 
-        Logger.Debug(this.getClass().getName(), "onClickNewShotList");
+        Logger.getInstance().Debug(this.getClass().getName(), "onClickNewShotList");
 
         EditText shotListName = null;
         EditText shotListDescription = null;
@@ -32,8 +33,8 @@ public class NewShotListActivity extends AppCompatActivity {
             shotListDescription = (EditText)findViewById(R.id.editTextShotListDescription);
             errorMessage = (TextView)findViewById(R.id.textViewErrorMessage);
 
-            PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(this);
-            Logger.Debug(this.getClass().getName(), "Before InsertShotList");
+            PSLBusinessHelper businessHelper = PSLBusinessHelperFactory.getInstance().create(this);
+            Logger.getInstance().Debug(this.getClass().getName(), "Before InsertShotList");
 
             ShotListDO sdo = new ShotListDO();
             sdo.setName(shotListName.getText().toString());
@@ -41,7 +42,7 @@ public class NewShotListActivity extends AppCompatActivity {
 
             sdo = businessHelper.InsertShotList(sdo);
 
-            Logger.Debug(this.getClass().getName(), "After InsertShotList");
+            Logger.getInstance().Debug(this.getClass().getName(), "After InsertShotList");
 
             errorMessage.setText(String.format("ShotList '%s' was added successfully.", sdo.getName()));
         }

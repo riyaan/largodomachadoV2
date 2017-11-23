@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.photoshotlist.bll.ImageDO;
 import com.photoshotlist.bll.PSLBusinessHelper;
+import com.photoshotlist.bll.PSLBusinessHelperFactory;
 import com.photoshotlist.bll.ShotListDO;
 import com.photoshotlist.exception.PSLException;
 
@@ -30,7 +31,7 @@ public class DetailsActivity extends ActionBarActivity {
         //Bitmap bitmap = Uncompress(compressedImage);
 
         // Get all images for this Category
-        PSLBusinessHelper businessHelper = PSLBusinessHelper.getInstance(this);
+        PSLBusinessHelper businessHelper = PSLBusinessHelperFactory.getInstance().create(this);
         try {
             ShotListDO category = businessHelper.GetCategoryByName(title);
 
