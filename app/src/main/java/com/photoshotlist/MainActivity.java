@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
                 title = getString(R.string.title_categories);
                 break;
             case 3:
+                fragment = new CompositionFragment();
                 title = getString(R.string.title_compositions);
                 break;
             case 4:
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
         TextView display = null;
         display = (TextView)findViewById(R.id.textViewDisplayCategory);
 
+        // Use dependency injection to new up these classes
         ChallengeMeInteractor cmi = new ChallengeMeInteractor(new CompositionRepository(this),
                 new CategoryRepository(this), new ImageRepository(this));
         ChallengeMe cm = cmi.GetRandom();
@@ -189,47 +191,21 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
 
     public void onClickViewAllCategory(View view)
     {
-        Fragment fragment = new CategoryAllFragment();
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-
-            // TODO: Start - This gets the back button to work
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            // TODO: End - This gets the back button to work
-
-            fragmentTransaction.commit();
-
-            // set the toolbar title
-            // getSupportActionBar().setTitle("All Categories");
-        }
+        LoadFragment(new CategoryAllFragment());
     }
 
     public void onClickViewAllCompositions(View view)
     {
-        Fragment fragment = new CompositionAllFragment();
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-
-            // TODO: Start - This gets the back button to work
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            // TODO: End - This gets the back button to work
-
-            fragmentTransaction.commit();
-
-            // set the toolbar title
-            // getSupportActionBar().setTitle("All Categories");
-        }
+        LoadFragment(new CompositionAllFragment());
     }
 
     public void onClickChallengeMe(View view)
     {
-        Fragment fragment = new ChallengeMeAllFragment();
+        LoadFragment(new ChallengeMeAllFragment());
+    }
+
+    private void LoadFragment(Fragment fragment)
+    {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -134,23 +134,23 @@ public class ChallengeMeAllFragment extends Fragment {
         super.onActivityCreated(outState);
 
         //if(savedInstanceState != null)
-        if(outState != null)
-        {
-//            Toast.makeText(getActivity(), "Instance was saved. Do the reload here.",
-//                    Toast.LENGTH_SHORT);
-
-            challengeMeResponseModel = (ChallengeMeResponseModel)
-                    savedInstanceState.getSerializable("responseModel");
-        }
+//        if(outState != null)
+//        {
+////            Toast.makeText(getActivity(), "Instance was saved. Do the reload here.",
+////                    Toast.LENGTH_SHORT);
+//
+//            challengeMeResponseModel = (ChallengeMeResponseModel)
+//                    savedInstanceState.getSerializable("responseModel");
+//        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("responseModel", (Serializable)challengeMeResponseModel);
-
-        getFragmentManager().putFragment(outState, "ChallengeMeAllFragment", this);
+//        outState.putSerializable("responseModel", (Serializable)challengeMeResponseModel);
+//
+//        getFragmentManager().putFragment(outState, "ChallengeMeAllFragment", this);
     }
 
     @Override
