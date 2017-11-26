@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 
 import activity.CategoryAllFragment;
 import activity.CategoryDetailFragment;
@@ -44,6 +45,12 @@ import activity.ShotListFragment;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
+import it.gmariotti.cardslib.library.internal.CardHeader;
+import it.gmariotti.cardslib.library.internal.CardThumbnail;
+import it.gmariotti.cardslib.library.view.CardListView;
+import it.gmariotti.cardslib.library.view.CardView;
 
 public class MainActivity extends AppCompatActivity implements Drawer.FragmentDrawerListener,
         CategoryDetailFragment.OnFragmentInteractionListener,
@@ -176,8 +183,8 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
 
     public void onClickAddComposition(View view)
     {
-        TextView display = null;
-        display = (TextView)findViewById(R.id.textViewDisplayComposition);
+//        TextView display = null;
+//        display = (TextView)findViewById(R.id.textViewDisplayComposition);
 
 //        ChallengeMeInteractor cmi = new ChallengeMeInteractor(new CompositionRepository(this),
 //                new CategoryRepository(this), new ImageRepository(this));
@@ -187,6 +194,35 @@ public class MainActivity extends AppCompatActivity implements Drawer.FragmentDr
 //            display.setText(composition.getName());
 //        else
 //            display.setText("Could not retrieve a random Composition.");
+        SetupCardsLib();
+
+        // Invoke the 'Create Shot List' UI
+        Intent intent = new Intent(this, CardsLibActivity.class);
+        // intent.putExtra(EXTRA_MESSAGE, "Oh Hi...");
+        startActivity(intent);
+    }
+
+    private void SetupCardsLib()
+    {
+        // Create a Card
+        Card card = new Card(this, R.layout.row_card);
+
+        // Create a CardHeader
+        CardHeader header = new CardHeader(this);
+        header.setTitle("Hello world");
+
+        card.setTitle("Simple card demo");
+        CardThumbnail thumb = new CardThumbnail(this);
+        thumb.setDrawableResource(R.drawable.ic_profile);
+
+        card.addCardThumbnail(thumb);
+
+        // Add Header to card
+        card.addCardHeader(header);
+
+        // Set card in the cardView
+        CardView cardView = (CardView) findViewById(R.id.carddemo);
+        cardView.setCard(card);
     }
 
     public void onClickViewAllCategory(View view)

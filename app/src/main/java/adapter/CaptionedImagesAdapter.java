@@ -58,6 +58,7 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
 
     @Override
     public void onBindViewHolder(CaptionedImagesAdapter.ViewHolder holder, final int position) {
+
         CardView cardView = holder.cardView;
         ImageView imageView = (ImageView)cardView.findViewById(R.id.imageViewSampleCategoryAll);
 

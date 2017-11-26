@@ -79,17 +79,21 @@ public class CategoryDetailFragment extends Fragment {
 
         Context context = getActivity();
 
+        // TODO: DI
         CategoryInteractor categoryInteractor = new CategoryInteractor(
                 new CategoryRepository(context), new ImageRepository(context));
 
+        // TODO: Create Factory
         CategoryRequestModel requestModel = new CategoryRequestModel();
         requestModel.setCategoryName(mParam1);
 
         CategoryResponseModel categoryResponseModel =
                 categoryInteractor.GetCategoryByName(requestModel);
 
+        // Find all the images in this category. Using the mParam1 (Category name)
             for(ImageResponseModel item : categoryResponseModel.getImageResponseModels()){
 
+                // TODO: Create Factory
                 ImageDO temp = new ImageDO();
                 temp.setCreatedDate(item.getCreatedDate());
                 temp.setLocation(item.getLocation());
